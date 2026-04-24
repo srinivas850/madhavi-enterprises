@@ -7,11 +7,11 @@ const API_BASE = 'https://madhavi-enterprises.onrender.com';  // Flask serves fr
 // ===== STATE =====
 let allProperties = [];
 let currentFilter = 'all';
-let galleryImages  = [];
+let galleryImages = [];
 let galleryVisible = [];
-let lbIndex        = 0;
+let lbIndex = 0;
 const GALLERY_PAGE = 20;
-let galleryOffset  = 0;
+let galleryOffset = 0;
 
 // ===== DOM READY =====
 document.addEventListener('DOMContentLoaded', () => {
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Lightbox keyboard
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') { closeLightbox(); closeModal(); }
-    if (e.key === 'ArrowLeft')  lightboxNav(-1);
+    if (e.key === 'ArrowLeft') lightboxNav(-1);
     if (e.key === 'ArrowRight') lightboxNav(1);
   });
 });
@@ -355,10 +355,10 @@ async function submitLead(e) {
   btn.textContent = ' Connecting AI Agent...';
   btn.disabled = true;
 
-  const name       = document.getElementById('lead-name').value.trim();
-  const phone      = document.getElementById('lead-phone').value.trim();
-  const budget     = document.getElementById('lead-budget')?.value || '';
-  const property   = document.getElementById('lead-property').value || 'General Inquiry';
+  const name = document.getElementById('lead-name').value.trim();
+  const phone = document.getElementById('lead-phone').value.trim();
+  const budget = document.getElementById('lead-budget')?.value || '';
+  const property = document.getElementById('lead-property').value || 'General Inquiry';
   const propertyId = document.getElementById('lead-property-id').value || '';
 
   const payload = {
@@ -409,13 +409,13 @@ function goToProperty(ventureName) {
    CLOUDINARY INTERIOR GALLERY
  */
 async function loadGallery() {
-  const grid    = document.getElementById('interior-gallery');
-  const loader  = document.getElementById('gallery-loader');
-  const empty   = document.getElementById('gallery-empty');
+  const grid = document.getElementById('interior-gallery');
+  const loader = document.getElementById('gallery-loader');
+  const empty = document.getElementById('gallery-empty');
   if (!grid) return;
 
   try {
-    const res  = await fetch(`${API_BASE}/api/cloudinary/images?max=80`);
+    const res = await fetch(`${API_BASE}/api/cloudinary/images?max=80`);
     const data = await res.json();
     galleryImages = data.images || [];
   } catch (err) {
@@ -431,19 +431,19 @@ async function loadGallery() {
   }
 
   galleryVisible = [...galleryImages];
-  galleryOffset  = 0;
+  galleryOffset = 0;
   grid.style.display = 'block';
   renderGalleryChunk();
 }
 
 function renderGalleryChunk() {
-  const grid     = document.getElementById('interior-gallery');
+  const grid = document.getElementById('interior-gallery');
   const loadMore = document.getElementById('gallery-load-more');
   if (!grid) return;
 
   const chunk = galleryVisible.slice(galleryOffset, galleryOffset + GALLERY_PAGE);
   chunk.forEach((img, i) => {
-    const idx  = galleryOffset + i;
+    const idx = galleryOffset + i;
     const item = document.createElement('div');
     item.className = 'gallery-item';
     item.dataset.folder = img.folder || '';
@@ -503,7 +503,7 @@ function initGalleryFilters() {
 /*  Lightbox  */
 function openLightbox(idx) {
   lbIndex = idx;
-  const lb  = document.getElementById('lightbox');
+  const lb = document.getElementById('lightbox');
   const img = document.getElementById('lightbox-img');
   if (!lb || !img) return;
   img.src = galleryVisible[lbIndex]?.url || '';
