@@ -2,7 +2,7 @@
    APP.JS - MADHAVI ENTERPRISES FRONTEND LOGIC
    ==================================================== */
 
-const API_BASE = 'http://127.0.0.1:5001';  // Flask serves from same origin
+const API_BASE = 'https://madhavi-enterprises.onrender.com';  // Flask serves from same origin
 
 // ===== STATE =====
 let allProperties = [];

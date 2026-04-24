@@ -386,7 +386,7 @@
     if (venture && VENTURES[venture]) {
       renderProp(VENTURES[venture]);
     } else if (propId) {
-      fetch(`http://127.0.0.1:5001/api/properties`)
+      fetch(`https://madhavi-enterprises.onrender.com/api/properties`)
         .then(r => r.json())
         .then(data => {
           const prop = data.find(p => String(p.id) === String(propId));
