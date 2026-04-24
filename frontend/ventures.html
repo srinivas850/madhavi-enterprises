@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8"/>
+
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+
+  <title>Premium Ventures - Madhavi Enterprises</title>
+
+  <meta name="description" content="Explore premium ventures and plots in Andhra Pradesh's fastest-growing corridors."/>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="style.css"/>
+
+  <style>
+
+    body { background: #030812; }
+
+    /* Hero */
+
+    .ven-hero {
+
+      padding: 120px 0 60px;
+
+      background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.08) 0%, transparent 60%),
+
+                  linear-gradient(180deg,#050B18,#030812);
+
+      text-align: center;
+
+      position: relative;
+
+    }
+
+    .ven-hero h1 { font-size: clamp(2.2rem,5vw,3.8rem); margin-bottom:1rem; }
+
+    .ven-hero p  { max-width: 580px; margin: 0 auto 2rem; color:var(--text-secondary); font-size:1.05rem; line-height:1.7; }
+
+    
+
+    .ventures-section { background: linear-gradient(180deg, #050B18 0%, #080F1F 50%, #050B18 100%); padding: 60px 0; }
+
+    .ventures-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2.5rem; }
+
+    .venture-card {
+
+      background: var(--bg-card);
+
+      border: 1px solid var(--border-glass);
+
+      border-radius: var(--radius-card);
+
+      overflow: hidden;
+
+      cursor: pointer;
+
+      transition: var(--transition);
+
+    }
+
+    .venture-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-hover); border-color: rgba(201,168,76,0.4); }
+
+    .venture-img { height: 180px; overflow: hidden; }
+
+    .venture-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+
+    .venture-card:hover .venture-img img { transform: scale(1.08); }
+
+    .venture-body { padding: 1.2rem; }
+
+    .venture-name { font-family: 'Outfit', sans-serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 4px; }
+
+    .venture-price { color: var(--gold); font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.1rem; }
+
+    .venture-price small { color: var(--text-secondary); font-weight: 400; font-size: 0.75rem; }
+
+
+
+    @media (max-width: 768px) { .ventures-grid { grid-template-columns: 1fr; } }
+
+    @media (max-width: 1024px) { .ventures-grid { grid-template-columns: 1fr 1fr; } }
+
+  </style>
+
+</head>
+
+<body>
+
+
+
+<!-- Floating WA -->
+
+<a href="https://wa.me/919876543210" target="_blank" class="wa-float" aria-label="WhatsApp">
+
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.570-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.122.553 4.116 1.523 5.843L.057 23.857a.5.5 0 0 0 .603.628l6.276-1.638A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.887 0-3.653-.523-5.168-1.43l-.37-.22-3.832.999 1.023-3.728-.24-.385A9.956 9.956 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+
+</a>
+
+
+
+<!-- Navbar -->
+
+<nav class="navbar" id="navbar">
+
+  <div class="container nav-inner">
+
+    <a href="index.html" class="nav-logo">
+
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D32F2F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+
+        <path d="M 22 2 H 12 V 22 H 2" />
+
+        <path d="M 2 2 V 12 H 22 V 22" />
+
+        <circle cx="17" cy="7" r="1.5" fill="#D32F2F" stroke="none"/>
+
+        <circle cx="17" cy="17" r="1.5" fill="#D32F2F" stroke="none"/>
+
+        <circle cx="7" cy="17" r="1.5" fill="#D32F2F" stroke="none"/>
+
+        <circle cx="7" cy="7" r="1.5" fill="#D32F2F" stroke="none"/>
+
+      </svg>
+
+      Madhavi <span>Enterprises</span>
+
+    </a>
+
+    <ul class="nav-links">
+
+      <li><a href="index.html">Home</a></li>
+
+      <li><a href="interiors.html">Interiors</a></li>
+
+      <li><a href="exteriors.html">Exteriors</a></li>
+
+      <li><a href="properties.html">Properties</a></li>
+
+      <li><a href="ventures.html" style="color:var(--gold);">Ventures</a></li>
+
+      <li><a href="contact.html">Contact</a></li>
+
+      <li><a href="admin.html" class="btn btn-glass" style="padding:8px 20px;font-size:0.82rem;">Admin</a></li>
+
+    </ul>
+
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+
+      <span></span><span></span><span></span>
+
+    </button>
+
+  </div>
+
+</nav>
+
+<nav class="nav-mobile" id="nav-mobile">
+
+  <a href="index.html">Home</a>
+
+  <a href="interiors.html">Interiors</a>
+
+  <a href="exteriors.html">Exteriors</a>
+
+  <a href="properties.html">Properties</a>
+
+  <a href="ventures.html" style="color:var(--gold);">Ventures</a>
+
+  <a href="contact.html">Contact</a>
+
+  <a href="admin.html">Admin Dashboard</a>
+
+</nav>
+
+
+
+<!-- Hero -->
+
+<header class="ven-hero">
+
+  <div class="container">
+
+    <nav class="breadcrumb levitate" style="justify-content:center;">
+
+      <a href="index.html">Home</a><span class="sep">&#8250;</span><span class="current">Ventures</span>
+
+    </nav>
+
+    <div class="section-badge levitate levitate-delay-1" style="display:inline-flex;margin-bottom:1.2rem;"><i class="fa-solid fa-star-of-life" style="font-size:0.7em;"></i> Premium Real Estate</div>
+
+    <h1 class="levitate levitate-delay-2">
+
+      Featured <span class="gold-text">Ventures</span>
+
+    </h1>
+
+    <p class="levitate levitate-delay-3">
+
+      Exclusive plots and gated communities in Andhra Pradesh's fastest-growing corridors. Secure your future with Madhavi Enterprises.
+
+    </p>
+
+  </div>
+
+</header>
+
+
+
+<!-- Ventures Section -->
+
+<section class="section ventures-section">
+
+  <div class="container">
+
+    <div class="ventures-grid" style="margin-top:0;">
+
+      <div class="venture-card levitate levitate-delay-1" onclick="window.location.href='property.html?venture=kammapadu'">
+
+        <div class="venture-img">
+
+          <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&q=80" alt="Kammapadu Plots" loading="lazy"/>
+
+        </div>
+
+        <div class="venture-body">
+
+          <div class="venture-name"> Kammapadu</div>
+
+          <div class="venture-price">Rs. 15,000 <small>/ sq.yard</small></div>
+
+          <p style="font-size:0.82rem;margin-top:6px;color:var(--text-secondary)">DTCP Approved &middot; Gated Community &middot; Premium Location</p>
+
+        </div>
+
+      </div>
+
+      <div class="venture-card levitate levitate-delay-2" onclick="window.location.href='property.html?venture=lemalle'">
+
+        <div class="venture-img">
+
+          <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&q=80" alt="Lemalle Venture" loading="lazy"/>
+
+        </div>
+
+        <div class="venture-body">
+
+          <div class="venture-name"> Lemalle</div>
+
+          <div class="venture-price">Rs. 17,000 <small>/ sq.yard</small></div>
+
+          <p style="font-size:0.82rem;margin-top:6px;color:var(--text-secondary)">RERA Registered &middot; Highway Access &middot; High ROI Zone</p>
+
+        </div>
+
+      </div>
+
+      <div class="venture-card levitate levitate-delay-3" onclick="window.location.href='property.html?venture=kanchincharla'">
+
+        <div class="venture-img">
+
+          <img src="https://images.unsplash.com/photo-1560493676-04071c5f467b?w=600&q=80" alt="Kanchincharla Venture" loading="lazy"/>
+
+        </div>
+
+        <div class="venture-body">
+
+          <div class="venture-name">&#11088; Kanchincharla</div>
+
+          <div class="venture-price">Rs. 18,000 <small>/ sq.yard</small></div>
+
+          <p style="font-size:0.82rem;margin-top:6px;color:var(--text-secondary)">Exclusive Layout &middot; River View &middot; Investment Hotspot</p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- Footer -->
+
+<footer class="footer">
+
+  <div class="container">
+
+    <div class="footer-grid">
+
+      <div class="footer-brand">
+
+        <div class="nav-logo" style="margin-bottom:1rem;">
+
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D32F2F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+
+            <path d="M 22 2 H 12 V 22 H 2" />
+
+        <path d="M 2 2 V 12 H 22 V 22" />
+
+        <circle cx="17" cy="7" r="1.5" fill="#D32F2F" stroke="none"/>
+
+        <circle cx="17" cy="17" r="1.5" fill="#D32F2F" stroke="none"/>
+
+        <circle cx="7" cy="17" r="1.5" fill="#D32F2F" stroke="none"/>
+
+        <circle cx="7" cy="7" r="1.5" fill="#D32F2F" stroke="none"/>
+
+          </svg>
+
+          Madhavi <span>Enterprises</span>
+
+        </div>
+
+        <p>We Don't Just Build Spaces - We Elevate Them.<br/>Premium real estate powered by AI automation.</p>
+
+        <div style="margin-top:1.2rem;display:flex;gap:10px;">
+
+          <a href="https://wa.me/919876543210" target="_blank" style="color:var(--gold);">WhatsApp</a>
+
+          <span style="color:var(--text-secondary)">&middot;</span>
+
+          <a href="tel:+919876543210" style="color:var(--gold);">Call Now</a>
+
+        </div>
+
+      </div>
+
+      <div class="footer-col">
+
+        <h4>Services</h4>
+
+        <a href="interiors.html">Interior Design</a>
+
+        <a href="exteriors.html">Exterior Design</a>
+
+        <a href="properties.html">Properties</a>
+
+        <a href="ventures.html">Ventures</a>
+
+        <a href="contact.html">Contact Us</a>
+
+      </div>
+
+      <div class="footer-col">
+
+        <h4>Ventures</h4>
+
+        <a href="ventures.html">Kammapadu</a>
+
+        <a href="ventures.html">Lemalle</a>
+
+        <a href="ventures.html">Kanchincharla</a>
+
+      </div>
+
+      <div class="footer-col">
+
+        <h4>Contact</h4>
+
+        <a href="tel:+919876543210"><i class="fa-solid fa-phone"></i>  +91 98765 43210</a>
+
+        <a href="mailto:info@madhavienterprise.com"> info@madhavienterprise.com</a>
+
+        <a href="#">" Andhra Pradesh, India</a>
+
+        <a href="admin.html">" Admin Login</a>
+
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+      <span>&copy; 2025 Madhavi Enterprises. All rights reserved.</span>
+
+      <span>Powered by AI &middot; Built with &#10084; in Andhra Pradesh</span>
+
+    </div>
+
+  </div>
+
+</footer>
+
+
+
+<script src="app.js"></script>
+
+</body>
+
+</html>
+

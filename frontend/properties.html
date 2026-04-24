@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8"/>
+
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+
+  <title>Properties - Madhavi Enterprises</title>
+
+  <meta name="description" content="Find your perfect property. Explore plots, villas, apartments, and individual houses."/>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="style.css"/>
+
+  <style>
+
+    body { background: #030812; }
+
+    /* Hero */
+
+    .prop-hero {
+
+      padding: 120px 0 60px;
+
+      background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.08) 0%, transparent 60%),
+
+                  linear-gradient(180deg,#050B18,#030812);
+
+      text-align: center;
+
+      position: relative;
+
+    }
+
+    .prop-hero h1 { font-size: clamp(2.2rem,5vw,3.8rem); margin-bottom:1rem; }
+
+    .prop-hero p  { max-width: 580px; margin: 0 auto 2rem; color:var(--text-secondary); font-size:1.05rem; line-height:1.7; }
+
+  </style>
+
+</head>
+
+<body>
+
+
+
+<!-- Floating WA -->
+
+<a href="https://wa.me/919876543210" target="_blank" class="wa-float" aria-label="WhatsApp">
+
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.570-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.122.553 4.116 1.523 5.843L.057 23.857a.5.5 0 0 0 .603.628l6.276-1.638A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.887 0-3.653-.523-5.168-1.43l-.37-.22-3.832.999 1.023-3.728-.24-.385A9.956 9.956 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+
+</a>
+
+
+
+<!-- Navbar -->
+
+<nav class="navbar" id="navbar">
+
+  <div class="container nav-inner">
+
+    <a href="index.html" class="nav-logo">
+
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D32F2F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+
+        <path d="M 22 2 H 12 V 22 H 2" />
+
+        <path d="M 2 2 V 12 H 22 V 22" />
+
+        <circle cx="17" cy="7" r="1.5" fill="#D32F2F" stroke="none"/>
+
+        <circle cx="17" cy="17" r="1.5" fill="#D32F2F" stroke="none"/>
+
+        <circle cx="7" cy="17" r="1.5" fill="#D32F2F" stroke="none"/>
+
+        <circle cx="7" cy="7" r="1.5" fill="#D32F2F" stroke="none"/>
+
+      </svg>
+
+      Madhavi <span>Enterprises</span>
+
+    </a>
+
+    <ul class="nav-links">
+
+      <li><a href="index.html">Home</a></li>
+
+      <li><a href="interiors.html">Interiors</a></li>
+
+      <li><a href="exteriors.html">Exteriors</a></li>
+
+      <li><a href="properties.html" style="color:var(--gold);">Properties</a></li>
+
+      <li><a href="ventures.html">Ventures</a></li>
+
+      <li><a href="contact.html">Contact</a></li>
+
+      <li><a href="admin.html" class="btn btn-glass" style="padding:8px 20px;font-size:0.82rem;">Admin</a></li>
+
+    </ul>
+
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+
+      <span></span><span></span><span></span>
+
+    </button>
+
+  </div>
+
+</nav>
+
+<nav class="nav-mobile" id="nav-mobile">
+
+  <a href="index.html">Home</a>
+
+  <a href="interiors.html">Interiors</a>
+
+  <a href="exteriors.html">Exteriors</a>
+
+  <a href="properties.html" style="color:var(--gold);">Properties</a>
+
+  <a href="ventures.html">Ventures</a>
+
+  <a href="contact.html">Contact</a>
+
+  <a href="admin.html">Admin Dashboard</a>
+
+</nav>
+
+
+
+<!-- Hero -->
+
+<header class="prop-hero">
+
+  <div class="container">
+
+    <nav class="breadcrumb levitate" style="justify-content:center;">
+
+      <a href="index.html">Home</a><span class="sep">&#8250;</span><span class="current">Properties</span>
+
+    </nav>
+
+    <div class="section-badge levitate levitate-delay-1" style="display:inline-flex;margin-bottom:1.2rem;"><i class="fa-solid fa-star-of-life" style="font-size:0.7em;"></i> Smart Property Showcase</div>
+
+    <h1 class="levitate levitate-delay-2">
+
+      Find Your Perfect <span class="gold-text">Property</span>
+
+    </h1>
+
+    <p class="levitate levitate-delay-3">
+
+      Browse our extensive portfolio of premium plots, luxurious villas, and modern apartments. Your dream home awaits.
+
+    </p>
+
+  </div>
+
+</header>
+
+
+
+<!-- ALL PROPERTIES SECTION -->
+
+<section class="section" id="properties" style="padding-top:20px;">
+
+  <div class="container">
+
+    <div class="prop-tabs levitate">
+
+      <button class="prop-tab active" data-filter="all" id="tab-all">All</button>
+
+      <button class="prop-tab" data-filter="Plot" id="tab-plots">Plots</button>
+
+      <button class="prop-tab" data-filter="Villa" id="tab-villas">Villas</button>
+
+      <button class="prop-tab" data-filter="Apartment" id="tab-apartments">Apartments</button>
+
+      <button class="prop-tab" data-filter="House" id="tab-houses">Individual Houses</button>
+
+    </div>
+
+    <div class="properties-grid" id="props-grid">
+
+      <!-- Loaded by app.js -->
+
+      <div class="ag-card skeleton" style="height:350px;"></div>
+
+      <div class="ag-card skeleton" style="height:350px;"></div>
+
+      <div class="ag-card skeleton" style="height:350px;"></div>
+
+    </div>
+
+    <div id="no-props" style="display:none;text-align:center;padding:3rem;color:var(--text-secondary);">
+
+      No properties found in this category. Check back soon!
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- Lead Modal (Required for Quick Enquiry in app.js) -->
+
+<div class="modal-overlay" id="lead-modal">
+
+  <div class="modal">
+
+    <button class="modal-close" onclick="closeModal()" id="modal-close-btn"></button>
+
+    <div class="section-badge" style="margin-bottom:1rem;"><i class="fa-solid fa-robot"></i>  AI-Powered Lead</div>
+
+    <h3>Get Instant <span class="gold-text">AI Callback</span></h3>
+
+    <p>Our AI agent will call you within 30 seconds with complete property details.</p>
+
+    <form id="lead-form" onsubmit="submitLead(event)">
+
+      <div class="form-group">
+
+        <label>Your Full Name *</label>
+
+        <input type="text" id="lead-name" placeholder="Enter your name" required autocomplete="name"/>
+
+      </div>
+
+      <div class="form-group">
+
+        <label>WhatsApp Number *</label>
+
+        <input type="tel" id="lead-phone" placeholder="+91 XXXXX XXXXX" required autocomplete="tel"/>
+
+      </div>
+
+      <div class="form-group">
+
+        <label>Budget Range</label>
+
+        <select id="lead-budget">
+
+          <option value="">Select Budget</option>
+
+          <option>Rs. 10L - Rs. 25L</option>
+
+          <option>Rs. 25L - Rs. 50L</option>
+
+          <option>Rs. 50L - Rs. 1Cr</option>
+
+          <option>Rs. 1Cr - Rs. 2Cr</option>
+
+          <option>Rs. 2Cr+</option>
+
+        </select>
+
+      </div>
+
+      <input type="hidden" id="lead-property" value=""/>
+
+      <input type="hidden" id="lead-property-id" value=""/>
+
+      <button type="submit" class="btn btn-glow" style="width:100%;justify-content:center;" id="lead-submit-btn">
+
+        <i class="fa-solid fa-rocket"></i>  Get My AI Call Now
+
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+
+<!-- Toast -->
+
+<div class="toast" id="toast">
+
+  <span class="toast-icon"><i class="fa-solid fa-robot"></i> </span>
+
+  <div>
+
+    <div class="toast-title">AI Agent Activated!</div>
+
+    <div class="toast-sub">You'll receive a call within 30 seconds</div>
+
+  </div>
+
+</div>
+
+
+
+<!-- Footer -->
+
+<footer class="footer">
+
+  <div class="container">
+
+    <div class="footer-grid">
+
+      <div class="footer-brand">
+
+        <div class="nav-logo" style="margin-bottom:1rem;">
+
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D32F2F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+
+            <path d="M 22 2 H 12 V 22 H 2" />
+
+        <path d="M 2 2 V 12 H 22 V 22" />
+
+        <circle cx="17" cy="7" r="1.5" fill="#D32F2F" stroke="none"/>
+
+        <circle cx="17" cy="17" r="1.5" fill="#D32F2F" stroke="none"/>
+
+        <circle cx="7" cy="17" r="1.5" fill="#D32F2F" stroke="none"/>
+
+        <circle cx="7" cy="7" r="1.5" fill="#D32F2F" stroke="none"/>
+
+          </svg>
+
+          Madhavi <span>Enterprises</span>
+
+        </div>
+
+        <p>We Don't Just Build Spaces - We Elevate Them.<br/>Premium real estate powered by AI automation.</p>
+
+        <div style="margin-top:1.2rem;display:flex;gap:10px;">
+
+          <a href="https://wa.me/919876543210" target="_blank" style="color:var(--gold);">WhatsApp</a>
+
+          <span style="color:var(--text-secondary)">&middot;</span>
+
+          <a href="tel:+919876543210" style="color:var(--gold);">Call Now</a>
+
+        </div>
+
+      </div>
+
+      <div class="footer-col">
+
+        <h4>Services</h4>
+
+        <a href="interiors.html">Interior Design</a>
+
+        <a href="exteriors.html">Exterior Design</a>
+
+        <a href="properties.html">Properties</a>
+
+        <a href="ventures.html">Ventures</a>
+
+        <a href="contact.html">Contact Us</a>
+
+      </div>
+
+      <div class="footer-col">
+
+        <h4>Ventures</h4>
+
+        <a href="ventures.html">Kammapadu</a>
+
+        <a href="ventures.html">Lemalle</a>
+
+        <a href="ventures.html">Kanchincharla</a>
+
+      </div>
+
+      <div class="footer-col">
+
+        <h4>Contact</h4>
+
+        <a href="tel:+919876543210"><i class="fa-solid fa-phone"></i>  +91 98765 43210</a>
+
+        <a href="mailto:info@madhavienterprise.com"> info@madhavienterprise.com</a>
+
+        <a href="#">" Andhra Pradesh, India</a>
+
+        <a href="admin.html">" Admin Login</a>
+
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+      <span>&copy; 2025 Madhavi Enterprises. All rights reserved.</span>
+
+      <span>Powered by AI &middot; Built with &#10084; in Andhra Pradesh</span>
+
+    </div>
+
+  </div>
+
+</footer>
+
+
+
+<script src="app.js"></script>
+
+</body>
+
+</html>
+

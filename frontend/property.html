@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Property Details - Madhavi Enterprises</title>
+  <meta name="description" content="View complete property details, gallery, and pricing. Get an instant AI callback from Madhavi Enterprises."/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .prop-detail-hero {
+      min-height: 60vh;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      padding-bottom: 3rem;
+    }
+    .gallery-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      transition: opacity 0.6s ease;
+    }
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(5,11,24,0.3) 0%, rgba(5,11,24,0.9) 100%);
+    }
+    .gallery-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      pointer-events: none;
+      z-index: 3;
+    }
+    .gallery-btn {
+      pointer-events: all;
+      width: 50px; height: 50px;
+      background: rgba(5,11,24,0.7);
+      border: 1px solid var(--border-glass);
+      border-radius: 50%;
+      color: var(--text-primary);
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      backdrop-filter: blur(10px);
+    }
+    .gallery-btn:hover { background: var(--gold); color: #050B18; }
+
+    .gallery-thumbs {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 4;
+    }
+    .gallery-thumb {
+      width: 60px; height: 42px;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: var(--transition);
+      opacity: 0.5;
+    }
+    .gallery-thumb.active { border-color: var(--gold); opacity: 1; }
+    .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+    .prop-detail-hero .container { position: relative; z-index: 2; }
+
+    .detail-layout {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 3rem;
+      padding: 60px 0;
+      align-items: start;
+    }
+    .info-panel {
+      position: sticky;
+      top: 100px;
+    }
+    .price-badge {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: #050B18;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+      font-size: 2rem;
+      padding: 1.2rem 2rem;
+      border-radius: 16px;
+      display: inline-block;
+      margin-bottom: 1.5rem;
+    }
+    .price-badge small { font-size: 0.9rem; font-weight: 600; }
+    .detail-meta { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+    }
+    .meta-item strong { color: var(--text-primary); }
+
+    .amenities-list { display: flex; gap: 0.7rem; flex-wrap: wrap; margin: 1.5rem 0; }
+    .amenity-tag {
+      background: var(--gold-dim);
+      border: 1px solid var(--border-glass);
+      border-radius: 50px;
+      padding: 4px 14px;
+      font-size: 0.78rem;
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .related-props { padding: 60px 0; }
+    .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; }
+
+    @media (max-width: 768px) {
+      .detail-layout { grid-template-columns: 1fr; }
+      .info-panel { position: static; }
+      .related-grid { grid-template-columns: 1fr; }
+      .prop-detail-hero { min-height: 50vh; }
+    }
+    @media (max-width: 1024px) {
+      .related-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Floating WA -->
+<a href="https://wa.me/919876543210" target="_blank" class="wa-float" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.570-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.122.553 4.116 1.523 5.843L.057 23.857a.5.5 0 0 0 .603.628l6.276-1.638A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.887 0-3.653-.523-5.168-1.43l-.37-.22-3.832.999 1.023-3.728-.24-.385A9.956 9.956 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+</a>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <span class="toast-icon"><i class="fa-solid fa-robot"></i> </span>
+  <div>
+    <div class="toast-title">AI Agent Activated!</div>
+    <div class="toast-sub">You'll receive a call within 30 seconds</div>
+  </div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D32F2F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M 22 2 H 12 V 22 H 2" />
+        <path d="M 2 2 V 12 H 22 V 22" />
+        <circle cx="17" cy="7" r="1.5" fill="#D32F2F" stroke="none"/>
+        <circle cx="17" cy="17" r="1.5" fill="#D32F2F" stroke="none"/>
+        <circle cx="7" cy="17" r="1.5" fill="#D32F2F" stroke="none"/>
+        <circle cx="7" cy="7" r="1.5" fill="#D32F2F" stroke="none"/>
+      </svg>
+      Madhavi <span>Enterprises</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="interiors.html">Interiors</a></li>
+      <li><a href="exteriors.html">Exteriors</a></li>
+      <li><a href="properties.html" style="color:var(--gold);">Properties</a></li>
+      <li><a href="ventures.html">Ventures</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="admin.html" class="btn btn-glass" style="padding:8px 20px;font-size:0.82rem;">Admin</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<nav class="nav-mobile" id="nav-mobile">
+  <a href="index.html">Home</a>
+  <a href="interiors.html">Interiors</a>
+  <a href="exteriors.html">Exteriors</a>
+  <a href="properties.html" style="color:var(--gold);">Properties</a>
+  <a href="ventures.html">Ventures</a>
+  <a href="contact.html">Contact</a>
+  <a href="admin.html">Admin Dashboard</a>
+</nav>
+
+<!-- Gallery Hero -->
+<section class="prop-detail-hero" id="prop-hero">
+  <div class="gallery-bg" id="gallery-bg" style="background-image:url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1400&q=80')"></div>
+  <div class="gallery-overlay"></div>
+  <div class="gallery-nav">
+    <button class="gallery-btn" id="prev-img" onclick="changeImage(-1)" aria-label="Previous">"</button>
+    <button class="gallery-btn" id="next-img" onclick="changeImage(1)" aria-label="Next">&#8250;</button>
+  </div>
+  <div class="gallery-thumbs" id="gallery-thumbs"></div>
+  <div class="container">
+    <a href="index.html" style="color:var(--text-secondary);font-size:0.82rem;display:inline-flex;align-items:center;gap:5px;margin-bottom:1rem;transition:var(--transition);" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text-secondary)'">&#8592; Back to Properties</a>
+    <div class="section-badge" id="prop-type-badge">Plot</div>
+    <h1 id="prop-title" style="font-size:clamp(1.8rem,4vw,3rem);margin:0.5rem 0 0;">Loading...</h1>
+  </div>
+</section>
+
+<!-- Detail Body -->
+<section style="background:var(--bg-deep);">
+  <div class="container">
+    <div class="detail-layout">
+      <!-- Left: Details -->
+      <div>
+        <div id="prop-desc-section" class="ag-card levitate" style="margin-bottom:1.5rem;">
+          <h3 style="margin-bottom:1rem;font-size:1.1rem;color:var(--gold);">About This Property</h3>
+          <p id="prop-description" style="line-height:1.85;font-size:0.95rem;">Loading property details...</p>
+        </div>
+
+        <div class="ag-card levitate levitate-delay-1" style="margin-bottom:1.5rem;">
+          <h3 style="margin-bottom:1rem;font-size:1.1rem;color:var(--gold);">Amenities & Features</h3>
+          <div class="amenities-list" id="prop-amenities">
+            <span class="amenity-tag">Loading...</span>
+          </div>
+        </div>
+
+        <div class="ag-card levitate levitate-delay-2">
+          <h3 style="margin-bottom:1rem;font-size:1.1rem;color:var(--gold);">" Location Details</h3>
+          <p id="prop-location-detail" style="color:var(--text-secondary);">Loading...</p>
+          <div style="margin-top:1rem;background:var(--bg-highlight);border-radius:12px;height:160px;display:flex;align-items:center;justify-content:center;color:var(--text-secondary);font-size:0.85rem;border:1px solid var(--border-glass);">
+            - Map - Andhra Pradesh
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Floating Info Panel -->
+      <div class="info-panel">
+        <div class="glass-card ag-card" style="border:1px solid rgba(201,168,76,0.3);">
+          <div class="price-badge" id="panel-price">Rs. -</div>
+          <div class="detail-meta" id="panel-meta">
+            <div class="meta-item">" <strong id="panel-loc">-</strong></div>
+            <div class="meta-item">- <strong id="panel-type">-</strong></div>
+          </div>
+          <p id="panel-short-desc" style="font-size:0.88rem;margin-bottom:1.5rem;line-height:1.7;">-</p>
+
+          <button class="btn btn-glow" id="interested-btn" style="width:100%;justify-content:center;font-size:1rem;padding:18px;" onclick="openLeadModalDetail()">
+             I'm Interested - Get AI Call
+          </button>
+
+          <div style="margin-top:1rem;text-align:center;">
+            <p style="font-size:0.75rem;color:var(--text-secondary);">
+              <i class="fa-solid fa-robot"></i>  AI agent calls within 30 seconds<br/>
+              <i class="fa-solid fa-comment-dots"></i>  WhatsApp confirmation sent instantly
+            </p>
+          </div>
+
+          <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,0.05);">
+            <a href="https://wa.me/919876543210" target="_blank" class="btn btn-glass" style="width:100%;justify-content:center;margin-bottom:0.7rem;">
+              <i class="fa-solid fa-comment-dots"></i>  WhatsApp Us
+            </a>
+            <a href="tel:+919876543210" class="btn btn-glass" style="width:100%;justify-content:center;background:transparent;">
+              <i class="fa-solid fa-phone"></i>  Call Now
+            </a>
+          </div>
+        </div>
+
+        <!-- Trust Badges -->
+        <div class="ag-card" style="margin-top:1rem;padding:1rem 1.5rem;">
+          <div style="display:flex;flex-direction:column;gap:0.7rem;">
+            <div style="font-size:0.8rem;display:flex;align-items:center;gap:8px;"><span style="color:var(--gold);"></span> DTCP / RERA Approved</div>
+            <div style="font-size:0.8rem;display:flex;align-items:center;gap:8px;"><span style="color:var(--gold);"></span> Clear Title & Documentation</div>
+            <div style="font-size:0.8rem;display:flex;align-items:center;gap:8px;"><span style="color:var(--gold);"></span> Home Loan Assistance</div>
+            <div style="font-size:0.8rem;display:flex;align-items:center;gap:8px;"><span style="color:var(--gold);"></span> Site Visits Available</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Related Properties -->
+<section class="related-props" style="background:#080F1F;">
+  <div class="container">
+    <div class="section-head levitate">
+      <h2 style="font-size:1.8rem;">Similar <span class="gold-text">Properties</span></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="related-grid" id="related-grid">
+      <div class="ag-card skeleton" style="height:280px;"></div>
+      <div class="ag-card skeleton" style="height:280px;"></div>
+      <div class="ag-card skeleton" style="height:280px;"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Lead Modal (same as index) -->
+<div class="modal-overlay" id="lead-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()" id="modal-close-btn"></button>
+    <div class="section-badge" style="margin-bottom:1rem;"><i class="fa-solid fa-robot"></i>  AI-Powered Lead</div>
+    <h3>Express Your <span class="gold-text">Interest</span></h3>
+    <p id="modal-prop-label" style="color:var(--gold);font-size:0.82rem;margin-bottom:1rem;"></p>
+    <p>Our AI agent will call you within 30 seconds with complete details & site visit arrangements.</p>
+    <form id="lead-form" onsubmit="submitLead(event)">
+      <div class="form-group">
+        <label>Your Full Name *</label>
+        <input type="text" id="lead-name" placeholder="Enter your name" required autocomplete="name"/>
+      </div>
+      <div class="form-group">
+        <label>WhatsApp Number *</label>
+        <input type="tel" id="lead-phone" placeholder="+91 XXXXX XXXXX" required autocomplete="tel"/>
+      </div>
+      <div class="form-group">
+        <label>Budget Range</label>
+        <select id="lead-budget">
+          <option value="">Select Budget</option>
+          <option>Rs. 10L - Rs. 25L</option>
+          <option>Rs. 25L - Rs. 50L</option>
+          <option>Rs. 50L - Rs. 1Cr</option>
+          <option>Rs. 1Cr - Rs. 2Cr</option>
+          <option>Rs. 2Cr+</option>
+        </select>
+      </div>
+      <input type="hidden" id="lead-property" value=""/>
+      <input type="hidden" id="lead-property-id" value=""/>
+      <button type="submit" class="btn btn-glow" style="width:100%;justify-content:center;" id="lead-submit-btn">
+        <i class="fa-solid fa-rocket"></i>  Get My AI Call Now
+      </button>
+    </form>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script>
+  // Property detail page specific
+  let currentProp = null;
+  let images = [];
+  let currentImgIdx = 0;
+
+  // Static ventures data for direct URL links
+  const VENTURES = {
+    kammapadu: {
+      id: 'kammapadu', title: 'Kammapadu', type: 'Plot', category: 'Plot',
+      price: 'Rs. 15,000', price_per_yard: 'Rs. 15,000',
+      location: 'Kammapadu, Andhra Pradesh',
+      description: 'Premium DTCP-approved plots in Kammapadu - one of Andhra Pradesh\'s fastest-growing real estate corridors. Enjoy excellent connectivity, lush surroundings, and high ROI potential. Gated community with 24/7 security, wide roads, and all civic amenities in place.',
+      images: [
+        'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&q=80',
+        'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1200&q=80',
+        'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1200&q=80'
+      ],
+      amenities: ['DTCP Approved', 'Gated Community', '24/7 Security', 'Wide Roads', 'Water Supply', 'Electricity', 'Underground Drainage', 'Park & Garden', 'High ROI Zone']
+    },
+    lemalle: {
+      id: 'lemalle', title: 'Lemalle', type: 'Plot', category: 'Plot',
+      price: 'Rs. 17,000', price_per_yard: 'Rs. 17,000',
+      location: 'Lemalle, Andhra Pradesh',
+      description: 'Lemalle is a RERA-registered premium venture offering plots with direct highway access - making it an outstanding investment opportunity. With growing infrastructure and government projects in the vicinity, capital appreciation is projected at 25% YoY.',
+      images: [
+        'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&q=80',
+        'https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=1200&q=80',
+        'https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=1200&q=80'
+      ],
+      amenities: ['RERA Registered', 'Highway Access', 'High ROI Zone', 'Clear Title', 'Home Loan Available', 'Power Backup', 'Compound Wall', 'Streetlights']
+    },
+    kanchincharla: {
+      id: 'kanchincharla', title: 'Kanchincharla', type: 'Plot', category: 'Plot',
+      price: 'Rs. 18,000', price_per_yard: 'Rs. 18,000',
+      location: 'Kanchincharla, Andhra Pradesh',
+      description: 'Kanchincharla is our most prestigious venture - an exclusive layout with breathtaking river views and proximity to major IT and industrial hubs. Limited plots available. This is truly an investment hotspot with explosive appreciation potential.',
+      images: [
+        'https://images.unsplash.com/photo-1560493676-04071c5f467b?w=1200&q=80',
+        'https://images.unsplash.com/photo-1516912481808-3406841bd33c?w=1200&q=80',
+        'https://images.unsplash.com/photo-1511497584788-876760111969?w=1200&q=80'
+      ],
+      amenities: ['Exclusive Layout', 'River View', 'Investment Hotspot', 'Limited Plots', 'Premium Location', 'VIP Access Roads', 'Clubhouse', 'Children\'s Park', 'Clear Title']
+    }
+  };
+
+  function loadPropertyDetail() {
+    const params = new URLSearchParams(window.location.search);
+    const propId  = params.get('id');
+    const venture = params.get('venture');
+
+    if (venture && VENTURES[venture]) {
+      renderProp(VENTURES[venture]);
+    } else if (propId) {
+      fetch(`http://127.0.0.1:5001/api/properties`)
+        .then(r => r.json())
+        .then(data => {
+          const prop = data.find(p => String(p.id) === String(propId));
+          if (prop) {
+            prop.images = prop.images || [];
+            renderProp(prop);
+          } else {
+            renderProp(VENTURES.kammapadu); // fallback
+          }
+        })
+        .catch(() => renderProp(VENTURES.kammapadu));
+    } else {
+      renderProp(VENTURES.kammapadu);
+    }
+  }
+
+  function renderProp(prop) {
+    currentProp = prop;
+    images = prop.images && prop.images.length > 0 ? prop.images : [
+      'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&q=80'
+    ];
+    currentImgIdx = 0;
+
+    document.title = `${prop.title} - Madhavi Enterprises`;
+    document.getElementById('prop-title').textContent = prop.title;
+    document.getElementById('prop-type-badge').textContent = prop.type || prop.category || 'Property';
+    document.getElementById('prop-description').textContent = prop.description || '';
+    document.getElementById('panel-price').innerHTML = `${prop.price || prop.price_per_yard}<small style="font-size:0.7rem;font-weight:600;">/sq.yard</small>`;
+    document.getElementById('panel-loc').textContent = prop.location || '-';
+    document.getElementById('panel-type').textContent = prop.type || prop.category || '-';
+    document.getElementById('panel-short-desc').textContent = (prop.description || '').substring(0, 120) + '...';
+    document.getElementById('prop-location-detail').textContent = prop.location || '';
+    document.getElementById('lead-property').value = prop.title;
+    document.getElementById('lead-property-id').value = prop.id || '';
+
+    // Amenities
+    const amenitiesData = prop.amenities || ['Premium Location', 'Clear Title', 'DTCP Approved', 'Gated Community'];
+    const container = document.getElementById('prop-amenities');
+    container.innerHTML = amenitiesData.map(a => `<span class="amenity-tag">${a}</span>`).join('');
+
+    // Gallery
+    updateGallery();
+    buildThumbs();
+
+    // Trigger levitate
+    setTimeout(() => {
+      document.querySelectorAll('.levitate').forEach(el => el.classList.add('visible'));
+    }, 100);
+
+    // Load related
+    loadRelated(prop);
+  }
+
+  function updateGallery() {
+    const bg = document.getElementById('gallery-bg');
+    bg.style.backgroundImage = `url('${images[currentImgIdx]}')`;
+    document.querySelectorAll('.gallery-thumb').forEach((t, i) => {
+      t.classList.toggle('active', i === currentImgIdx);
+    });
+  }
+
+  function buildThumbs() {
+    const cont = document.getElementById('gallery-thumbs');
+    cont.innerHTML = images.map((src, i) =>
+      `<div class="gallery-thumb${i === 0 ? ' active' : ''}" onclick="setImage(${i})">
+         <img src="${src}" alt="View ${i+1}" loading="lazy"/>
+       </div>`
+    ).join('');
+  }
+
+  function changeImage(dir) {
+    currentImgIdx = (currentImgIdx + dir + images.length) % images.length;
+    updateGallery();
+  }
+  function setImage(idx) {
+    currentImgIdx = idx;
+    updateGallery();
+  }
+
+  function openLeadModalDetail() {
+    const title = currentProp ? currentProp.title : 'Property';
+    document.getElementById('modal-prop-label').textContent = `Property: ${title}`;
+    openLeadModal(title, currentProp ? (currentProp.id || '') : '', currentProp ? (currentProp.price || currentProp.price_per_yard || '') : '');
+  }
+
+  async function loadRelated(currentProp) {
+    const grid = document.getElementById('related-grid');
+    try {
+      const ventureList = Object.values(VENTURES).filter(v => v.id !== currentProp.id).slice(0, 3);
+      if (ventureList.length === 0) { grid.innerHTML = '<p style="color:var(--text-secondary)">No related properties.</p>'; return; }
+      grid.innerHTML = ventureList.map(p => `
+        <div class="ag-card property-card" onclick="window.location.href='property.html?venture=${p.id}'" style="cursor:pointer;">
+          <div class="prop-img-wrap" style="height:160px;">
+            <img src="${p.images[0]}" alt="${p.title}" loading="lazy"/>
+            <div class="prop-badge">${p.type}</div>
+          </div>
+          <div class="prop-body">
+            <h3 style="font-size:1rem;">${p.title}</h3>
+            <div class="prop-location">" ${p.location}</div>
+            <div class="prop-price">${p.price || p.price_per_yard} <span>/sq.yard</span></div>
+          </div>
+        </div>
+      `).join('');
+    } catch (e) {
+      grid.innerHTML = '';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', loadPropertyDetail);
+</script>
+</body>
+</html>

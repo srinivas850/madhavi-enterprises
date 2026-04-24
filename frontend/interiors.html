@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8"/>
+
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+
+  <title>Interior Designs - Madhavi Enterprises</title>
+
+  <meta name="description" content="Explore our premium interior design portfolio - living rooms, bedrooms, kitchens, office spaces and more by Madhavi Enterprises."/>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="style.css"/>
+
+  <style>
+
+    body { background: #030812; }
+
+
+
+    /* "" Hero "" */
+
+    .int-hero {
+
+      padding: 120px 0 60px;
+
+      background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.08) 0%, transparent 60%),
+
+                  linear-gradient(180deg,#050B18,#030812);
+
+      text-align: center;
+
+      position: relative;
+
+      overflow: hidden;
+
+    }
+
+    .int-hero::before {
+
+      content:'';
+
+      position:absolute; inset:0;
+
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9A84C' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+
+    }
+
+    .int-hero-content { position:relative; z-index:1; }
+
+    .int-hero h1 { font-size: clamp(2.2rem,5vw,3.8rem); margin-bottom:1rem; }
+
+    .int-hero p  { max-width: 580px; margin: 0 auto 2rem; color:var(--text-secondary); font-size:1.05rem; line-height:1.7; }
+
+
+
+    /* "" Filters "" */
+
+    .filters-bar {
+
+      display: flex;
+
+      gap: 10px;
+
+      flex-wrap: wrap;
+
+      justify-content: center;
+
+      padding: 2rem 0 0;
+
+    }
+
+    .f-btn {
+
+      padding: 9px 22px;
+
+      border: 1px solid var(--border-glass);
+
+      background: transparent;
+
+      border-radius: 50px;
+
+      color: var(--text-secondary);
+
+      font-size: 0.85rem;
+
+      font-weight: 600;
+
+      cursor: pointer;
+
+      transition: var(--transition);
+
+      font-family: 'Inter', sans-serif;
+
+    }
+
+    .f-btn:hover { color:var(--gold); border-color:rgba(201,168,76,0.4); }
+
+    .f-btn.active { background:var(--gold-dim); color:var(--gold); border-color:var(--gold); }
+
+
+
+    /* "" Gallery "" */
+
+    .gallery-section { padding: 3rem 0 5rem; }
+
+    .masonry {
+
+      columns: 4;
+
+      column-gap: 16px;
+
+    }
+
+    .g-item {
+
+      break-inside: avoid;
+
+      margin-bottom: 16px;
+
+      border-radius: 16px;
+
+      overflow: hidden;
+
+      cursor: pointer;
+
+      position: relative;
+
+      border: 1px solid var(--border-glass);
+
+      transition: transform 0.35s cubic-bezier(0.23,1,0.32,1), box-shadow 0.35s ease, border-color 0.3s;
+
+    }
+
+    .g-item:hover {
+
+      transform: translateY(-6px);
+
+      box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+
+      border-color: rgba(201,168,76,0.5);
+
+    }
+
+    .g-item img {
+
+      width:100%; height:auto; display:block;
+
+      transition: transform 0.5s ease;
+
+    }
+
+    .g-item:hover img { transform: scale(1.07); }
+
+    .g-overlay {
+
+      position:absolute; inset:0;
+
+      background: linear-gradient(to top, rgba(3,8,18,0.9) 0%, transparent 55%);
+
+      opacity:0; transition:opacity 0.3s;
+
+      display:flex; align-items:flex-end; padding:16px;
+
+    }
+
+    .g-item:hover .g-overlay { opacity:1; }
+
+    .g-tag {
+
+      display:inline-flex; align-items:center; gap:6px;
+
+      background:var(--gold-dim); border:1px solid rgba(201,168,76,0.4);
+
+      border-radius:50px; padding:4px 12px;
+
+      font-size:0.72rem; font-weight:700; color:var(--gold);
+
+      text-transform:capitalize; letter-spacing:.04em;
+
+    }
+
+
+
+    /* "" Skeleton "" */
+
+    .skeleton-grid {
+
+      display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:0;
+
+    }
+
+    .skel-item {
+
+      border-radius:16px;
+
+      background: linear-gradient(90deg,var(--bg-highlight) 25%,rgba(255,255,255,0.04) 50%,var(--bg-highlight) 75%);
+
+      background-size:200% 100%;
+
+      animation: shimmer 1.5s infinite;
+
+    }
+
+    @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+
+
+    /* "" Empty "" */
+
+    .gallery-empty {
+
+      text-align:center; padding:6rem 2rem; color:var(--text-secondary);
+
+    }
+
+    .gallery-empty .empty-icon { font-size:4rem; margin-bottom:1.5rem; }
+
+
+
+    /* "" Load More "" */
+
+    .load-more-wrap { display:flex; justify-content:center; padding:2rem 0; }
+
+
+
+    /* "" Lightbox "" */
+
+    .lightbox {
+
+      position:fixed; inset:0;
+
+      background:rgba(3,8,18,0.97);
+
+      z-index:9000;
+
+      display:flex; align-items:center; justify-content:center;
+
+      opacity:0; pointer-events:none;
+
+      transition:opacity 0.3s;
+
+    }
+
+    .lightbox.open { opacity:1; pointer-events:all; }
+
+    .lb-img {
+
+      max-width:90vw; max-height:88vh;
+
+      border-radius:16px;
+
+      box-shadow:0 40px 100px rgba(0,0,0,0.9);
+
+      transition:opacity 0.2s;
+
+    }
+
+    .lb-close {
+
+      position:absolute; top:20px; right:28px;
+
+      font-size:2.2rem; color:var(--text-secondary);
+
+      cursor:pointer; background:none; border:none;
+
+      transition:color 0.2s; line-height:1;
+
+    }
+
+    .lb-close:hover { color:var(--gold); }
+
+    .lb-nav {
+
+      position:absolute; top:50%; transform:translateY(-50%);
+
+      background:rgba(255,255,255,0.06); border:1px solid var(--border-glass);
+
+      border-radius:50%; width:52px; height:52px;
+
+      display:flex; align-items:center; justify-content:center;
+
+      cursor:pointer; color:var(--text-secondary); font-size:1.6rem;
+
+      transition:var(--transition); backdrop-filter:blur(8px);
+
+    }
+
+    .lb-nav:hover { color:var(--gold); border-color:var(--gold); background:var(--gold-dim); }
+
+    .lb-prev { left:20px; }
+
+    .lb-next { right:20px; }
+
+    .lb-counter {
+
+      position:absolute; bottom:24px; left:50%; transform:translateX(-50%);
+
+      font-size:0.8rem; color:var(--text-secondary);
+
+      background:var(--bg-card); border:1px solid var(--border-glass);
+
+      border-radius:50px; padding:5px 16px;
+
+    }
+
+
+
+    /* "" CTA Banner "" */
+
+    .cta-banner {
+
+      background: linear-gradient(135deg,rgba(201,168,76,0.06),rgba(13,23,41,0.6));
+
+      border:1px solid var(--border-glass);
+
+      border-radius:28px; padding:3.5rem;
+
+      text-align:center; margin:2rem 0 4rem;
+
+    }
+
+    .cta-banner h3 { font-size:1.8rem; margin-bottom:0.8rem; }
+
+    .cta-banner p  { color:var(--text-secondary); max-width:500px; margin:0 auto 2rem; }
+
+
+
+    /* "" Responsive "" */
+
+    @media (max-width:1024px) { .masonry { columns:3; } .skeleton-grid { grid-template-columns:repeat(3,1fr); } }
+
+    @media (max-width:768px)  { .masonry { columns:2; } .skeleton-grid { grid-template-columns:repeat(2,1fr); } .int-hero { padding:100px 0 50px; } }
+
+    @media (max-width:480px)  { .masonry { columns:1; } .skeleton-grid { grid-template-columns:1fr; } }
+
+  </style>
+
+</head>
+
+<body>
+
+
+
+<!-- Floating WA -->
+
+<a href="https://wa.me/919876543210" target="_blank" class="wa-float" id="wa-btn" aria-label="WhatsApp">
+
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.570-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.122.553 4.116 1.523 5.843L.057 23.857a.5.5 0 0 0 .603.628l6.276-1.638A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.887 0-3.653-.523-5.168-1.43l-.37-.22-3.832.999 1.023-3.728-.24-.385A9.956 9.956 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+
+</a>
+
+
+
+<!-- Floating Callback -->
+
+<button class="callback-float" id="callback-float-btn" onclick="getCall()" aria-label="Request Callback">
+
+  <i class="fa-solid fa-phone"></i>  Request Callback
+
+</button>
+
+
+
+<!-- Navbar -->
+
+<nav class="navbar" id="navbar">
+
+  <div class="container nav-inner">
+
+    <a href="index.html" class="nav-logo">
+
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D32F2F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+
+        <path d="M 22 2 H 12 V 22 H 2" />
+
+        <path d="M 2 2 V 12 H 22 V 22" />
+
+        <circle cx="17" cy="7" r="1.5" fill="#D32F2F" stroke="none"/>
+
+        <circle cx="17" cy="17" r="1.5" fill="#D32F2F" stroke="none"/>
+
+        <circle cx="7" cy="17" r="1.5" fill="#D32F2F" stroke="none"/>
+
+        <circle cx="7" cy="7" r="1.5" fill="#D32F2F" stroke="none"/>
+
+      </svg>
+
+      Madhavi <span>Enterprises</span>
+
+    </a>
+
+    <ul class="nav-links">
+
+      <li><a href="index.html">Home</a></li>
+
+      <li><a href="interiors.html" style="color:var(--gold);">Interiors</a></li>
+
+      <li><a href="exteriors.html">Exteriors</a></li>
+
+      <li><a href="properties.html">Properties</a></li>
+
+      <li><a href="ventures.html">Ventures</a></li>
+
+      <li><a href="contact.html">Contact</a></li>
+
+      <li><a href="admin.html" class="btn btn-glass" style="padding:8px 20px;font-size:0.82rem;">Admin</a></li>
+
+    </ul>
+
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+
+      <span></span><span></span><span></span>
+
+    </button>
+
+  </div>
+
+</nav>
+
+<nav class="nav-mobile" id="nav-mobile">
+
+  <a href="index.html">Home</a>
+
+  <a href="interiors.html" style="color:var(--gold);">Interiors</a>
+
+  <a href="exteriors.html">Exteriors</a>
+
+  <a href="properties.html">Properties</a>
+
+  <a href="ventures.html">Ventures</a>
+
+  <a href="contact.html">Contact</a>
+
+  <a href="admin.html">Admin Dashboard</a>
+
+</nav>
+
+
+
+<!-- Hero -->
+
+<header class="int-hero">
+
+  <div class="container int-hero-content">
+
+    <nav class="breadcrumb levitate" style="justify-content:center;">
+
+      <a href="index.html">Home</a><span class="sep">&#8250;</span><span class="current">Interior Design</span>
+
+    </nav>
+
+    <div class="section-badge levitate levitate-delay-1" style="display:inline-flex;margin-bottom:1.2rem;"><i class="fa-solid fa-star-of-life" style="font-size:0.7em;"></i> Our Portfolio</div>
+
+    <h1 class="levitate levitate-delay-2">
+
+      Interior <span class="gold-text">Designs</span>
+
+    </h1>
+
+    <p class="levitate levitate-delay-3">
+
+      Luxury living rooms, modular kitchens, office cabins, hotel suites - crafted with precision and passion.
+
+    </p>
+
+    <div class="filters-bar levitate levitate-delay-4" id="filters-bar">
+
+      <button class="f-btn active" data-filter="all">All Designs</button>
+
+      <button class="f-btn" data-filter="living">Living Rooms</button>
+
+      <button class="f-btn" data-filter="bedroom">Bedrooms</button>
+
+      <button class="f-btn" data-filter="kitchen">Kitchens</button>
+
+      <button class="f-btn" data-filter="office">Office Spaces</button>
+
+      <button class="f-btn" data-filter="hotel">Hotel Suites</button>
+
+    </div>
+
+  </div>
+
+</header>
+
+
+
+
+
+<!-- Gallery -->
+
+<section class="gallery-section">
+
+  <div class="container">
+
+
+
+    <!-- Skeleton loader -->
+
+    <div class="skeleton-grid" id="skel-grid">
+
+      <div class="skel-item" style="height:200px;"></div>
+
+      <div class="skel-item" style="height:260px;"></div>
+
+      <div class="skel-item" style="height:180px;"></div>
+
+      <div class="skel-item" style="height:230px;"></div>
+
+      <div class="skel-item" style="height:210px;"></div>
+
+      <div class="skel-item" style="height:170px;"></div>
+
+      <div class="skel-item" style="height:240px;"></div>
+
+      <div class="skel-item" style="height:190px;"></div>
+
+    </div>
+
+
+
+    <!-- Masonry Grid -->
+
+    <div class="masonry" id="gallery-grid" style="display:none;"></div>
+
+
+
+
+
+    <!-- Load More -->
+
+    <div class="load-more-wrap" id="load-more-wrap" style="display:none;">
+
+      <button class="btn btn-glass" id="load-more-btn" onclick="loadMore()">Load More Images</button>
+
+    </div>
+
+
+
+  </div>
+
+</section>
+
+
+
+<!-- Lightbox -->
+
+<div class="lightbox" id="lightbox">
+
+  <button class="lb-close" onclick="closeLb()" id="lb-close-btn"></button>
+
+  <button class="lb-nav lb-prev" onclick="navLb(-1)" id="lb-prev-btn">"</button>
+
+  <img src="" alt="Interior Design" class="lb-img" id="lb-img"/>
+
+  <button class="lb-nav lb-next" onclick="navLb(1)" id="lb-next-btn">&#8250;</button>
+
+  <div class="lb-counter" id="lb-counter">1 / 1</div>
+
+</div>
+
+
+
+<!-- Lead Modal -->
+
+<div class="modal-overlay" id="lead-modal">
+
+  <div class="modal">
+
+    <button class="modal-close" onclick="closeModal()"></button>
+
+    <div class="section-badge" style="margin-bottom:1rem;"><i class="fa-solid fa-robot"></i>  AI-Powered</div>
+
+    <h3>Get <span class="gold-text">Design Consultation</span></h3>
+
+    <p>Our AI agent will call you within 30 seconds.</p>
+
+    <form id="lead-form" onsubmit="submitLead(event)">
+
+      <div class="form-group">
+
+        <label>Your Name *</label>
+
+        <input type="text" id="lead-name" placeholder="Enter your name" required/>
+
+      </div>
+
+      <div class="form-group">
+
+        <label>WhatsApp Number *</label>
+
+        <input type="tel" id="lead-phone" placeholder="+91 XXXXX XXXXX" required/>
+
+      </div>
+
+      <input type="hidden" id="lead-property" value="Interior Design Consultation"/>
+
+      <input type="hidden" id="lead-property-id" value=""/>
+
+      <button type="submit" class="btn btn-glow" style="width:100%;justify-content:center;" id="lead-submit-btn">
+
+        <i class="fa-solid fa-rocket"></i>  Get My Consultation Call
+
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+
+<!-- Toast -->
+
+<div class="toast" id="toast">
+
+  <span class="toast-icon"><i class="fa-solid fa-robot"></i> </span>
+
+  <div>
+
+    <div class="toast-title">AI Agent Activated!</div>
+
+    <div class="toast-sub">You'll receive a call within 30 seconds</div>
+
+  </div>
+
+</div>
+
+
+
+<script>
+
+/* ==============================
+
+   INTERIORS PAGE - GALLERY LOGIC
+
+============================== */
+
+let allImgs  = [];
+
+let visible  = [];
+
+let offset   = 0;
+
+const PER_PAGE = 24;
+
+let lbIdx    = 0;
+
+
+
+// Init
+
+
+
+
+
+document.addEventListener('keydown', e => {
+
+  if (e.key === 'Escape') { closeLb(); closeModal(); }
+
+  if (e.key === 'ArrowLeft')  navLb(-1);
+
+  if (e.key === 'ArrowRight') navLb(1);
+
+});
+
+document.getElementById('lightbox').addEventListener('click', e => {
+
+  if (e.target === document.getElementById('lightbox')) closeLb();
+
+});
+
+document.getElementById('lead-modal').addEventListener('click', e => {
+
+  if (e.target === document.getElementById('lead-modal')) closeModal();
+
+});
+
+
+
+// Load gallery on page load
+
+(async function init() {
+
+  try {
+
+    const res  = await fetch('http://127.0.0.1:5001/api/cloudinary/images?max=200');
+
+    const data = await res.json();
+
+    // Only show YOUR real interior images - exclude property folder & Cloudinary demo samples
+
+    const allCloud = data.images || [];
+
+    allImgs = allCloud.filter(img => {
+
+      const folder = (img.folder || '').toLowerCase();
+
+      const pid    = (img.public_id || '').toLowerCase();
+
+      // Exclude property listing images
+
+      if (folder.includes('madhavi_properties') || pid.includes('madhavi_properties')) return false;
+
+      // Exclude Cloudinary's built-in demo/sample images
+
+      if (pid.startsWith('cld-sample') || pid.startsWith('sample') || pid === 'main-sample') return false;
+
+      
+
+      // Target only interior images
+
+      const isInterior = folder.includes('living') || folder.includes('bedroom') || folder.includes('kitchen') || folder.includes('office') || folder.includes('hotel') || folder.includes('interior') || pid.includes('interior');
+
+      if (!isInterior) return false;
+
+
+
+      return true;
+
+    });
+
+  } catch(e) {
+
+    allImgs = [];
+
+  }
+
+  document.getElementById('skel-grid').style.display = 'none';
+
+
+
+  if (!allImgs.length) {
+
+    document.getElementById('gallery-empty').style.display = 'block';
+
+    return;
+
+  }
+
+  visible = [...allImgs];
+
+  offset  = 0;
+
+  document.getElementById('gallery-grid').style.display = 'block';
+
+  renderChunk();
+
+})();
+
+
+
+function renderChunk() {
+
+  const grid = document.getElementById('gallery-grid');
+
+  const chunk = visible.slice(offset, offset + PER_PAGE);
+
+  chunk.forEach((img, i) => {
+
+    const globalIdx = offset + i;
+
+    const div = document.createElement('div');
+
+    div.className = 'g-item';
+
+    const folder = (img.folder || img.public_id || '').toLowerCase();
+
+    const tag = folder.includes('living') ? 'Living Room'
+
+              : folder.includes('bedroom') ? 'Bedroom'
+
+              : folder.includes('kitchen') ? 'Kitchen'
+
+              : folder.includes('office')  ? 'Office'
+
+              : folder.includes('exterior')? 'Exterior'
+
+              : 'Interior Design';
+
+    div.innerHTML = `
+
+      <img src="${img.url}" alt="${tag}" loading="lazy"/>
+
+      <div class="g-overlay"><span class="g-tag">${tag}</span></div>`;
+
+    div.addEventListener('click', () => openLb(globalIdx));
+
+    grid.appendChild(div);
+
+  });
+
+  offset += chunk.length;
+
+  document.getElementById('load-more-wrap').style.display =
+
+    offset < visible.length ? 'flex' : 'none';
+
+}
+
+
+
+function loadMore() { renderChunk(); }
+
+
+
+// Filters
+
+document.getElementById('filters-bar').addEventListener('click', e => {
+
+  if (!e.target.classList.contains('f-btn')) return;
+
+  document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('active'));
+
+  e.target.classList.add('active');
+
+  const f = e.target.dataset.filter;
+
+  visible = f === 'all'
+
+    ? [...allImgs]
+
+    : allImgs.filter(img => {
+
+        const s = ((img.folder || '') + (img.public_id || '')).toLowerCase();
+
+        return s.includes(f);
+
+      });
+
+  if (!visible.length) visible = [...allImgs]; // fallback
+
+  const grid = document.getElementById('gallery-grid');
+
+  grid.innerHTML = '';
+
+  offset = 0;
+
+  renderChunk();
+
+});
+
+
+
+// Lightbox
+
+function openLb(idx) {
+
+  lbIdx = idx;
+
+  const img = document.getElementById('lb-img');
+
+  img.src = visible[lbIdx]?.url || '';
+
+  document.getElementById('lb-counter').textContent = `${lbIdx + 1} / ${visible.length}`;
+
+  document.getElementById('lightbox').classList.add('open');
+
+  document.body.style.overflow = 'hidden';
+
+}
+
+function closeLb() {
+
+  document.getElementById('lightbox').classList.remove('open');
+
+  document.body.style.overflow = '';
+
+}
+
+function navLb(dir) {
+
+  if (!visible.length) return;
+
+  lbIdx = (lbIdx + dir + visible.length) % visible.length;
+
+  const img = document.getElementById('lb-img');
+
+  img.style.opacity = '0';
+
+  setTimeout(() => {
+
+    img.src = visible[lbIdx]?.url || '';
+
+    img.style.opacity = '1';
+
+    document.getElementById('lb-counter').textContent = `${lbIdx + 1} / ${visible.length}`;
+
+  }, 150);
+
+}
+
+
+
+// Lead / CTA
+
+function getCall() { document.getElementById('lead-modal').classList.add('open'); document.body.style.overflow='hidden'; }
+
+function closeModal() { document.getElementById('lead-modal').classList.remove('open'); document.body.style.overflow=''; }
+
+async function submitLead(e) {
+
+  e.preventDefault();
+
+  const btn = document.getElementById('lead-submit-btn');
+
+  btn.textContent = 'Connecting...'; btn.disabled = true;
+
+  try {
+
+    await fetch('http://127.0.0.1:5001/api/enquiry', {
+
+      method:'POST', headers:{'Content-Type':'application/json'},
+
+      body: JSON.stringify({
+
+        name:  document.getElementById('lead-name').value.trim(),
+
+        phone: document.getElementById('lead-phone').value.trim(),
+
+        property: 'Interior Design Consultation', location: 'Andhra Pradesh'
+
+      })
+
+    });
+
+  } catch(e) {}
+
+  closeModal();
+
+  const t = document.getElementById('toast');
+
+  t.classList.add('show');
+
+  setTimeout(() => t.classList.remove('show'), 5000);
+
+  btn.textContent = '<i class="fa-solid fa-rocket"></i>  Get My Consultation Call'; btn.disabled = false;
+
+}
+
+</script>
+
+
+
+<!-- Footer -->
+
+<footer class="footer">
+
+  <div class="container">
+
+    <div class="footer-grid">
+
+      <div class="footer-brand">
+
+        <div class="nav-logo" style="margin-bottom:1rem;">
+
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D32F2F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+
+            <path d="M 22 2 H 12 V 22 H 2" />
+
+        <path d="M 2 2 V 12 H 22 V 22" />
+
+        <circle cx="17" cy="7" r="1.5" fill="#D32F2F" stroke="none"/>
+
+        <circle cx="17" cy="17" r="1.5" fill="#D32F2F" stroke="none"/>
+
+        <circle cx="7" cy="17" r="1.5" fill="#D32F2F" stroke="none"/>
+
+        <circle cx="7" cy="7" r="1.5" fill="#D32F2F" stroke="none"/>
+
+          </svg>
+
+          Madhavi <span>Enterprises</span>
+
+        </div>
+
+        <p>We Don't Just Build Spaces - We Elevate Them.<br/>Premium interiors crafted with passion and precision.</p>
+
+        <div style="margin-top:1.2rem;display:flex;gap:10px;">
+
+          <a href="https://wa.me/919876543210" target="_blank" style="color:var(--gold);">WhatsApp</a>
+
+          <span style="color:var(--text-secondary)">&middot;</span>
+
+          <a href="tel:+919876543210" style="color:var(--gold);">Call Now</a>
+
+        </div>
+
+      </div>
+
+      <div class="footer-col">
+
+        <h4>Quick Links</h4>
+
+        <a href="index.html">Home</a>
+
+        <a href="interiors.html">Interiors</a>
+
+        <a href="exteriors.html">Exteriors</a>
+
+        <a href="properties.html">Properties</a>
+
+        <a href="ventures.html">Ventures</a>
+
+        <a href="contact.html">Contact</a>
+
+      </div>
+
+      <div class="footer-col">
+
+        <h4>Interior Services</h4>
+
+        <a href="interiors.html">Modern Designs</a>
+
+        <a href="interiors.html">Office Cabins</a>
+
+        <a href="interiors.html">Modular Kitchens</a>
+
+        <a href="interiors.html">Hotel Interiors</a>
+
+        <a href="interiors.html">Bedrooms</a>
+
+      </div>
+
+      <div class="footer-col">
+
+        <h4>Contact</h4>
+
+        <a href="tel:+919876543210"><i class="fa-solid fa-phone"></i>  +91 98765 43210</a>
+
+        <a href="mailto:info@madhavienterprise.com"> info@madhavienterprise.com</a>
+
+        <a href="#">" Andhra Pradesh, India</a>
+
+        <a href="admin.html">" Admin Login</a>
+
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+      <span>&copy; 2025 Madhavi Enterprises. All rights reserved.</span>
+
+      <span>Powered by AI &middot; Built with &#10084; in Andhra Pradesh</span>
+
+    </div>
+
+  </div>
+
+</footer>
+
+
+
+<script src="app.js"></script>
+
+</body>
+
+</html>
+
+
+

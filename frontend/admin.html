@@ -1,0 +1,2762 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8"/>
+
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+
+  <title>Admin Dashboard - Madhavi Enterprises</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="style.css"/>
+
+  <style>
+
+    /* ===== ADMIN-SPECIFIC STYLES ===== */
+
+    body { background: #030812; }
+
+
+
+    /* Login Screen */
+
+    .login-screen {
+
+      min-height: 100vh;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      background: radial-gradient(ellipse at 30% 50%, rgba(201,168,76,0.06) 0%, transparent 60%),
+
+                  radial-gradient(ellipse at 70% 30%, rgba(26,39,68,0.4) 0%, transparent 60%),
+
+                  var(--bg-deep);
+
+    }
+
+    .login-card {
+
+      width: 100%;
+
+      max-width: 420px;
+
+      background: var(--bg-card);
+
+      border: 1px solid var(--border-glass);
+
+      border-radius: 24px;
+
+      padding: 3rem 2.5rem;
+
+      box-shadow: var(--shadow-float);
+
+    }
+
+
+
+    /* Dashboard Layout */
+
+    .dash-layout { display: flex; min-height: 100vh; padding-top: 0; }
+
+    .sidebar {
+
+      width: 260px;
+
+      background: var(--bg-card);
+
+      border-right: 1px solid var(--border-glass);
+
+      position: fixed;
+
+      top: 0; left: 0; bottom: 0;
+
+      display: flex;
+
+      flex-direction: column;
+
+      z-index: 100;
+
+      transition: transform 0.4s cubic-bezier(0.23,1,0.32,1);
+
+    }
+
+    .sidebar-logo {
+
+      padding: 1.8rem 1.5rem;
+
+      border-bottom: 1px solid var(--border-glass);
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 10px;
+
+      font-family: 'Outfit', sans-serif;
+
+      font-weight: 800;
+
+      font-size: 1rem;
+
+      color: var(--text-primary);
+
+    }
+
+    .sidebar-logo span { color: var(--gold); font-size: 0.7rem; display: block; font-weight: 400; }
+
+    .sidebar-nav { flex: 1; padding: 1.5rem 0; overflow-y: auto; }
+
+    .nav-item {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 12px;
+
+      padding: 12px 1.5rem;
+
+      color: var(--text-secondary);
+
+      font-size: 0.88rem;
+
+      font-weight: 500;
+
+      cursor: pointer;
+
+      transition: var(--transition);
+
+      border-left: 3px solid transparent;
+
+    }
+
+    .nav-item:hover { color: var(--text-primary); background: rgba(255,255,255,0.03); }
+
+    .nav-item.active { color: var(--gold); background: var(--gold-dim); border-left-color: var(--gold); }
+
+    .nav-item .icon { font-size: 1.1rem; width: 20px; text-align: center; }
+
+    .sidebar-footer {
+
+      padding: 1rem 1.5rem;
+
+      border-top: 1px solid var(--border-glass);
+
+    }
+
+    .agent-pill {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 10px;
+
+      padding: 10px 12px;
+
+      background: var(--gold-dim);
+
+      border-radius: 12px;
+
+      border: 1px solid var(--border-glass);
+
+    }
+
+    .agent-avatar {
+
+      width: 36px; height: 36px;
+
+      border-radius: 50%;
+
+      background: var(--gold);
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-weight: 800;
+
+      font-family: 'Outfit', sans-serif;
+
+      color: #050B18;
+
+      font-size: 0.9rem;
+
+    }
+
+    .agent-name { font-size: 0.82rem; font-weight: 600; color: var(--text-primary); }
+
+    .agent-email { font-size: 0.7rem; color: var(--text-secondary); }
+
+
+
+    /* Main Content */
+
+    .dash-main {
+
+      margin-left: 260px;
+
+      flex: 1;
+
+      padding: 2rem;
+
+      min-height: 100vh;
+
+    }
+
+    .dash-header {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      margin-bottom: 2.5rem;
+
+      padding-bottom: 1.5rem;
+
+      border-bottom: 1px solid var(--border-glass);
+
+    }
+
+    .dash-header h2 { font-size: 1.6rem; }
+
+    .dash-header p { font-size: 0.85rem; color: var(--text-secondary); margin-top: 3px; }
+
+
+
+    /* Stat Cards */
+
+    .stat-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; margin-bottom: 2rem; }
+
+    .stat-card {
+
+      background: var(--bg-card);
+
+      border: 1px solid var(--border-glass);
+
+      border-radius: 16px;
+
+      padding: 1.5rem;
+
+      transition: var(--transition);
+
+      position: relative;
+
+      overflow: hidden;
+
+    }
+
+    .stat-card::before {
+
+      content: '';
+
+      position: absolute;
+
+      top: 0; left: 0; right: 0; height: 2px;
+
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+
+      opacity: 0.6;
+
+    }
+
+    .stat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-float); }
+
+    .stat-card .sc-icon { font-size: 1.8rem; margin-bottom: 0.8rem; }
+
+    .stat-card .sc-val { font-family: 'Outfit', sans-serif; font-size: 2rem; font-weight: 900; color: var(--gold); }
+
+    .stat-card .sc-label { font-size: 0.78rem; color: var(--text-secondary); margin-top: 3px; }
+
+
+
+    /* Panel */
+
+    .dash-panel {
+
+      background: var(--bg-card);
+
+      border: 1px solid var(--border-glass);
+
+      border-radius: 20px;
+
+      overflow: hidden;
+
+    }
+
+    .panel-head {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      padding: 1.5rem 2rem;
+
+      border-bottom: 1px solid var(--border-glass);
+
+    }
+
+    .panel-head h3 { font-size: 1rem; }
+
+    .panel-body { padding: 1.5rem 2rem; }
+
+
+
+    /* Table */
+
+    .data-table { width: 100%; border-collapse: collapse; }
+
+    .data-table th {
+
+      text-align: left;
+
+      font-family: 'Outfit', sans-serif;
+
+      font-size: 0.72rem;
+
+      font-weight: 700;
+
+      color: var(--gold);
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.08em;
+
+      padding: 12px 16px;
+
+      border-bottom: 1px solid var(--border-glass);
+
+      background: rgba(201,168,76,0.05);
+
+    }
+
+    .data-table td {
+
+      padding: 12px 16px;
+
+      font-size: 0.85rem;
+
+      color: var(--text-secondary);
+
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+
+      vertical-align: middle;
+
+    }
+
+    .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+    .data-table tr:last-child td { border-bottom: none; }
+
+    .badge {
+
+      display: inline-block;
+
+      padding: 3px 10px;
+
+      border-radius: 50px;
+
+      font-size: 0.7rem;
+
+      font-weight: 700;
+
+    }
+
+    .badge-success { background: rgba(34,197,94,0.15); color: #22c55e; }
+
+    .badge-warn { background: rgba(234,179,8,0.15); color: #eab308; }
+
+    .badge-danger { background: rgba(239,68,68,0.15); color: #ef4444; }
+
+    .badge-info { background: rgba(59,130,246,0.15); color: #3b82f6; }
+
+
+
+    /* Actions */
+
+    .action-btns { display: flex; gap: 6px; }
+
+    .action-btn {
+
+      padding: 5px 12px;
+
+      border-radius: 8px;
+
+      font-size: 0.72rem;
+
+      font-weight: 600;
+
+      cursor: pointer;
+
+      border: 1px solid var(--border-glass);
+
+      background: transparent;
+
+      color: var(--text-secondary);
+
+      transition: var(--transition);
+
+    }
+
+    .action-btn:hover { color: var(--gold); border-color: var(--gold); }
+
+    .action-btn.del:hover { color: #ef4444; border-color: #ef4444; }
+
+
+
+    /* Property image in table */
+
+    .prop-thumb { width: 50px; height: 36px; border-radius: 6px; object-fit: cover; }
+
+
+
+    /* Section tabs */
+
+    .section-hidden { display: none; }
+
+
+
+    /* Multi-image builder */
+
+    .img-url-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 8px; }
+
+    .img-url-row {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 8px;
+
+      background: rgba(255,255,255,0.03);
+
+      border: 1px solid var(--border-glass);
+
+      border-radius: 10px;
+
+      padding: 6px 10px;
+
+      transition: var(--transition);
+
+    }
+
+    .img-url-row:hover { border-color: rgba(201,168,76,0.3); }
+
+    .img-url-row input {
+
+      flex: 1;
+
+      background: transparent;
+
+      border: none;
+
+      color: var(--text-primary);
+
+      font-size: 0.85rem;
+
+      outline: none;
+
+      font-family: 'Inter', sans-serif;
+
+    }
+
+    .img-url-row input::placeholder { color: var(--text-secondary); }
+
+    .img-preview {
+
+      width: 42px; height: 32px;
+
+      border-radius: 6px;
+
+      object-fit: cover;
+
+      border: 1px solid var(--border-glass);
+
+      background: var(--bg-highlight);
+
+      flex-shrink: 0;
+
+      display: none;
+
+    }
+
+    .img-preview.loaded { display: block; }
+
+    .img-row-del {
+
+      background: none;
+
+      border: none;
+
+      color: var(--text-secondary);
+
+      cursor: pointer;
+
+      font-size: 1rem;
+
+      padding: 2px 6px;
+
+      border-radius: 6px;
+
+      transition: var(--transition);
+
+      flex-shrink: 0;
+
+    }
+
+    .img-row-del:hover { color: #ef4444; background: rgba(239,68,68,0.1); }
+
+    .img-row-num {
+
+      font-size: 0.7rem;
+
+      color: var(--gold);
+
+      font-weight: 700;
+
+      width: 18px;
+
+      text-align: center;
+
+      flex-shrink: 0;
+
+    }
+
+    .add-img-btn {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 6px;
+
+      background: var(--gold-dim);
+
+      border: 1px dashed rgba(201,168,76,0.4);
+
+      border-radius: 10px;
+
+      padding: 8px 16px;
+
+      color: var(--gold);
+
+      font-size: 0.82rem;
+
+      font-weight: 600;
+
+      cursor: pointer;
+
+      transition: var(--transition);
+
+      width: 100%;
+
+      justify-content: center;
+
+    }
+
+    .add-img-btn:hover { background: rgba(201,168,76,0.2); border-color: var(--gold); }
+
+
+
+    /* Analytics */
+
+    .analytics-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+
+    .analytics-card { background: var(--bg-card); border: 1px solid var(--border-glass); border-radius: 16px; padding: 1.5rem; }
+
+    .bar-chart { display: flex; align-items: flex-end; gap: 8px; height: 120px; margin-top: 1rem; }
+
+    .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+
+    .bar {
+
+      width: 100%;
+
+      background: linear-gradient(to top, var(--gold), var(--gold-light));
+
+      border-radius: 4px 4px 0 0;
+
+      min-height: 4px;
+
+      transition: height 0.8s cubic-bezier(0.23,1,0.32,1);
+
+    }
+
+    .bar-label { font-size: 0.62rem; color: var(--text-secondary); }
+
+
+
+    /* Mobile sidebar toggle */
+
+    /* Mobile Navbar */
+    .mobile-navbar {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 60px;
+      background: #030812; /* Dark theme color, not white */
+      border-bottom: 1px solid var(--border-glass);
+      z-index: 200;
+      padding: 0 1.5rem;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+    .mobile-nav-logo {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      color: var(--text-primary);
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+    }
+    .mobile-nav-logo span {
+      color: var(--gold);
+      font-weight: 400;
+      font-size: 0.8rem;
+      margin-left: 5px;
+    }
+    .sidebar-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.4rem;
+      color: var(--gold);
+      background: transparent;
+      border: none;
+      padding: 5px;
+    }
+
+
+
+    @media (max-width: 1024px) {
+
+      .stat-cards { grid-template-columns: repeat(2, 1fr); }
+
+      .analytics-row { grid-template-columns: 1fr; }
+
+    }
+
+    @media (max-width: 768px) {
+
+      .sidebar { transform: translateX(-100%); }
+
+      .sidebar.open { transform: translateX(0); }
+
+      .dash-main { margin-left: 0; padding: 1rem; padding-top: 4rem; }
+
+      .mobile-navbar { display: flex; }
+
+      .stat-cards { grid-template-columns: 1fr 1fr; }
+
+      .form-grid { grid-template-columns: 1fr; }
+
+      .form-grid .full-w { grid-column: 1; }
+
+      .panel-head { flex-direction: column; gap: 0.8rem; align-items: flex-start; }
+
+    }
+
+    @media (max-width: 480px) {
+
+      .stat-cards { grid-template-columns: 1fr; }
+
+    }
+
+    /* Design Projects Admin Cards */
+    .project-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      padding-top: 1rem;
+    }
+    .project-admin-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border-glass);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .project-admin-card:hover { border-color: var(--gold); }
+    .project-admin-img { height: 160px; background: var(--bg-highlight); overflow: hidden; }
+    .project-admin-img img { width: 100%; height: 100%; object-fit: cover; }
+    .project-admin-body { padding: 1.2rem; }
+    .project-admin-name { font-weight: 700; font-size: 1rem; color: var(--text-primary); margin-bottom: 5px; }
+    .project-admin-cat { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1rem; }
+    .project-admin-actions { display: flex; justify-content: flex-end; }
+
+    /* Form grid */
+
+    .form-grid {
+
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      gap: 1.2rem;
+
+    }
+
+    .form-grid .full-w { grid-column: 1 / -1; }
+
+    @media (max-width: 768px) { .form-grid { grid-template-columns: 1fr; } .form-grid .full-w { grid-column: 1; } }
+
+  </style>
+
+</head>
+
+<body>
+
+
+
+<!-- ===== LOGIN SCREEN ===== -->
+
+<div id="login-screen" class="login-screen">
+
+  <div class="login-card">
+
+    <div style="text-align:center;margin-bottom:2rem;">
+
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-bottom:1rem;">
+
+        <path d="M 22 2 H 12 V 22 H 2" />
+
+        <path d="M 2 2 V 12 H 22 V 22" />
+
+        <circle cx="17" cy="7" r="1.5" fill="#D32F2F" stroke="none"/>
+
+        <circle cx="17" cy="17" r="1.5" fill="#D32F2F" stroke="none"/>
+
+        <circle cx="7" cy="17" r="1.5" fill="#D32F2F" stroke="none"/>
+
+        <circle cx="7" cy="7" r="1.5" fill="#D32F2F" stroke="none"/>
+
+      </svg>
+
+      <h2 style="font-size:1.5rem;margin-bottom:0.3rem;">Admin Dashboard</h2>
+
+      <p style="font-size:0.85rem;">Madhavi Enterprises &middot; Secure Login</p>
+
+    </div>
+
+    <div id="login-error" style="display:none;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:10px;padding:10px 14px;font-size:0.82rem;color:#ef4444;margin-bottom:1rem;"></div>
+
+    <form onsubmit="adminLogin(event)">
+
+      <div class="form-group">
+
+        <label>Email Address</label>
+
+        <input type="email" id="login-email" placeholder="admin@madhavienterprise.com" required/>
+
+      </div>
+
+      <div class="form-group">
+
+        <label>Password</label>
+
+        <input type="password" id="login-password" placeholder="Enter password" required/>
+
+      </div>
+
+      <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center;margin-top:0.5rem;" id="login-submit-btn">
+
+        <i class="fa-solid fa-lock"></i> Login to Dashboard
+
+      </button>
+
+    </form>
+
+    <div style="text-align:center;margin-top:1.5rem;">
+
+      <a href="index.html" style="font-size:0.82rem;color:var(--text-secondary);">&#8592; Back to Website</a>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- ===== DASHBOARD ===== -->
+
+<div id="dashboard" class="dash-layout" style="display:none;">
+
+
+
+  <!-- Mobile Navbar -->
+  <div class="mobile-navbar">
+    <div class="mobile-nav-logo">Madhavi<span>Enterprises</span></div>
+    <button class="sidebar-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')" aria-label="Toggle Sidebar"><i class="fa-solid fa-bars"></i></button>
+  </div>
+
+
+
+  <!-- Sidebar -->
+
+  <aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-logo">
+
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D32F2F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+
+        <path d="M 22 2 H 12 V 22 H 2" />
+
+        <path d="M 2 2 V 12 H 22 V 22" />
+
+        <circle cx="17" cy="7" r="1.5" fill="#D32F2F" stroke="none"/>
+
+        <circle cx="17" cy="17" r="1.5" fill="#D32F2F" stroke="none"/>
+
+        <circle cx="7" cy="17" r="1.5" fill="#D32F2F" stroke="none"/>
+
+        <circle cx="7" cy="7" r="1.5" fill="#D32F2F" stroke="none"/>
+
+      </svg>
+
+      <div>
+
+        Madhavi <span style="color:var(--gold)">Enterprises</span>
+
+        <span style="display:block;font-size:0.65rem;color:var(--text-secondary);font-weight:400;margin-top:2px;">Admin Dashboard</span>
+
+      </div>
+
+    </div>
+
+    <nav class="sidebar-nav">
+
+      <div class="nav-item active" onclick="showSection('overview')" id="nav-overview">
+
+        <span class="icon"><i class="fa-solid fa-chart-bar"></i> </span> Overview
+
+      </div>
+
+      <div class="nav-item" onclick="showSection('properties')" id="nav-properties">
+
+        <span class="icon"><i class="fa-solid fa-building"></i> </span> Properties
+
+      </div>
+
+      <div class="nav-item" onclick="showSection('design-projects')" id="nav-design-projects">
+
+        <span class="icon"><i class="fa-solid fa-palette"></i> </span> Design Projects
+
+      </div>
+
+      <div class="nav-item" onclick="showSection('leads')" id="nav-leads">
+
+        <span class="icon"><i class="fa-solid fa-clipboard-list"></i> </span> Leads
+
+      </div>
+
+      <div class="nav-item" onclick="showSection('call-logs')" id="nav-call-logs">
+
+        <span class="icon"><i class="fa-solid fa-microphone"></i> </span> Call Logs
+
+      </div>
+
+      <div class="nav-item" onclick="showSection('analytics')" id="nav-analytics">
+
+        <span class="icon"><i class="fa-solid fa-chart-line"></i> </span> Analytics
+
+      </div>
+
+      <div style="margin:1rem 1.5rem;height:1px;background:var(--border-glass);"></div>
+
+      <a href="index.html" class="nav-item" style="text-decoration:none;">
+
+        <span class="icon"></span> View Website
+
+      </a>
+
+      <div class="nav-item" onclick="adminLogout()" style="color:#ef4444;">
+
+        <span class="icon"><i class="fa-solid fa-door-open"></i> </span> Logout
+
+      </div>
+
+    </nav>
+
+    <div class="sidebar-footer">
+
+      <div class="agent-pill">
+
+        <div class="agent-avatar" id="admin-avatar">A</div>
+
+        <div>
+
+          <div class="agent-name" id="admin-name">Admin</div>
+
+          <div class="agent-email" id="admin-email">admin@madhavienterprise.com</div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </aside>
+
+
+
+  <!-- Main -->
+
+  <main class="dash-main">
+
+
+
+    <!-- ===== OVERVIEW ===== -->
+
+    <div id="section-overview">
+
+      <div class="dash-header">
+
+        <div>
+
+          <h2>Good day, <span class="gold-text" id="welcome-name">Admin</span> <i class="fa-solid fa-hand-wave" style="color:var(--gold);"></i></h2>
+
+          <p id="dash-date">Loading date...</p>
+
+        </div>
+
+        <a href="index.html" class="btn btn-glass" style="font-size:0.82rem;padding:10px 20px;"><i class="fa-solid fa-globe"></i> Live Site</a>
+
+      </div>
+
+      <div class="stat-cards">
+
+        <div class="stat-card levitate">
+
+          <div class="sc-icon"><i class="fa-solid fa-building"></i></div>
+
+          <div class="sc-val" id="stat-props">-</div>
+
+          <div class="sc-label">Total Properties</div>
+
+        </div>
+
+        <div class="stat-card levitate levitate-delay-1">
+
+          <div class="sc-icon"><i class="fa-solid fa-clipboard-list"></i> </div>
+
+          <div class="sc-val" id="stat-leads">-</div>
+
+          <div class="sc-label">Total Leads</div>
+
+        </div>
+
+        <div class="stat-card levitate levitate-delay-2">
+
+          <div class="sc-icon"><i class="fa-solid fa-phone"></i> </div>
+
+          <div class="sc-val" id="stat-calls">-</div>
+
+          <div class="sc-label">AI Calls Made</div>
+
+        </div>
+
+        <div class="stat-card levitate levitate-delay-3">
+
+          <div class="sc-icon"><i class="fa-solid fa-comment-dots"></i> </div>
+
+          <div class="sc-val" id="stat-wa">-</div>
+
+          <div class="sc-label">WhatsApp Sent</div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- Recent Leads -->
+
+      <div class="dash-panel levitate levitate-delay-1">
+
+        <div class="panel-head">
+
+          <h3><i class="fa-solid fa-fire"></i>  Recent Leads</h3>
+
+          <button class="btn btn-glass" style="font-size:0.78rem;padding:8px 16px;" onclick="showSection('leads')">View All</button>
+
+        </div>
+
+        <div style="overflow-x:auto;">
+
+          <table class="data-table" id="recent-leads-table">
+
+            <thead>
+
+              <tr>
+
+                <th>Name</th>
+
+                <th>Phone</th>
+
+                <th>Property</th>
+
+                <th>Date</th>
+
+                <th>AI Call</th>
+
+                <th>WhatsApp</th>
+
+              </tr>
+
+            </thead>
+
+            <tbody id="recent-leads-body">
+
+              <tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--text-secondary);">Loading...</td></tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- ===== PROPERTIES ===== -->
+
+    <div id="section-properties" class="section-hidden">
+
+      <div class="dash-header">
+
+        <div><h2><i class="fa-solid fa-building"></i> Properties</h2><p>Manage your property listings</p></div>
+
+        <button class="btn btn-gold" style="font-size:0.85rem;padding:10px 24px;" onclick="showAddPropForm()" id="add-prop-btn">+ Add Property</button>
+
+      </div>
+
+
+
+      <!-- Add / Edit Form -->
+
+      <div id="add-prop-form" class="dash-panel levitate" style="display:none;margin-bottom:2rem;">
+
+        <div class="panel-head">
+
+          <h3 id="prop-form-title"> Add New Property</h3>
+
+          <button class="action-btn" onclick="hidePropForm()"> Cancel</button>
+
+        </div>
+
+        <div class="panel-body">
+
+          <div class="form-grid">
+
+            <div class="form-group">
+
+              <label>Property Title *</label>
+
+              <input type="text" id="pf-title" placeholder="e.g. Premium Plot in Kammapadu" required/>
+
+            </div>
+
+            <div class="form-group">
+
+              <label>Category *</label>
+
+              <select id="pf-type">
+
+                <option value="Plot">Plot</option>
+
+                <option value="Villa">Villa</option>
+
+                <option value="Apartment">Apartment</option>
+
+                <option value="House">Individual House</option>
+
+              </select>
+
+            </div>
+
+            <div class="form-group">
+
+              <label>Price (e.g. Rs. 15,000/yard or Rs. 1.2 Cr)</label>
+
+              <input type="text" id="pf-price" placeholder="Rs. 15,000"/>
+
+            </div>
+
+            <div class="form-group">
+
+              <label>Location *</label>
+
+              <input type="text" id="pf-location" placeholder="e.g. Kammapadu, Andhra Pradesh"/>
+
+            </div>
+
+            <div class="form-group full-w">
+
+              <label>Description</label>
+
+              <textarea id="pf-description" rows="4" placeholder="Detailed property description..." style="resize:vertical;"></textarea>
+
+            </div>
+
+            <div class="form-group full-w">
+
+              <label>Property Images <span style="color:var(--text-secondary);font-weight:400;">(Add up to 20 image URLs - paste URL, preview appears automatically)</span></label>
+
+              <div class="img-url-list" id="img-url-list"></div>
+
+              <button type="button" class="add-img-btn" onclick="addImageRow('')" id="add-img-row-btn">
+
+                + Add Image URL
+
+              </button>
+
+              <div style="font-size:0.72rem;color:var(--text-secondary);margin-top:6px;">Tip: Use Unsplash, Google Drive, or any direct image link. First image = cover photo.</div>
+
+            </div>
+
+            <div class="form-group full-w" style="display:flex;gap:1rem;justify-content:flex-end;">
+
+              <button class="btn btn-glass" onclick="hidePropForm()">Cancel</button>
+
+              <button class="btn btn-gold" onclick="saveProp()" id="save-prop-btn"><i class="fa-solid fa-floppy-disk"></i>  Save Property</button>
+
+            </div>
+
+          </div>
+
+          <input type="hidden" id="pf-edit-id" value=""/>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- Properties Table -->
+
+      <div class="dash-panel">
+
+        <div class="panel-head"><h3>All Properties</h3><span id="prop-count-badge" class="badge badge-info">0 total</span></div>
+
+        <div style="overflow-x:auto;">
+
+          <table class="data-table" id="props-table">
+
+            <thead>
+
+              <tr>
+
+                <th>Image</th>
+
+                <th>Title</th>
+
+                <th>Type</th>
+
+                <th>Price</th>
+
+                <th>Location</th>
+
+                <th>Actions</th>
+
+              </tr>
+
+            </thead>
+
+            <tbody id="props-table-body">
+
+              <tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--text-secondary);">Loading...</td></tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- ===== LEADS ===== -->
+
+    <div id="section-leads" class="section-hidden">
+
+      <div class="dash-header">
+
+        <div><h2><i class="fa-solid fa-clipboard-list"></i>  Leads</h2><p>All enquiries and automation status</p></div>
+
+        <button class="btn btn-glass" style="font-size:0.82rem;padding:10px 20px;" onclick="exportLeads()" id="export-leads-btn"><i class="fa-solid fa-file-excel"></i>  Export Excel</button>
+
+      </div>
+
+      <div class="dash-panel">
+
+        <div class="panel-head">
+
+          <h3>All Leads</h3>
+
+          <div style="display:flex;gap:8px;align-items:center;">
+
+            <input type="text" id="lead-search" placeholder="Search..." oninput="filterLeads()" style="background:rgba(255,255,255,0.04);border:1px solid var(--border-glass);border-radius:10px;padding:7px 14px;color:var(--text-primary);font-size:0.82rem;outline:none;width:180px;"/>
+
+          </div>
+
+        </div>
+
+        <div style="overflow-x:auto;">
+
+          <table class="data-table" id="leads-table">
+
+            <thead>
+
+              <tr>
+
+                <th>Name</th>
+
+                <th>Phone</th>
+
+                <th>Property</th>
+
+                <th>Budget</th>
+
+                <th>Date</th>
+
+                <th>AI Call</th>
+
+                <th>WhatsApp</th>
+
+              </tr>
+
+            </thead>
+
+            <tbody id="leads-table-body">
+
+              <tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--text-secondary);">Loading...</td></tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- ===== CALL LOGS ===== -->
+
+    <div id="section-call-logs" class="section-hidden">
+      <div class="dash-header">
+        <div><h2><i class="fa-solid fa-microphone"></i> Call Transcriptions</h2><p>AI-transcribed call logs</p></div>
+        <button class="btn btn-glass" style="font-size:0.82rem;padding:10px 20px;" onclick="exportCallLogs()" id="export-call-logs-btn"><i class="fa-solid fa-file-excel"></i> Export Excel</button>
+      </div>
+      
+      <!-- Upload Audio Testing -->
+      <div class="dash-panel levitate" style="margin-bottom:2rem;">
+        <div class="panel-head"><h3><i class="fa-solid fa-upload"></i> Process New Call</h3></div>
+        <div class="panel-body">
+            <input type="file" id="call-audio-upload" accept="audio/*" style="margin-right:1rem;">
+            <button class="btn btn-gold" onclick="uploadCallAudio()" id="upload-call-btn">Transcribe Call</button>
+            <div id="upload-call-status" style="margin-top:1rem; font-size: 0.85rem; color: var(--gold);"></div>
+        </div>
+      </div>
+
+      <div class="dash-panel">
+        <div class="panel-head">
+          <h3>Transcription Logs</h3>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <input type="text" id="call-search" placeholder="Search calls..." oninput="filterCallLogs()" style="background:rgba(255,255,255,0.04);border:1px solid var(--border-glass);border-radius:10px;padding:7px 14px;color:var(--text-primary);font-size:0.82rem;outline:none;width:180px;"/>
+            <select id="call-filter-interest" onchange="filterCallLogs()" style="background:rgba(255,255,255,0.04);border:1px solid var(--border-glass);border-radius:10px;padding:7px 14px;color:var(--text-primary);font-size:0.82rem;outline:none;">
+              <option value="">All Interests</option>
+              <option value="buy">Buy</option>
+              <option value="rent">Rent</option>
+              <option value="sell">Sell</option>
+            </select>
+          </div>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="data-table" id="call-logs-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Interest</th>
+                <th>Property</th>
+                <th>Budget</th>
+                <th>Location</th>
+                <th>Summary</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="call-logs-body">
+              <tr><td colspan="9" style="text-align:center;padding:2rem;color:var(--text-secondary);">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- ===== ANALYTICS ===== -->
+
+    <div id="section-analytics" class="section-hidden">
+
+      <div class="dash-header">
+
+        <div><h2><i class="fa-solid fa-chart-line"></i>  Analytics</h2><p>Performance overview</p></div>
+
+      </div>
+
+      <div class="stat-cards">
+
+        <div class="stat-card">
+
+          <div class="sc-icon"><i class="fa-solid fa-chart-line"></i> </div>
+
+          <div class="sc-val" id="an-conversion">-%</div>
+
+          <div class="sc-label">Lead Conversion Rate</div>
+
+        </div>
+
+        <div class="stat-card">
+
+          <div class="sc-icon"><i class="fa-solid fa-phone"></i> </div>
+
+          <div class="sc-val" id="an-calls">-</div>
+
+          <div class="sc-label">AI Calls Completed</div>
+
+        </div>
+
+        <div class="stat-card">
+
+          <div class="sc-icon"><i class="fa-solid fa-comment-dots"></i> </div>
+
+          <div class="sc-val" id="an-wa">-</div>
+
+          <div class="sc-label">WhatsApp Delivered</div>
+
+        </div>
+
+        <div class="stat-card">
+
+          <div class="sc-icon"><i class="fa-solid fa-building"></i></div>
+
+          <div class="sc-val" id="an-props">-</div>
+
+          <div class="sc-label">Active Listings</div>
+
+        </div>
+
+      </div>
+
+      <div class="analytics-row">
+
+        <div class="analytics-card">
+
+          <h3 style="font-size:1rem;margin-bottom:0.3rem;">Leads by Property</h3>
+
+          <p style="font-size:0.78rem;">Top enquired properties</p>
+
+          <div class="bar-chart" id="leads-chart"></div>
+
+        </div>
+
+        <div class="analytics-card">
+
+          <h3 style="font-size:1rem;margin-bottom:0.3rem;">Automation Status</h3>
+
+          <p style="font-size:0.78rem;">AI Call & WhatsApp success rates</p>
+
+          <div id="auto-stats" style="margin-top:1.5rem;display:flex;flex-direction:column;gap:1rem;"></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- ===== DESIGN PROJECTS ===== -->
+
+    <div id="section-design-projects" class="section-hidden">
+
+      <div class="dash-header">
+        <div><h2><i class="fa-solid fa-palette"></i> Design Projects</h2><p>Manage interior and exterior design portfolios</p></div>
+      </div>
+
+      <!-- Interior Projects -->
+      <div class="dash-panel levitate" style="margin-bottom:2rem;">
+        <div class="panel-head">
+          <h3><i class="fa-solid fa-couch" style="color:var(--gold);"></i> Interior Projects</h3>
+          <span class="badge badge-info" id="int-count">0 projects</span>
+        </div>
+        <div class="panel-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Project Title *</label>
+              <input type="text" id="int-title" placeholder="e.g. Luxury Living Room Makeover"/>
+            </div>
+            <div class="form-group">
+              <label>Category</label>
+              <select id="int-category">
+                <option value="living">Living Room</option>
+                <option value="bedroom">Bedroom</option>
+                <option value="kitchen">Kitchen</option>
+                <option value="office">Office Cabin</option>
+                <option value="hotel">Hotel Interior</option>
+                <option value="bathroom">Bathroom</option>
+              </select>
+            </div>
+            <div class="form-group full-w">
+              <label>Description</label>
+              <textarea id="int-description" rows="3" placeholder="Short project description..." style="resize:vertical;"></textarea>
+            </div>
+            <div class="form-group full-w">
+              <label>Image URLs <span style="color:var(--text-secondary);font-weight:400;">(Add Cloudinary / direct image URLs)</span></label>
+              <div class="img-url-list" id="int-img-list"></div>
+              <button type="button" class="add-img-btn" onclick="addDesignImageRow('int-img-list')">+ Add Image URL</button>
+            </div>
+            <div class="form-group full-w" style="display:flex;justify-content:flex-end;">
+              <button class="btn btn-gold" onclick="saveDesignProject('interior')"><i class="fa-solid fa-floppy-disk"></i> Save Interior Project</button>
+            </div>
+          </div>
+        </div>
+        <div style="padding:0 1.5rem 1.5rem;">
+          <div id="int-projects-list"><p style="color:var(--text-secondary);font-size:0.88rem;">No interior projects added yet.</p></div>
+        </div>
+      </div>
+
+      <!-- Exterior Projects -->
+      <div class="dash-panel levitate">
+        <div class="panel-head">
+          <h3><i class="fa-solid fa-house" style="color:var(--gold);"></i> Exterior Projects</h3>
+          <span class="badge badge-info" id="ext-count">0 projects</span>
+        </div>
+        <div class="panel-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Project Title *</label>
+              <input type="text" id="ext-title" placeholder="e.g. Modern Villa Elevation"/>
+            </div>
+            <div class="form-group">
+              <label>Category</label>
+              <select id="ext-category">
+                <option value="elevation">Villa Elevation</option>
+                <option value="facade">Modern Facade</option>
+                <option value="commercial">Commercial Building</option>
+                <option value="landscape">Landscape Design</option>
+                <option value="villa">Villa Exterior</option>
+              </select>
+            </div>
+            <div class="form-group full-w">
+              <label>Description</label>
+              <textarea id="ext-description" rows="3" placeholder="Short project description..." style="resize:vertical;"></textarea>
+            </div>
+            <div class="form-group full-w">
+              <label>Image URLs <span style="color:var(--text-secondary);font-weight:400;">(Add Cloudinary / direct image URLs)</span></label>
+              <div class="img-url-list" id="ext-img-list"></div>
+              <button type="button" class="add-img-btn" onclick="addDesignImageRow('ext-img-list')">+ Add Image URL</button>
+            </div>
+            <div class="form-group full-w" style="display:flex;justify-content:flex-end;">
+              <button class="btn btn-gold" onclick="saveDesignProject('exterior')"><i class="fa-solid fa-floppy-disk"></i> Save Exterior Project</button>
+            </div>
+          </div>
+        </div>
+        <div style="padding:0 1.5rem 1.5rem;">
+          <div id="ext-projects-list"><p style="color:var(--text-secondary);font-size:0.88rem;">No exterior projects added yet.</p></div>
+        </div>
+      </div>
+
+    </div>
+
+
+
+  </main>
+
+</div>
+
+
+
+<!-- Delete Confirm Modal -->
+
+<div class="modal-overlay" id="delete-modal">
+
+  <div class="modal" style="max-width:380px;text-align:center;">
+
+    <div style="font-size:3rem;margin-bottom:1rem;"><i class="fa-solid fa-trash" style="color:#ef4444;"></i></div>
+
+    <h3 style="margin-bottom:0.5rem;">Delete Property?</h3>
+
+    <p style="margin-bottom:1.5rem;">This action cannot be undone. All associated leads will remain.</p>
+
+    <div style="display:flex;gap:1rem;justify-content:center;">
+
+      <button class="btn btn-glass" onclick="document.getElementById('delete-modal').classList.remove('open')">Cancel</button>
+
+      <button class="btn btn-gold" id="confirm-delete-btn" style="background:rgba(239,68,68,0.8);box-shadow:none;">Yes, Delete</button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- Call Transcription Modal -->
+<div class="modal-overlay" id="transcription-modal">
+  <div class="modal" style="max-width:600px; max-height:80vh; display:flex; flex-direction:column;">
+    <button class="modal-close" onclick="document.getElementById('transcription-modal').classList.remove('open')">&times;</button>
+    <h3 style="margin-bottom:1rem;"><i class="fa-solid fa-file-lines" style="color:var(--gold);"></i> Full Transcription</h3>
+    <div id="transcription-text" style="flex:1; overflow-y:auto; padding-right:10px; font-size:0.9rem; color:var(--text-secondary); line-height:1.6; white-space:pre-wrap;">
+        Loading transcription...
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+
+/* ===================================================================
+
+   ADMIN DASHBOARD - MADHAVI ENTERPRISES
+
+   =================================================================== */
+
+
+
+const API = 'http://127.0.0.1:5001';  // Same origin since Flask serves everything
+
+
+
+let authToken = localStorage.getItem('me_admin_token');
+
+let adminData = JSON.parse(localStorage.getItem('me_admin_data') || '{}');
+
+let allLeads = [];
+
+let allProps = [];
+
+
+
+// ===== INIT =====
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  if (authToken) {
+
+    showDashboard();
+
+  }
+
+  // Date
+
+  const now = new Date();
+
+  const el = document.getElementById('dash-date');
+
+  if (el) el.textContent = now.toLocaleDateString('en-IN', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+});
+
+
+
+// ===== LOGIN =====
+
+async function adminLogin(e) {
+
+  e.preventDefault();
+
+  const btn = document.getElementById('login-submit-btn');
+
+  const errEl = document.getElementById('login-error');
+
+  btn.textContent = '&#9203; Logging in...';
+
+  btn.disabled = true;
+
+  errEl.style.display = 'none';
+
+
+
+  const email = document.getElementById('login-email').value;
+
+  const password = document.getElementById('login-password').value;
+
+
+
+  try {
+
+    const res = await fetch(`${API}/api/login`, {
+
+      method: 'POST',
+
+      headers: { 'Content-Type': 'application/json' },
+
+      body: JSON.stringify({ email, password })
+
+    });
+
+    const data = await res.json();
+
+    if (data.status === 'success') {
+
+      authToken = data.token;
+
+      adminData = data.agent || {};
+
+      localStorage.setItem('me_admin_token', authToken);
+
+      localStorage.setItem('me_admin_data', JSON.stringify(adminData));
+
+      showDashboard();
+
+    } else {
+
+      errEl.textContent = data.message || 'Invalid credentials';
+
+      errEl.style.display = 'block';
+
+    }
+
+  } catch (err) {
+
+    errEl.textContent = 'Cannot connect to server. Make sure backend is running.';
+
+    errEl.style.display = 'block';
+
+  }
+
+  btn.innerHTML = '<i class="fa-solid fa-lock"></i> Login to Dashboard';
+
+  btn.disabled = false;
+
+}
+
+
+
+function showDashboard() {
+
+  document.getElementById('login-screen').style.display = 'none';
+
+  document.getElementById('dashboard').style.display = 'flex';
+
+
+
+  // Set admin info
+
+  const name = adminData.name || 'Admin';
+
+  document.getElementById('admin-name').textContent = name;
+
+  document.getElementById('admin-email').textContent = adminData.email || '';
+
+  document.getElementById('welcome-name').textContent = name.split(' ')[0];
+
+  document.getElementById('admin-avatar').textContent = name[0].toUpperCase();
+
+  document.getElementById('dash-date').textContent = new Date().toLocaleDateString('en-IN', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+
+
+  loadDashboardData();
+
+  triggerLevitate();
+
+}
+
+
+
+function adminLogout() {
+
+  localStorage.removeItem('me_admin_token');
+
+  localStorage.removeItem('me_admin_data');
+
+  authToken = null;
+
+  document.getElementById('dashboard').style.display = 'none';
+
+  document.getElementById('login-screen').style.display = 'flex';
+
+}
+
+
+
+// ===== NAVIGATION =====
+
+function showSection(id) {
+
+  ['overview','properties','design-projects','leads','analytics','call-logs'].forEach(s => {
+    document.getElementById(`section-${s}`)?.classList.toggle('section-hidden', s !== id);
+    document.getElementById(`nav-${s}`)?.classList.toggle('active', s === id);
+  });
+
+  if (id === 'properties') loadPropsTable();
+
+  if (id === 'leads') loadLeadsTable();
+
+  if (id === 'analytics') loadAnalytics();
+
+  if (id === 'design-projects') loadDesignProjects();
+
+  if (id === 'call-logs') loadCallLogsTable();
+
+  // Close mobile sidebar
+
+  document.getElementById('sidebar').classList.remove('open');
+
+}
+
+
+
+function toggleSidebar() {
+
+  document.getElementById('sidebar').classList.toggle('open');
+
+}
+
+
+
+// ===== LOAD DATA =====
+
+async function loadDashboardData() {
+
+  try {
+
+    const headers = { 'Authorization': `Bearer ${authToken}` };
+
+    const [propsRes, leadsRes] = await Promise.all([
+
+      fetch(`${API}/api/properties`),
+
+      fetch(`${API}/api/admin/leads`, { headers })
+
+    ]);
+
+    const props = await propsRes.json();
+
+    const leadsData = await leadsRes.json();
+
+    allProps = Array.isArray(props) ? props : [];
+
+    allLeads = leadsData.leads || (Array.isArray(leadsData) ? leadsData : []);
+
+
+
+    // Stats
+
+    document.getElementById('stat-props').textContent = allProps.length;
+
+    document.getElementById('stat-leads').textContent = allLeads.length;
+
+    const calls = allLeads.filter(l => l.call_status === 'completed').length;
+
+    const wa = allLeads.filter(l => l.whatsapp_sent).length;
+
+    document.getElementById('stat-calls').textContent = calls;
+
+    document.getElementById('stat-wa').textContent = wa;
+
+
+
+    // Recent leads (last 5)
+
+    renderRecentLeads(allLeads.slice(0, 5));
+
+  } catch (err) {
+
+    console.error('Dashboard load error:', err);
+
+  }
+
+}
+
+
+
+function renderRecentLeads(leads) {
+
+  const tbody = document.getElementById('recent-leads-body');
+
+  if (!leads.length) {
+
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--text-secondary);">No leads yet. Share your website to get started!</td></tr>';
+
+    return;
+
+  }
+
+  tbody.innerHTML = leads.map(l => `
+
+    <tr>
+
+      <td style="color:var(--text-primary);font-weight:600;">${l.name || '-'}</td>
+
+      <td>${l.phone || '-'}</td>
+
+      <td>${l.property_title || l.property || 'General'}</td>
+
+      <td style="font-size:0.75rem;">${formatDate(l.date)}</td>
+
+      <td><span class="badge ${l.call_status === 'completed' ? 'badge-success' : l.call_status === 'failed' ? 'badge-danger' : 'badge-warn'}">${l.call_status || 'pending'}</span></td>
+
+      <td><span class="badge ${l.whatsapp_sent ? 'badge-success' : 'badge-warn'}">${l.whatsapp_sent ? ' Sent' : 'Pending'}</span></td>
+
+    </tr>
+
+  `).join('');
+
+}
+
+
+
+// ===== PROPERTIES =====
+
+async function loadPropsTable() {
+
+  const tbody = document.getElementById('props-table-body');
+
+  try {
+
+    const res = await fetch(`${API}/api/properties`);
+
+    allProps = await res.json();
+
+    document.getElementById('prop-count-badge').textContent = `${allProps.length} total`;
+
+    if (!allProps.length) {
+
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--text-secondary);">No properties yet. Add your first one!</td></tr>';
+
+      return;
+
+    }
+
+    tbody.innerHTML = allProps.map(p => {
+
+      const img = (p.images && p.images[0]) || (p.image_urls && p.image_urls.split(',')[0]) || '';
+
+      return `
+
+      <tr>
+
+        <td>${img ? `<img src="${img}" class="prop-thumb" alt="${p.title}" loading="lazy"/>` : '<i class="fa-solid fa-camera"></i> '}</td>
+
+        <td style="color:var(--text-primary);font-weight:600;">${p.title || '-'}</td>
+
+        <td><span class="badge badge-info">${p.type || '-'}</span></td>
+
+        <td style="color:var(--gold);font-weight:700;">${p.price || '-'}</td>
+
+        <td><i class="fa-solid fa-location-dot" style="color:var(--gold);"></i> ${p.location || '-'}</td>
+
+        <td>
+
+          <div class="action-btns">
+
+            <button class="action-btn" onclick="editProp(${JSON.stringify(p).replace(/"/g,'&quot;')})"> Edit</button>
+
+            <button class="action-btn del" onclick="confirmDelete(${p.id})"><i class="fa-solid fa-trash"></i> Del</button>
+
+          </div>
+
+        </td>
+
+      </tr>`;
+
+    }).join('');
+
+    document.getElementById('stat-props').textContent = allProps.length;
+
+  } catch (err) {
+
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-secondary);">Error loading properties.</td></tr>';
+
+  }
+
+}
+
+
+
+function showAddPropForm() {
+
+  document.getElementById('pf-edit-id').value = '';
+
+  document.getElementById('pf-title').value = '';
+
+  document.getElementById('pf-type').value = 'Plot';
+
+  document.getElementById('pf-price').value = '';
+
+  document.getElementById('pf-location').value = '';
+
+  document.getElementById('pf-description').value = '';
+
+  // Reset image rows - start with 5 empty slots
+
+  const list = document.getElementById('img-url-list');
+
+  list.innerHTML = '';
+
+  for (let i = 0; i < 5; i++) addImageRow('');
+
+  document.getElementById('prop-form-title').textContent = 'Add New Property';
+
+  document.getElementById('add-prop-form').style.display = 'block';
+
+  document.getElementById('add-prop-btn').style.display = 'none';
+
+  document.getElementById('add-prop-form').scrollIntoView({ behavior: 'smooth' });
+
+}
+
+
+
+function editProp(prop) {
+
+  document.getElementById('pf-edit-id').value = prop.id || '';
+
+  document.getElementById('pf-title').value = prop.title || '';
+
+  document.getElementById('pf-type').value = prop.type || 'Plot';
+
+  document.getElementById('pf-price').value = prop.price || '';
+
+  document.getElementById('pf-location').value = prop.location || '';
+
+  document.getElementById('pf-description').value = prop.description || '';
+
+  // Load existing images into rows
+
+  const imgs = prop.images ? prop.images : (prop.image_urls ? prop.image_urls.split(',').map(s=>s.trim()).filter(Boolean) : []);
+
+  const list = document.getElementById('img-url-list');
+
+  list.innerHTML = '';
+
+  const filled = imgs.length > 0 ? imgs : [];
+
+  // Always show at least 5 rows
+
+  const total = Math.max(filled.length + 2, 5);
+
+  for (let i = 0; i < total; i++) addImageRow(filled[i] || '');
+
+  document.getElementById('prop-form-title').textContent = 'Edit Property';
+
+  document.getElementById('add-prop-form').style.display = 'block';
+
+  document.getElementById('add-prop-btn').style.display = 'none';
+
+  document.getElementById('add-prop-form').scrollIntoView({ behavior: 'smooth' });
+
+}
+
+
+
+/* "" Dynamic image URL rows "" */
+
+function addImageRow(value = '') {
+
+  const list = document.getElementById('img-url-list');
+
+  if (!list) return;
+
+  const rowIdx = list.children.length + 1;
+
+  const row = document.createElement('div');
+
+  row.className = 'img-url-row';
+
+  row.innerHTML = `
+
+    <span class="img-row-num">${rowIdx}</span>
+
+    <img class="img-preview" src="" alt="preview"/>
+
+    <input class="img-url-input" type="url" placeholder="Paste image URL here (https://...)" value="${value}"/>
+
+    <button type="button" class="img-row-del" onclick="removeImageRow(this)" title="Remove"></button>`;
+
+  list.appendChild(row);
+
+
+
+  const inp  = row.querySelector('.img-url-input');
+
+  const prev = row.querySelector('.img-preview');
+
+
+
+  // Live preview on paste/type
+
+  function tryPreview(url) {
+
+    if (!url) { prev.classList.remove('loaded'); return; }
+
+    const t = new Image();
+
+    t.onload  = () => { prev.src = url; prev.classList.add('loaded'); };
+
+    t.onerror = () => prev.classList.remove('loaded');
+
+    t.src = url;
+
+  }
+
+
+
+  inp.addEventListener('input',  () => tryPreview(inp.value.trim()));
+
+  inp.addEventListener('blur',   () => tryPreview(inp.value.trim()));
+
+  inp.addEventListener('paste',  e  => {
+
+    const pasted = (e.clipboardData || window.clipboardData).getData('text').trim();
+
+    setTimeout(() => tryPreview(pasted), 50);
+
+  });
+
+
+
+  if (value) tryPreview(value);
+
+}
+
+
+
+function removeImageRow(btn) {
+
+  btn.closest('.img-url-row').remove();
+
+  updateRowNumbers();
+
+}
+
+
+
+function updateRowNumbers() {
+
+  document.querySelectorAll('#img-url-list .img-row-num').forEach((el, i) => {
+
+    el.textContent = i + 1;
+
+  });
+
+}
+
+
+
+function hidePropForm() {
+
+  document.getElementById('add-prop-form').style.display = 'none';
+
+  document.getElementById('add-prop-btn').style.display = 'inline-flex';
+
+}
+
+
+
+async function saveProp() {
+
+  const btn = document.getElementById('save-prop-btn');
+
+  btn.textContent = 'Saving...';
+
+  btn.disabled = true;
+
+  const editId = document.getElementById('pf-edit-id').value;
+
+  // Collect all image URLs from the dynamic rows
+
+  const imageUrls = Array.from(document.querySelectorAll('.img-url-input'))
+
+    .map(inp => inp.value.trim())
+
+    .filter(Boolean);
+
+  const payload = {
+
+    title:       document.getElementById('pf-title').value.trim(),
+
+    type:        document.getElementById('pf-type').value,
+
+    price:       document.getElementById('pf-price').value.trim(),
+
+    location:    document.getElementById('pf-location').value.trim(),
+
+    description: document.getElementById('pf-description').value.trim(),
+
+    image_urls:  imageUrls.join(',')
+
+  };
+
+  if (!payload.title || !payload.location) {
+
+    alert('Title and Location are required!');
+
+    btn.textContent = 'Save Property'; btn.disabled = false;
+
+    return;
+
+  }
+
+  try {
+
+    const method = editId ? 'PUT' : 'POST';
+
+    const url = editId ? `${API}/api/admin/properties/${editId}` : `${API}/api/admin/properties`;
+
+    const res = await fetch(url, {
+
+      method,
+
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${authToken}` },
+
+      body: JSON.stringify(payload)
+
+    });
+
+    const data = await res.json();
+
+    if (data.status === 'success') {
+
+      hidePropForm();
+
+      loadPropsTable();
+
+      loadDashboardData();
+
+      showAdminToast(' Property saved successfully!');
+
+    } else {
+
+      alert(data.message || 'Error saving property');
+
+    }
+
+  } catch (err) {
+
+    alert('Server error. Make sure backend is running.');
+
+  }
+
+  btn.textContent = '<i class="fa-solid fa-floppy-disk"></i>  Save Property'; btn.disabled = false;
+
+}
+
+
+
+let deleteId = null;
+
+function confirmDelete(id) {
+
+  deleteId = id;
+
+  document.getElementById('delete-modal').classList.add('open');
+
+  document.getElementById('confirm-delete-btn').onclick = async () => {
+
+    document.getElementById('delete-modal').classList.remove('open');
+
+    await fetch(`${API}/api/admin/properties/${deleteId}`, {
+
+      method: 'DELETE',
+
+      headers: { 'Authorization': `Bearer ${authToken}` }
+
+    });
+
+    loadPropsTable();
+
+    loadDashboardData();
+
+    showAdminToast('Property deleted');
+
+  };
+
+}
+
+
+
+// ===== LEADS =====
+
+async function loadLeadsTable() {
+
+  const tbody = document.getElementById('leads-table-body');
+
+  try {
+
+    const res = await fetch(`${API}/api/admin/leads`, {
+
+      headers: { 'Authorization': `Bearer ${authToken}` }
+
+    });
+
+    const data = await res.json();
+
+    allLeads = data.leads || (Array.isArray(data) ? data : []);
+
+    renderLeadsTable(allLeads);
+
+  } catch (err) {
+
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-secondary);">Error loading leads.</td></tr>';
+
+  }
+
+}
+
+
+
+function renderLeadsTable(leads) {
+
+  const tbody = document.getElementById('leads-table-body');
+
+  if (!leads.length) {
+
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--text-secondary);">No leads yet!</td></tr>';
+
+    return;
+
+  }
+
+  tbody.innerHTML = leads.map(l => `
+
+    <tr>
+
+      <td style="color:var(--text-primary);font-weight:600;">${l.name || '-'}</td>
+
+      <td><a href="tel:${l.phone}" style="color:var(--gold);">${l.phone || '-'}</a></td>
+
+      <td>${l.property_title || l.property || 'General'}</td>
+
+      <td style="font-size:0.8rem;color:var(--text-secondary);">${l.budget || '-'}</td>
+
+      <td style="font-size:0.75rem;">${formatDate(l.date)}</td>
+
+      <td><span class="badge ${l.call_status === 'completed' ? 'badge-success' : l.call_status === 'failed' ? 'badge-danger' : 'badge-warn'}">${l.call_status || 'pending'}</span></td>
+
+      <td><span class="badge ${l.whatsapp_sent ? 'badge-success' : 'badge-warn'}">${l.whatsapp_sent ? ' Sent' : '- No'}</span></td>
+
+    </tr>
+
+  `).join('');
+
+}
+
+
+
+function filterLeads() {
+
+  const q = document.getElementById('lead-search').value.toLowerCase();
+
+  const filtered = allLeads.filter(l =>
+
+    (l.name || '').toLowerCase().includes(q) ||
+
+    (l.phone || '').toLowerCase().includes(q) ||
+
+    (l.property_title || '').toLowerCase().includes(q)
+
+  );
+
+  renderLeadsTable(filtered);
+
+}
+
+
+
+async function exportLeads() {
+
+  window.open(`${API}/api/admin/leads/export`, '_blank');
+
+}
+
+
+
+// ===== ANALYTICS =====
+
+function loadAnalytics() {
+
+  const leads = allLeads;
+
+  const props = allProps;
+
+  const calls = leads.filter(l => l.call_status === 'completed').length;
+
+  const wa = leads.filter(l => l.whatsapp_sent).length;
+
+  const convRate = leads.length ? Math.round((calls / leads.length) * 100) : 0;
+
+
+
+  document.getElementById('an-conversion').textContent = `${convRate}%`;
+
+  document.getElementById('an-calls').textContent = calls;
+
+  document.getElementById('an-wa').textContent = wa;
+
+  document.getElementById('an-props').textContent = props.length;
+
+
+
+  // Bar chart by property
+
+  const chart = document.getElementById('leads-chart');
+
+  const propCounts = {};
+
+  leads.forEach(l => {
+
+    const t = l.property_title || 'Other';
+
+    propCounts[t] = (propCounts[t] || 0) + 1;
+
+  });
+
+  const entries = Object.entries(propCounts).slice(0, 5);
+
+  const max = Math.max(...entries.map(e => e[1]), 1);
+
+  chart.innerHTML = entries.length ? entries.map(([name, count]) => `
+
+    <div class="bar-col">
+
+      <div class="bar" style="height:${(count/max)*100}px;" title="${name}: ${count}"></div>
+
+      <div class="bar-label">${name.substring(0,8)}</div>
+
+    </div>
+
+  `).join('') : '<p style="color:var(--text-secondary);font-size:0.82rem;align-self:center;">No data yet</p>';
+
+
+
+  // Auto stats
+
+  const autoStats = document.getElementById('auto-stats');
+
+  const callPct = leads.length ? Math.round((calls/leads.length)*100) : 0;
+
+  const waPct = leads.length ? Math.round((wa/leads.length)*100) : 0;
+
+  autoStats.innerHTML = `
+
+    <div>
+
+      <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:5px;">
+
+        <span><i class="fa-solid fa-phone"></i>  AI Calls</span><span style="color:var(--gold);">${callPct}%</span>
+
+      </div>
+
+      <div style="background:var(--bg-highlight);border-radius:4px;height:6px;">
+
+        <div style="background:linear-gradient(90deg,var(--gold),var(--gold-light));width:${callPct}%;height:100%;border-radius:4px;transition:width 1s ease;"></div>
+
+      </div>
+
+    </div>
+
+    <div>
+
+      <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:5px;">
+
+        <span><i class="fa-solid fa-comment-dots"></i>  WhatsApp</span><span style="color:var(--gold);">${waPct}%</span>
+
+      </div>
+
+      <div style="background:var(--bg-highlight);border-radius:4px;height:6px;">
+
+        <div style="background:linear-gradient(90deg,#25D366,#22c55e);width:${waPct}%;height:100%;border-radius:4px;transition:width 1s ease;"></div>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+
+// ===== UTILITIES =====
+
+function formatDate(dateStr) {
+
+  if (!dateStr) return '-';
+
+  const d = new Date(dateStr);
+
+  if (isNaN(d)) return dateStr;
+
+  return d.toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' });
+
+}
+
+
+
+function triggerLevitate() {
+
+  setTimeout(() => {
+
+    document.querySelectorAll('.levitate').forEach(el => el.classList.add('visible'));
+
+  }, 100);
+
+}
+
+
+
+function showAdminToast(msg) {
+
+  const t = document.createElement('div');
+
+  t.className = 'toast show';
+
+  t.style.cssText = 'position:fixed;bottom:30px;right:30px;z-index:9999;background:var(--bg-card);border:1px solid var(--gold);border-radius:14px;padding:1rem 1.5rem;font-size:0.88rem;color:var(--text-primary);box-shadow:var(--shadow-float);';
+
+  t.textContent = msg;
+
+  document.body.appendChild(t);
+
+  setTimeout(() => t.remove(), 3000);
+
+}
+
+
+
+// ===== DESIGN PROJECTS =====
+
+let designProjects = JSON.parse(localStorage.getItem('me_design_projects') || '{"interior":[],"exterior":[]}');
+
+
+
+function switchDPTab(tab) {
+
+  document.getElementById('dp-interior-panel').style.display = tab === 'interior' ? 'block' : 'none';
+
+  document.getElementById('dp-exterior-panel').style.display = tab === 'exterior' ? 'block' : 'none';
+
+  document.getElementById('dp-tab-interior').classList.toggle('active', tab === 'interior');
+
+  document.getElementById('dp-tab-exterior').classList.toggle('active', tab === 'exterior');
+
+}
+
+
+
+function addDesignImageRow(listId) {
+
+  const list = document.getElementById(listId);
+
+  if (!list) return;
+
+  const rowIdx = list.children.length + 1;
+
+  const row = document.createElement('div');
+
+  row.className = 'img-url-row';
+
+  row.innerHTML = `
+
+    <span class="img-row-num">${rowIdx}</span>
+
+    <img class="img-preview" src="" alt="preview"/>
+
+    <input class="img-url-input" type="url" placeholder="Paste image URL here (https://...)"/>
+
+    <button type="button" class="img-row-del" onclick="this.closest('.img-url-row').remove()" title="Remove"></button>`;
+
+  list.appendChild(row);
+
+  const inp = row.querySelector('.img-url-input');
+
+  const prev = row.querySelector('.img-preview');
+
+  inp.addEventListener('input', () => {
+
+    const url = inp.value.trim();
+
+    if (!url) { prev.classList.remove('loaded'); return; }
+
+    const t = new Image(); t.onload = () => { prev.src = url; prev.classList.add('loaded'); }; t.src = url;
+
+  });
+
+}
+
+
+
+function saveDesignProject(type) {
+
+  const prefix = type === 'interior' ? 'int' : 'ext';
+
+  const title = document.getElementById(`${prefix}-title`).value.trim();
+
+  const category = document.getElementById(`${prefix}-category`).value;
+
+  const description = document.getElementById(`${prefix}-description`).value.trim();
+
+  if (!title) { alert('Please enter a project title!'); return; }
+
+  const imageUrls = Array.from(document.querySelectorAll(`#${prefix}-img-list .img-url-input`))
+
+    .map(inp => inp.value.trim()).filter(Boolean);
+
+  const project = { id: Date.now(), title, category, description, images: imageUrls, date: new Date().toISOString() };
+
+  designProjects[type].unshift(project);
+
+  localStorage.setItem('me_design_projects', JSON.stringify(designProjects));
+
+  // Reset form
+
+  document.getElementById(`${prefix}-title`).value = '';
+
+  document.getElementById(`${prefix}-description`).value = '';
+
+  document.getElementById(`${prefix}-img-list`).innerHTML = '';
+
+  renderDesignProjects(type);
+
+  showAdminToast(` ${type === 'interior' ? 'Interior' : 'Exterior'} project saved!`);
+
+}
+
+
+
+function loadDesignProjects() {
+
+  designProjects = JSON.parse(localStorage.getItem('me_design_projects') || '{"interior":[],"exterior":[]}');
+
+  // Init image rows if empty
+
+  if (!document.getElementById('int-img-list').children.length) addDesignImageRow('int-img-list');
+
+  if (!document.getElementById('ext-img-list').children.length) addDesignImageRow('ext-img-list');
+
+  renderDesignProjects('interior');
+
+  renderDesignProjects('exterior');
+
+}
+
+
+
+function renderDesignProjects(type) {
+
+  const prefix = type === 'interior' ? 'int' : 'ext';
+
+  const projects = designProjects[type] || [];
+
+  document.getElementById(`${prefix}-count`).textContent = `${projects.length} project${projects.length !== 1 ? 's' : ''}`;
+
+  const list = document.getElementById(`${prefix}-projects-list`);
+
+  if (!projects.length) {
+
+    list.innerHTML = `<p style="color:var(--text-secondary);font-size:0.88rem;">No ${type} projects added yet. Add your first project above.</p>`;
+
+    return;
+
+  }
+
+  list.innerHTML = `<div class="project-card-grid">${projects.map(p => `
+
+    <div class="project-admin-card">
+
+      <div class="project-admin-img">
+
+        ${p.images && p.images[0] ? `<img src="${p.images[0]}" alt="${p.title}" loading="lazy"/>` : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2rem;"><i class="fa-solid fa-camera"></i> </div>'}
+
+      </div>
+
+      <div class="project-admin-body">
+
+        <div class="project-admin-name">${p.title}</div>
+
+        <div class="project-admin-cat">- ${p.category} &middot; ${p.images ? p.images.length : 0} images</div>
+
+        <div class="project-admin-actions">
+
+          <button class="action-btn del" onclick="deleteDesignProject('${type}',${p.id})"><i class="fa-solid fa-trash"></i> Delete</button>
+
+        </div>
+
+      </div>
+
+    </div>`).join('')}</div>`;
+
+}
+
+
+
+function deleteDesignProject(type, id) {
+
+  designProjects[type] = designProjects[type].filter(p => p.id !== id);
+
+  localStorage.setItem('me_design_projects', JSON.stringify(designProjects));
+
+  renderDesignProjects(type);
+
+  showAdminToast('Project deleted');
+
+}
+
+// ===== CALL LOGS =====
+
+let allCallLogs = [];
+
+async function loadCallLogsTable() {
+  const tbody = document.getElementById('call-logs-body');
+  try {
+    const res = await fetch(`${API}/api/admin/calls`, {
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+    const data = await res.json();
+    allCallLogs = data.calls || [];
+    renderCallLogsTable(allCallLogs);
+  } catch (err) {
+    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:var(--text-secondary);">Error loading call logs.</td></tr>';
+  }
+}
+
+function renderCallLogsTable(logs) {
+  const tbody = document.getElementById('call-logs-body');
+  if (!logs.length) {
+    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:2rem;color:var(--text-secondary);">No call logs found.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = logs.map(l => `
+    <tr>
+      <td style="font-size:0.75rem;">${formatDate(l.call_time)}</td>
+      <td style="color:var(--text-primary);font-weight:600;">${l.customer_name || '-'}</td>
+      <td><a href="tel:${l.phone_number}" style="color:var(--gold);">${l.phone_number || '-'}</a></td>
+      <td><span class="badge badge-info">${l.interest_type || '-'}</span></td>
+      <td>${l.property_type || '-'}</td>
+      <td style="font-size:0.8rem;color:var(--text-secondary);">${l.budget || '-'}</td>
+      <td>${l.location || '-'}</td>
+      <td style="font-size:0.8rem; max-width:200px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${l.summary || ''}">${l.summary || '-'}</td>
+      <td>
+        <button class="action-btn" onclick="viewTranscription(${l.id})"><i class="fa-solid fa-eye"></i> View</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function filterCallLogs() {
+  const q = document.getElementById('call-search').value.toLowerCase();
+  const interest = document.getElementById('call-filter-interest').value.toLowerCase();
+  
+  const filtered = allCallLogs.filter(l => {
+    const matchSearch = (l.customer_name || '').toLowerCase().includes(q) ||
+                        (l.phone_number || '').toLowerCase().includes(q) ||
+                        (l.location || '').toLowerCase().includes(q) ||
+                        (l.summary || '').toLowerCase().includes(q);
+    const matchInterest = interest ? (l.interest_type || '').toLowerCase() === interest : true;
+    return matchSearch && matchInterest;
+  });
+  renderCallLogsTable(filtered);
+}
+
+async function viewTranscription(id) {
+  document.getElementById('transcription-text').textContent = 'Loading transcription...';
+  document.getElementById('transcription-modal').classList.add('open');
+  
+  try {
+    const res = await fetch(`${API}/api/admin/calls/${id}`, {
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+    const data = await res.json();
+    if (data.status === 'success') {
+      document.getElementById('transcription-text').textContent = data.data.transcription || 'No transcription available.';
+    } else {
+      document.getElementById('transcription-text').textContent = 'Error loading transcription.';
+    }
+  } catch(err) {
+    document.getElementById('transcription-text').textContent = 'Error connecting to server.';
+  }
+}
+
+async function exportCallLogs() {
+  window.open(`${API}/api/admin/calls/export`, '_blank');
+}
+
+async function uploadCallAudio() {
+  const fileInput = document.getElementById('call-audio-upload');
+  if (!fileInput.files.length) {
+    alert("Please select an audio file first.");
+    return;
+  }
+  
+  const btn = document.getElementById('upload-call-btn');
+  const status = document.getElementById('upload-call-status');
+  btn.textContent = 'Processing...';
+  btn.disabled = true;
+  status.textContent = 'Uploading and analyzing via AI... This may take a minute.';
+  
+  const formData = new FormData();
+  formData.append('audio', fileInput.files[0]);
+  
+  try {
+    const res = await fetch(`${API}/api/admin/upload-call`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${authToken}` },
+      body: formData
+    });
+    const data = await res.json();
+    if (data.status === 'success') {
+      status.textContent = 'Processed successfully! Refreshing table...';
+      fileInput.value = '';
+      loadCallLogsTable();
+      showAdminToast('Call logged successfully!');
+    } else {
+      status.textContent = 'Error: ' + data.error;
+    }
+  } catch (err) {
+    status.textContent = 'Upload failed. Check backend connection.';
+  }
+  
+  btn.textContent = 'Transcribe Call';
+  btn.disabled = false;
+}
+
+</script>
+
+</body>
+
+</html>
+
+
+
