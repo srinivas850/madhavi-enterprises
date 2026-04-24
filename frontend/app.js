@@ -371,7 +371,7 @@ async function submitLead(e) {
   };
 
   try {
-    const res = await fetch(`${API_BASE}/enquiry`, {
+    const res = await fetch(`${API_BASE}/api/enquiry`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
