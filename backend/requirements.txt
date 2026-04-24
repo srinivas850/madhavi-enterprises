@@ -8,3 +8,4 @@ openpyxl
 cloudinary
 omnidimension
 waitress
+psycopg2-binary
