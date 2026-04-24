@@ -90,11 +90,12 @@ def init_pg_db():
             call_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )''')
         
-        # 2. Admin
-        c.execute('''CREATE TABLE IF NOT EXISTS admin (
+        # 2. Admins
+        c.execute('''CREATE TABLE IF NOT EXISTS admins (
             id SERIAL PRIMARY KEY,
             email VARCHAR(255) UNIQUE,
-            password TEXT
+            password_hash TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )''')
         
         # 3. Properties
@@ -124,13 +125,7 @@ def init_pg_db():
             whatsapp_sent INTEGER DEFAULT 0
         )''')
         
-        # Seed admin if not exists
-        c.execute("SELECT COUNT(*) as cnt FROM admin")
-        if c.fetchone()["cnt"] == 0:
-            hashed = bcrypt.hashpw(ADMIN_PASSWORD.encode(), bcrypt.gensalt()).decode()
-            c.execute("INSERT INTO admin (email, password) VALUES (%s, %s)", (ADMIN_EMAIL, hashed))
-            print(f"  [+] Admin seeded: {ADMIN_EMAIL}")
-            
+        
         # Seed demo properties if empty
         c.execute("SELECT COUNT(*) as cnt FROM properties")
         if c.fetchone()["cnt"] == 0:
@@ -270,11 +265,11 @@ def login():
 
     conn = get_pg_db()
     c = conn.cursor(cursor_factory=RealDictCursor)
-    c.execute("SELECT * FROM admin WHERE email=%s", (email,))
+    c.execute("SELECT * FROM admins WHERE email=%s", (email,))
     admin = c.fetchone()
     conn.close()
 
-    if admin and bcrypt.checkpw(password.encode(), admin["password"].encode()):
+    if admin and bcrypt.checkpw(password.encode(), admin["password_hash"].encode()):
         token = jwt.encode({
             "admin_id": admin["id"],
             "email": admin["email"],
