@@ -27,6 +27,7 @@ load_dotenv()
 #  AI-Powered Real Estate Platform
 # =====================================================
 
+print('App starting...')
 app = Flask(__name__)
 # Enable CORS for all origins (for Vercel deployment)
 CORS(app, resources={r"/*": {"origins": "*"}})
@@ -41,6 +42,7 @@ ADMIN_EMAIL         = os.environ.get("ADMIN_EMAIL", "admin@madhavienterprise.com
 ADMIN_PASSWORD      = os.environ.get("ADMIN_PASSWORD", "madhavi2025")
 
 DATABASE_URL        = os.environ.get("DATABASE_URL")
+print("DB status:", DATABASE_URL is not None)
 GEMINI_API_KEY      = os.environ.get("GEMINI_API_KEY")
 if GEMINI_API_KEY:
     genai.configure(api_key=GEMINI_API_KEY)
@@ -58,15 +60,30 @@ cloudinary.config(
 )
 
 # ===== OMNIDIMENSION SDK CLIENT =====
-omni_client = Client(OMNI_API_KEY)
+try:
+    omni_client = Client(OMNI_API_KEY)
+except Exception as e:
+    print(f"Omnidimension Init Error: {e}")
+    omni_client = None
 
 # =====================================================
 #  DATABASE - POSTGRESQL
 # =====================================================
 def get_pg_db():
-    if not DATABASE_URL:
-        raise Exception("DATABASE_URL not set")
-    return psycopg2.connect(DATABASE_URL)
+    try:
+        url = os.getenv("DATABASE_URL")
+        if not url: return None
+        if "?sslmode=" in url:
+            return psycopg2.connect(url)
+        return psycopg2.connect(url, sslmode="require")
+    except Exception as e:
+        print("DB Error:", e)
+        return None
+
+@app.route("/")
+def home():
+    return "Backend is running"
+
 
 def init_pg_db():
     if not DATABASE_URL:
@@ -288,6 +305,8 @@ def login():
 @app.route("/api/properties", methods=["GET"])
 def get_properties():
     conn = get_pg_db()
+    if not conn:
+        return jsonify([])
     c = conn.cursor(cursor_factory=RealDictCursor)
     c.execute("SELECT * FROM properties ORDER BY featured DESC, created_at DESC")
     rows = c.fetchall()
@@ -304,6 +323,8 @@ def get_properties():
 @app.route("/api/properties/<int:prop_id>", methods=["GET"])
 def get_property(prop_id):
     conn = get_pg_db()
+    if not conn:
+        return jsonify([])
     c = conn.cursor(cursor_factory=RealDictCursor)
     c.execute("SELECT * FROM properties WHERE id=%s", (prop_id,))
     row = c.fetchone()
@@ -363,6 +384,8 @@ def update_property(prop_id):
 @token_required
 def delete_property(prop_id):
     conn = get_pg_db()
+    if not conn:
+        return jsonify([])
     c = conn.cursor()
     c.execute("DELETE FROM properties WHERE id=%s", (prop_id,))
     conn.commit()
@@ -376,6 +399,8 @@ def delete_property(prop_id):
 @token_required
 def get_leads():
     conn = get_pg_db()
+    if not conn:
+        return jsonify([])
     c = conn.cursor(cursor_factory=RealDictCursor)
     c.execute("SELECT * FROM leads ORDER BY date DESC")
     rows = c.fetchall()
@@ -703,6 +728,8 @@ def upload_call():
 def get_call_logs():
     try:
         conn = get_pg_db()
+        if not conn:
+            return jsonify([])
         c = conn.cursor(cursor_factory=RealDictCursor)
         c.execute("SELECT id, customer_name, phone_number, summary, interest_type, property_type, budget, location, call_time FROM call_logs ORDER BY call_time DESC")
         rows = c.fetchall()
@@ -722,6 +749,8 @@ def get_call_logs():
 def get_call_log_detail(log_id):
     try:
         conn = get_pg_db()
+        if not conn:
+            return jsonify([])
         c = conn.cursor(cursor_factory=RealDictCursor)
         c.execute("SELECT * FROM call_logs WHERE id = %s", (log_id,))
         row = c.fetchone()
@@ -742,6 +771,8 @@ def get_call_log_detail(log_id):
 def export_call_logs():
     try:
         conn = get_pg_db()
+        if not conn:
+            return jsonify([])
         df = pd.read_sql_query("SELECT * FROM call_logs ORDER BY call_time DESC", conn)
         conn.close()
         
