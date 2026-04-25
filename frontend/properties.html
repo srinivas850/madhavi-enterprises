@@ -34,9 +34,13 @@
     }
     .prop-hero::before { content:""; position:absolute; inset:0; background:rgba(0,0,0,0.6); z-index:0; }
 
-    .prop-hero h1 { font-size: clamp(2.2rem,5vw,3.8rem); margin-bottom:1rem; }
+    .prop-hero h1 { font-size: clamp(2.2rem,5vw,3.8rem); margin-bottom:1rem; color:#FFFFFF; }
 
-    .prop-hero p  { max-width: 580px; margin: 0 auto 2rem; color:var(--text-secondary); font-size:1.05rem; line-height:1.7; }
+    .prop-hero p  { max-width: 580px; margin: 0 auto 2rem; color:rgba(255,255,255,0.8); font-size:1.05rem; line-height:1.7; }
+
+    .prop-hero .section-badge { color:#FFFFFF; border-color:rgba(255,255,255,0.5); background:rgba(255,255,255,0.15); }
+
+    .prop-hero .breadcrumb a, .prop-hero .breadcrumb .sep, .prop-hero .breadcrumb .current { color:rgba(255,255,255,0.75); }
 
   </style>
 

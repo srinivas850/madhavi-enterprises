@@ -27,9 +27,7 @@
 
       padding: 120px 0 60px;
 
-      background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.08) 0%, transparent 60%),
-
-                  linear-gradient(180deg,#050B18,#030812);
+      background: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=80') center/cover no-repeat;
 
       text-align: center;
 
@@ -39,21 +37,17 @@
 
     }
 
-    .ext-hero::before {
-
-      content:'';
-
-      position:absolute; inset:0;
-
-      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9A84C' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-
-    }
+    .ext-hero::before { content:""; position:absolute; inset:0; background:rgba(0,0,0,0.6); z-index:0; }
 
     .ext-hero-content { position:relative; z-index:1; }
 
-    .ext-hero h1 { font-size: clamp(2.2rem,5vw,3.8rem); margin-bottom:1rem; }
+    .ext-hero h1 { font-size: clamp(2.2rem,5vw,3.8rem); margin-bottom:1rem; color:#FFFFFF; }
 
-    .ext-hero p  { max-width: 580px; margin: 0 auto 2rem; color:var(--text-secondary); font-size:1.05rem; line-height:1.7; }
+    .ext-hero p  { max-width: 580px; margin: 0 auto 2rem; color:rgba(255,255,255,0.8); font-size:1.05rem; line-height:1.7; }
+
+    .ext-hero .section-badge { color:#FFFFFF; border-color:rgba(255,255,255,0.5); background:rgba(255,255,255,0.15); }
+
+    .ext-hero .breadcrumb a, .ext-hero .breadcrumb .sep, .ext-hero .breadcrumb .current { color:rgba(255,255,255,0.75); }
 
 
 
