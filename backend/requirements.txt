@@ -9,5 +9,5 @@ cloudinary
 omnidimension
 waitress
 psycopg2-binary
-google-generativeai
+groq
 pandas

@@ -15,7 +15,6 @@ import bcrypt
 from functools import wraps
 import psycopg2
 from psycopg2.extras import RealDictCursor
-import google.generativeai as genai
 import tempfile
 import pandas as pd
 from io import BytesIO
@@ -34,8 +33,8 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 
 # ===== CONFIG FROM .env =====
 JWT_SECRET          = os.environ.get("JWT_SECRET", "madhavi_enterprises_secret_key_2025")
-OMNI_API_KEY        = os.environ.get("OMNI_API_KEY", "Xc2QxbCkxEGH6ga8Z05uMgBI4WYoo4fbGXIzsf9fEkQ")
-OMNI_AGENT_ID       = int(os.environ.get("OMNI_AGENT_ID", "149718"))
+OMNI_API_KEY        = os.environ.get("OMNI_API_KEY", "lqLMKAJ6b04-_xJtfWFYc_2g7MCFaOiSECW_hB6mSaonow")
+OMNI_AGENT_ID       = int(os.environ.get("OMNI_AGENT_ID", "151473"))
 ULTRAMSG_INSTANCE   = os.environ.get("ULTRAMSG_INSTANCE_ID", "")
 ULTRAMSG_TOKEN      = os.environ.get("ULTRAMSG_TOKEN", "")
 ADMIN_EMAIL         = os.environ.get("ADMIN_EMAIL", "admin@madhavienterprise.com")
@@ -43,9 +42,7 @@ ADMIN_PASSWORD      = os.environ.get("ADMIN_PASSWORD", "madhavi2025")
 
 DATABASE_URL        = os.environ.get("DATABASE_URL")
 print("DB status:", DATABASE_URL is not None)
-GEMINI_API_KEY      = os.environ.get("GEMINI_API_KEY")
-if GEMINI_API_KEY:
-    genai.configure(api_key=GEMINI_API_KEY)
+GROQ_API_KEY        = os.environ.get("GROQ_API_KEY")
 
 CLOUDINARY_CLOUD  = os.environ.get("CLOUDINARY_CLOUD_NAME", "djda3lldb")
 CLOUDINARY_KEY    = os.environ.get("CLOUDINARY_API_KEY",    "142637855547974")
@@ -140,6 +137,22 @@ def init_pg_db():
             date VARCHAR(255),
             call_status VARCHAR(50) DEFAULT 'pending',
             whatsapp_sent INTEGER DEFAULT 0
+        )''')
+        
+        # 5. AI Extracted Leads
+        c.execute('''CREATE TABLE IF NOT EXISTS ai_extracted_leads (
+            id SERIAL PRIMARY KEY,
+            name TEXT,
+            phone TEXT,
+            budget TEXT,
+            location_preference TEXT,
+            property_type TEXT,
+            buying_timeline TEXT,
+            interest_level TEXT,
+            key_requirements TEXT,
+            conversation_summary TEXT,
+            raw_json JSONB,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )''')
         
         
@@ -660,14 +673,22 @@ def upload_call():
         file.save(temp_audio_path)
         
         try:
-            audio_file = genai.upload_file(path=temp_audio_path)
+            from groq import Groq
+            client = Groq(api_key=GROQ_API_KEY)
             
+            # Step 1: Transcribe using Whisper
+            with open(temp_audio_path, "rb") as audio_f:
+                transcription_text = client.audio.transcriptions.create(
+                    file=(os.path.basename(temp_audio_path), audio_f.read()),
+                    model="whisper-large-v3",
+                    response_format="text"
+                )
+            
+            # Step 2: Extract JSON using Llama 3
             prompt = """
-            Analyze the following call recording and transcribe it completely.
-            Also extract the key details into a JSON object.
+            Analyze the following call recording and extract the key details into a JSON object.
             Return ONLY a valid JSON object with the exact following keys:
             {
-                "transcription": "the full transcribed text of the call",
                 "customer_name": "extracted name or 'Unknown'",
                 "phone_number": "extracted phone or 'Unknown'",
                 "interest_type": "buy/rent/sell or 'Unknown'",
@@ -678,16 +699,16 @@ def upload_call():
             }
             """
             
-            model = genai.GenerativeModel('gemini-2.5-flash')
-            response = model.generate_content(
-                [prompt, audio_file],
-                generation_config={"response_mime_type": "application/json"}
+            chat_completion = client.chat.completions.create(
+                messages=[
+                    {"role": "system", "content": prompt},
+                    {"role": "user", "content": f"Transcript:\n{transcription_text}"}
+                ],
+                model="llama-3.1-8b-instant",
+                response_format={"type": "json_object"}
             )
             
-            extracted_data = json.loads(response.text)
-            transcription_text = extracted_data.get('transcription', '')
-            
-            genai.delete_file(audio_file.name)
+            extracted_data = json.loads(chat_completion.choices[0].message.content)
         finally:
             if os.path.exists(temp_audio_path):
                 os.remove(temp_audio_path)
@@ -800,6 +821,11 @@ if __name__ == "__main__":
     print("=" * 56)
     print("  MADHAVI ENTERPRISES -- BACKEND (PRODUCTION READY)")
     print("=" * 56)
+    
+    # Register AI webhook and routes
+    from routes.webhook import webhook_bp
+    app.register_blueprint(webhook_bp)
+
     init_pg_db()
     print()
     print(" * Serving API with Waitress WSGI server (Port $PORT or 5001)")
