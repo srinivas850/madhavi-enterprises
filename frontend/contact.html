@@ -13,11 +13,11 @@
   <meta name="description" content="Get in touch with Madhavi Enterprises for premium real estate, interior design, and exterior design services."/>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="style.css?v=7"/>
 
   <style>
 
-    body { background: #030812; }
+    
 
     /* Hero */
 
@@ -25,15 +25,14 @@
 
       padding: 120px 0 60px;
 
-      background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.08) 0%, transparent 60%),
-
-                  linear-gradient(180deg,#050B18,#030812);
+      background: url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&q=80') center/cover no-repeat; position: relative;
 
       text-align: center;
 
       position: relative;
 
     }
+    .contact-hero::before { content:""; position:absolute; inset:0; background:rgba(0,0,0,0.6); z-index:0; }
 
     .contact-hero h1 { font-size: clamp(2.2rem,5vw,3.8rem); margin-bottom:1rem; }
 
@@ -147,17 +146,26 @@
 
 <!-- Floating WA -->
 
-<a href="https://wa.me/919876543210" target="_blank" class="wa-float" aria-label="WhatsApp">
-
-  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.570-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.122.553 4.116 1.523 5.843L.057 23.857a.5.5 0 0 0 .603.628l6.276-1.638A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.887 0-3.653-.523-5.168-1.43l-.37-.22-3.832.999 1.023-3.728-.24-.385A9.956 9.956 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
-
-</a>
-
-
-
 <!-- Navbar -->
 
-<nav class="navbar" id="navbar">
+
+  <!-- ===== TOP BAR ===== -->
+  <div class="top-bar">
+    <div class="container">
+      <div class="top-bar-contact">
+        <a href="tel:+919666313007"><i class="fa-solid fa-phone"></i> +91 96663 13007</a>
+        <a href="mailto:dasamrao@gmail.com"><i class="fa-solid fa-envelope"></i> dasamrao@gmail.com</a>
+      </div>
+      <div class="top-bar-socials">
+        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+        <a href="#"><i class="fa-brands fa-facebook"></i></a>
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <nav class="navbar" id="navbar">
 
   <div class="container nav-inner">
 
@@ -199,7 +207,8 @@
 
       <li><a href="admin.html" class="btn btn-glass" style="padding:8px 20px;font-size:0.82rem;">Admin</a></li>
 
-    </ul>
+    <li><a href="#" class="btn-estimation" onclick="openLeadModal(\'Get Free Estimation\',\'\',\'\')">Get Free Estimation</a></li>
+      </ul>
 
     <button class="nav-hamburger" id="hamburger" aria-label="Menu">
 
@@ -563,9 +572,9 @@ async function submitContactForm(e) {
 
         <a href="mailto:info@madhavienterprise.com"> info@madhavienterprise.com</a>
 
-        <a href="#">" Andhra Pradesh, India</a>
+        <a href="#"><i class="fa-solid fa-location-dot"></i> Andhra Pradesh, India</a>
 
-        <a href="admin.html">" Admin Login</a>
+        <a href="admin.html"><i class="fa-solid fa-lock"></i> Admin Login</a>
 
       </div>
 
@@ -586,6 +595,20 @@ async function submitContactForm(e) {
 
 
 <script src="app.js"></script>
+
+
+  <!-- ===== FLOATING SIDE BUTTONS ===== -->
+  <div class="floating-side-group fade-in-up">
+    <a href="https://wa.me/919666313007" target="_blank" class="side-btn wa" aria-label="WhatsApp">
+      <i class="fa-brands fa-whatsapp"></i>
+    </a>
+    <a href="tel:+919666313007" class="side-btn call" aria-label="Call">
+      <i class="fa-solid fa-phone"></i>
+    </a>
+    <button class="side-btn-quote" onclick="openLeadModal('Get Free Estimation','','')">
+      Get Quote
+    </button>
+  </div>
 
 </body>
 

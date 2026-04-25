@@ -19,15 +19,13 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=7" />
 
   <style>
     /* ===== PAGE-SPECIFIC EXTRAS ===== */
 
     .ventures-section {
-
-      background: linear-gradient(180deg, #050B18 0%, #080F1F 50%, #050B18 100%);
-
+      background: #FFFFFF;
     }
 
 
@@ -230,7 +228,7 @@
 
     .ai-highlight {
 
-      background: linear-gradient(135deg, rgba(201, 168, 76, 0.05) 0%, rgba(13, 23, 41, 0.8) 100%);
+      background: linear-gradient(135deg, rgba(181, 138, 27, 0.06) 0%, rgba(241, 243, 245, 0.9) 100%);
 
       border: 1px solid var(--border-glass);
 
@@ -352,10 +350,8 @@
 
     /* ===== INTERIOR GALLERY ===== */
 
-    .interior-section {
-
-      background: linear-gradient(180deg, #050B18 0%, #06101E 60%, #050B18 100%);
-
+    .how-it-works-section {
+      background: #F8F9FA;
     }
 
 
@@ -498,7 +494,7 @@
 
       inset: 0;
 
-      background: linear-gradient(to top, rgba(3, 8, 18, 0.85) 0%, transparent 60%);
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 0%, transparent 60%);
 
       opacity: 0;
 
@@ -554,7 +550,7 @@
 
       inset: 0;
 
-      background: rgba(3, 8, 18, 0.96);
+      background: rgba(0, 0, 0, 0.75);
 
       z-index: 2000;
 
@@ -801,32 +797,11 @@
 
 
 
-  <!-- ===== FLOATING WA ===== -->
-
-  <a href="https://wa.me/919876543210" target="_blank" class="wa-float" id="wa-btn" aria-label="WhatsApp">
-
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-
-      <path
-        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.570-.347z" />
-
-      <path
-        d="M12 0C5.373 0 0 5.373 0 12c0 2.122.553 4.116 1.523 5.843L.057 23.857a.5.5 0 0 0 .603.628l6.276-1.638A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.887 0-3.653-.523-5.168-1.43l-.37-.22-3.832.999 1.023-3.728-.24-.385A9.956 9.956 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z" />
-
-    </svg>
-
-  </a>
+  
 
 
 
-  <!-- ===== FLOATING CALLBACK ===== -->
 
-  <button class="callback-float" id="callback-float-btn" onclick="openLeadModal('Request Callback','','')"
-    aria-label="Request Callback">
-
-    <i class="fa-solid fa-phone"></i> Request Callback
-
-  </button>
 
 
 
@@ -849,6 +824,23 @@
 
 
   <!-- ===== NAVBAR ===== -->
+
+  
+  <!-- ===== TOP BAR ===== -->
+  <div class="top-bar">
+    <div class="container">
+      <div class="top-bar-contact">
+        <a href="tel:+919666313007"><i class="fa-solid fa-phone"></i> +91 96663 13007</a>
+        <a href="mailto:dasamrao@gmail.com"><i class="fa-solid fa-envelope"></i> dasamrao@gmail.com</a>
+      </div>
+      <div class="top-bar-socials">
+        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+        <a href="#"><i class="fa-brands fa-facebook"></i></a>
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+      </div>
+    </div>
+  </div>
 
   <nav class="navbar" id="navbar">
 
@@ -893,6 +885,7 @@
 
         <li><a href="admin.html" class="btn btn-glass" style="padding:8px 20px;font-size:0.82rem;">Admin</a></li>
 
+      <li><a href="#" class="btn-estimation" onclick="openLeadModal(\'Get Free Estimation\',\'\',\'\')">Get Free Estimation</a></li>
       </ul>
 
       <button class="nav-hamburger" id="hamburger" aria-label="Menu">
@@ -927,130 +920,37 @@
 
   <!-- ===== HERO ===== -->
 
-  <section class="hero" id="hero">
-
-    <div class="hero-bg"></div>
-
-    <div class="hero-particles" id="particles"></div>
-
-    <div class="container hero-content">
-
-      <div class="hero-grid">
-
-        <div>
-
-          <div class="hero-tagline">
-
-            <span><i class="fa-solid fa-star-of-life" style="font-size:0.7em;"></i></span> AI-Powered Real Estate
-            &middot; Andhra Pradesh
-
-          </div>
-
-          <h1 class="hero-title">
-
-            We Don't Just<br />
-
-            Build Spaces -<br />
-
-            <span class="gold-text">We Elevate Them.</span>
-
-          </h1>
-
-          <p class="hero-sub">
-
-            Civil, Interior, and Real Estate - powered by AI automation.
-
-            Your dream space is one conversation away.
-
-          </p>
-
-          <div class="hero-ctas">
-
-            <button class="btn btn-gold" id="explore-btn" onclick="window.location.href='properties.html'">
-
-              Explore Properties
-
-            </button>
-
-            <button class="btn btn-glass" id="ai-call-btn" onclick="openLeadModal('General Inquiry','','')">
-
-              <i class="fa-solid fa-robot"></i> Get Instant AI Call
-
-            </button>
-
-          </div>
-
-          <div class="hero-stats">
-
-            <div class="hero-stat">
-
-              <div class="num" data-count="150">0</div>
-
-              <div class="label">Projects Completed</div>
-
-            </div>
-
-            <div class="hero-stat">
-
-              <div class="num" data-count="500">0</div>
-
-              <div class="label">Happy Clients</div>
-
-            </div>
-
-            <div class="hero-stat">
-
-              <div class="num" data-count="8">0</div>
-
-              <div class="label">Years Experience</div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-        <div class="swastik-wrapper">
-
-          <div class="swastik-ring swastik-ring-2"></div>
-
-          <div class="swastik-ring swastik-ring-3"></div>
-
-          <div class="swastik-glow"></div>
-
-          <svg class="swastik-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg"
-            aria-label="Madhavi Enterprises Logo">
-
-            <!-- Clean geometric right-facing swastik -->
-
-            <path d="M 170 30 H 100 V 170 H 30" stroke="#D32F2F" stroke-width="12" stroke-linecap="round"
-              stroke-linejoin="round" />
-
-            <path d="M 30 30 V 100 H 170 V 170" stroke="#D32F2F" stroke-width="12" stroke-linecap="round"
-              stroke-linejoin="round" />
-
-            <!-- Red dots in quadrants -->
-
-            <circle cx="135" cy="65" r="8" fill="#D32F2F" opacity="0.9" />
-
-            <circle cx="135" cy="135" r="8" fill="#D32F2F" opacity="0.9" />
-
-            <circle cx="65" cy="135" r="8" fill="#D32F2F" opacity="0.9" />
-
-            <circle cx="65" cy="65" r="8" fill="#D32F2F" opacity="0.9" />
-
-            <!-- Outer ring -->
-
-            <circle cx="100" cy="100" r="92" stroke="rgba(211,47,47,0.3)" stroke-width="1" stroke-dasharray="6 4" />
-
-          </svg>
-
-        </div>
-
+  <section class="hero-custom fade-in-up" id="hero" style="background-image: url('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');">
+    <div class="hero-custom-content">
+      <h1 class="fade-in-up">ELEGANT INTERIORS & FURNITURE, WPC / UPVC DOORS & WINDOW SOLUTIONS</h1>
+      <div class="section-badge fade-in-up" style="animation-delay: 0.2s;">
+        End-to-End Interior Solutions Across Andhra Pradesh & Telangana
       </div>
-
+      <br />
+      <div style="display:flex; justify-content:center; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap;">
+        <a href="#" onclick="openLeadModal('Book a Visit', '', ''); event.preventDefault();" class="hero-custom-btn fade-in-up" style="animation-delay: 0.4s; background: var(--gold); border-color: var(--gold); color: #FFF;">
+          <i class="fa-solid fa-calendar-check"></i> BOOK A VISIT
+        </a>
+        <a href="#" onclick="openLeadModal('Request Callback', '', ''); event.preventDefault();" class="hero-custom-btn fade-in-up" style="animation-delay: 0.5s;">
+          <i class="fa-solid fa-phone"></i> REQUEST CALLBACK
+        </a>
+      </div>
     </div>
 
+    <div class="hero-overlap-box fade-in-up" style="animation-delay: 0.6s;">
+      <div class="hero-overlap-item">
+        <i class="fa-solid fa-couch"></i> Modulars
+      </div>
+      <div class="hero-overlap-item">
+        <i class="fa-solid fa-house"></i> Interiors
+      </div>
+      <div class="hero-overlap-item">
+        <i class="fa-solid fa-chair"></i> Furnitures
+      </div>
+      <div class="hero-overlap-item">
+        <i class="fa-solid fa-door-open"></i> WPC / uPVC Doors & Windows
+      </div>
+    </div>
   </section>
 
 
@@ -1119,54 +1019,44 @@
 
       <div class="services-grid">
 
-        <div class="ag-card service-card levitate levitate-delay-1">
-
-          <div class="service-icon"><i class="fa-solid fa-helmet-safety"></i></div>
-
-          <h3>Civil Contract Works</h3>
-
-          <p>End-to-end construction from foundation to finish - built to last generations.</p>
-
+        <div class="ag-card service-card levitate levitate-delay-1 fade-in-up">
+          <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Civil Contract Works" class="service-card-img" />
+          <div class="service-card-content">
+            <h3>Civil Contract Works</h3>
+            <p>End-to-end construction from foundation to finish - built to last generations.</p>
+          </div>
         </div>
 
-        <div class="ag-card service-card levitate levitate-delay-2">
-
-          <div class="service-icon"><i class="fa-solid fa-couch"></i></div>
-
-          <h3>Interior Design</h3>
-
-          <p>Spaces that breathe luxury - curated interiors tailored to your lifestyle.</p>
-
+        <div class="ag-card service-card levitate levitate-delay-2 fade-in-up">
+          <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Interior Design" class="service-card-img" />
+          <div class="service-card-content">
+            <h3>Interior Design</h3>
+            <p>Spaces that breathe luxury - curated interiors tailored to your lifestyle.</p>
+          </div>
         </div>
 
-        <div class="ag-card service-card levitate levitate-delay-3">
-
-          <div class="service-icon"><i class="fa-solid fa-house"></i></div>
-
-          <h3>Exterior Design</h3>
-
-          <p>First impressions that last. Bold, timeless exteriors that command attention.</p>
-
+        <div class="ag-card service-card levitate levitate-delay-3 fade-in-up">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Exterior Design" class="service-card-img" />
+          <div class="service-card-content">
+            <h3>Exterior Design</h3>
+            <p>First impressions that last. Bold, timeless exteriors that command attention.</p>
+          </div>
         </div>
 
-        <div class="ag-card service-card levitate levitate-delay-4">
-
-          <div class="service-icon"><i class="fa-solid fa-building-user"></i></div>
-
-          <h3>Office Cabins</h3>
-
-          <p>Sleek, functional workspaces designed to maximize productivity and brand identity.</p>
-
+        <div class="ag-card service-card levitate levitate-delay-4 fade-in-up">
+          <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Office Cabins" class="service-card-img" />
+          <div class="service-card-content">
+            <h3>Office Cabins</h3>
+            <p>Sleek, functional workspaces designed to maximize productivity and brand identity.</p>
+          </div>
         </div>
 
-        <div class="ag-card service-card levitate levitate-delay-5">
-
-          <div class="service-icon"><i class="fa-solid fa-hotel"></i></div>
-
-          <h3>Hotel Interiors</h3>
-
-          <p>Hospitality spaces that make every guest feel like royalty - from lobby to suite.</p>
-
+        <div class="ag-card service-card levitate levitate-delay-5 fade-in-up">
+          <img src="https://images.unsplash.com/photo-1542314831-c6a4d14d8c53?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Hotel Interiors" class="service-card-img" />
+          <div class="service-card-content">
+            <h3>Hotel Interiors</h3>
+            <p>Hospitality spaces that make every guest feel like royalty - from lobby to suite.</p>
+          </div>
         </div>
 
       </div>
@@ -1218,7 +1108,7 @@
 
   <!-- ===== FOUNDER ===== -->
 
-  <section class="section" id="founder" style="background:linear-gradient(180deg,#080F1F,#050B18)">
+  <section class="section" id="founder" style="background:#FFFFFF">
 
     <div class="container">
 
@@ -1397,6 +1287,58 @@
       </div>
     </div>
   </section>
+
+  <!-- ===== LEAD MODAL ===== -->
+  <div class="modal-overlay" id="lead-modal">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal()" id="modal-close-btn">&times;</button>
+      <div class="section-badge" style="margin-bottom:1rem;"><i class="fa-solid fa-robot"></i>  AI-Powered Lead</div>
+      <h3>Express Your <span class="gold-text">Interest</span></h3>
+      <p id="modal-prop-label" style="color:var(--gold);font-size:0.82rem;margin-bottom:1rem;"></p>
+      <p>Our AI agent will call you within 30 seconds with complete details & site visit arrangements.</p>
+      <form id="lead-form" onsubmit="submitLead(event)">
+        <div class="form-group">
+          <label>Your Full Name *</label>
+          <input type="text" id="lead-name" placeholder="Enter your name" required autocomplete="name"/>
+        </div>
+        <div class="form-group">
+          <label>WhatsApp Number *</label>
+          <input type="tel" id="lead-phone" placeholder="+91 XXXXX XXXXX" required autocomplete="tel"/>
+        </div>
+        <div class="form-group">
+          <label>Budget Range</label>
+          <select id="lead-budget">
+            <option value="">Select Budget</option>
+            <option>Rs. 10L - Rs. 25L</option>
+            <option>Rs. 25L - Rs. 50L</option>
+            <option>Rs. 50L - Rs. 1Cr</option>
+            <option>Rs. 1Cr - Rs. 2Cr</option>
+            <option>Rs. 2Cr+</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Preferred Visit Date</label>
+          <input type="date" id="lead-date"/>
+        </div>
+        <div class="form-group">
+          <label>Preferred Time Slot</label>
+          <select id="lead-time">
+            <option value="">Select Time</option>
+            <option>10:00 AM - 12:00 PM</option>
+            <option>12:00 PM - 02:00 PM</option>
+            <option>02:00 PM - 04:00 PM</option>
+            <option>04:00 PM - 06:00 PM</option>
+          </select>
+        </div>
+        <input type="hidden" id="lead-property" value=""/>
+        <input type="hidden" id="lead-property-id" value=""/>
+        <button type="submit" class="btn btn-glow" style="width:100%;justify-content:center;" id="lead-submit-btn">
+          <i class="fa-solid fa-rocket"></i>  Get My AI Call Now
+        </button>
+      </form>
+    </div>
+  </div>
+
   <!-- ===== FOOTER ===== -->
 
   <footer class="footer">
@@ -1480,9 +1422,9 @@
 
           <a href="mailto:info@madhavienterprise.com"> info@madhavienterprise.com</a>
 
-          <a href="#">" Andhra Pradesh, India</a>
+          <a href="#"><i class="fa-solid fa-location-dot"></i> Andhra Pradesh, India</a>
 
-          <a href="admin.html">" Admin Login</a>
+          <a href="admin.html"><i class="fa-solid fa-lock"></i> Admin Login</a>
 
         </div>
 
@@ -1506,6 +1448,20 @@
 
 
   <script src="app.js"></script>
+
+  <!-- ===== FLOATING SIDE BUTTONS ===== -->
+  <div class="floating-side-group fade-in-up">
+    <a href="https://wa.me/919666313007" target="_blank" class="side-btn wa" aria-label="WhatsApp">
+      <i class="fa-brands fa-whatsapp"></i>
+    </a>
+    <a href="tel:+919666313007" class="side-btn call" aria-label="Call">
+      <i class="fa-solid fa-phone"></i>
+    </a>
+    <button class="side-btn-quote" onclick="openLeadModal('Get Free Estimation','','')">
+      Get Quote
+    </button>
+  </div>
+
 </body>
 
 

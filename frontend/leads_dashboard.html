@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>AI Leads Dashboard - Madhavi Enterprises</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="style.css?v=7"/>
+  <style>
+    body { background: #F8F9FA; color: #111827; font-family: 'Inter', sans-serif; }
+    .dash-layout { display: flex; min-height: 100vh; padding-top: 0; }
+    .sidebar { width: 260px; background: var(--bg-card); border-right: 1px solid var(--border-glass); position: fixed; top: 0; left: 0; bottom: 0; display: flex; flex-direction: column; z-index: 100; }
+    .sidebar-logo { padding: 1.8rem 1.5rem; border-bottom: 1px solid var(--border-glass); display: flex; align-items: center; gap: 10px; font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1rem; color: var(--text-primary); }
+    .sidebar-logo span { color: var(--gold); font-size: 0.7rem; display: block; font-weight: 400; }
+    .sidebar-nav { flex: 1; padding: 1.5rem 0; overflow-y: auto; }
+    .nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 1.5rem; color: var(--text-secondary); font-size: 0.88rem; font-weight: 500; cursor: pointer; transition: var(--transition); border-left: 3px solid transparent; }
+    .nav-item:hover { color: var(--text-primary); background: #FFFFFF; }
+    .nav-item.active { color: var(--gold); background: var(--gold-dim); border-left-color: var(--gold); }
+    .nav-item .icon { font-size: 1.1rem; width: 20px; text-align: center; }
+    
+    .dash-main { margin-left: 260px; flex: 1; padding: 2rem; min-height: 100vh; }
+    .dash-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-glass); }
+    .dash-header h2 { font-size: 1.6rem; margin-bottom: 5px; }
+    .dash-header p { font-size: 0.85rem; color: var(--text-secondary); }
+    
+    .filter-bar { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .filter-bar input, .filter-bar select { padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-glass); background: #FFFFFF; color: white; outline: none; }
+    .filter-bar input:focus, .filter-bar select:focus { border-color: var(--gold); }
+    
+    .dash-panel { background: var(--bg-card); border: 1px solid var(--border-glass); border-radius: 20px; overflow: hidden; }
+    .panel-body { padding: 1rem; overflow-x: auto; }
+    
+    .data-table { width: 100%; border-collapse: collapse; min-width: 800px; }
+    .data-table th { text-align: left; font-family: 'Outfit', sans-serif; font-size: 0.72rem; font-weight: 700; color: var(--gold); text-transform: uppercase; padding: 12px 16px; border-bottom: 1px solid var(--border-glass); background: rgba(201,168,76,0.05); }
+    .data-table td { padding: 12px 16px; font-size: 0.85rem; color: var(--text-secondary); border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: middle; }
+    .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+    
+    .hot-lead { background: rgba(239,68,68,0.1) !important; }
+    .hot-lead:hover td { background: rgba(239,68,68,0.15) !important; }
+    
+    .badge { padding: 4px 10px; border-radius: 50px; font-size: 0.7rem; font-weight: 700; }
+    .badge-hot { background: rgba(239,68,68,0.2); color: #ef4444; border: 1px solid rgba(239,68,68,0.4); }
+    .badge-warm { background: rgba(234,179,8,0.2); color: #eab308; border: 1px solid rgba(234,179,8,0.4); }
+    .badge-cold { background: rgba(59,130,246,0.2); color: #3b82f6; border: 1px solid rgba(59,130,246,0.4); }
+    
+    .btn-export { background: var(--gold); color: #000; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem; transition: 0.3s; border: none; cursor: pointer; }
+    .btn-export:hover { background: #fff; }
+    
+  </style>
+</head>
+<body>
+
+<div class="dash-layout">
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D32F2F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M 22 2 H 12 V 22 H 2" />
+        <path d="M 2 2 V 12 H 22 V 22" />
+        <circle cx="17" cy="7" r="1.5" fill="#D32F2F" stroke="none"/>
+        <circle cx="17" cy="17" r="1.5" fill="#D32F2F" stroke="none"/>
+        <circle cx="7" cy="17" r="1.5" fill="#D32F2F" stroke="none"/>
+        <circle cx="7" cy="7" r="1.5" fill="#D32F2F" stroke="none"/>
+      </svg>
+      <div>Madhavi <span style="color:var(--gold)">Enterprises</span></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-item" onclick="window.location.href='admin.html'">
+        <span class="icon"><i class="fa-solid fa-arrow-left"></i></span> Back to Admin
+      </div>
+      <div class="nav-item active">
+        <span class="icon"><i class="fa-solid fa-robot"></i></span> AI Leads
+      </div>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="dash-main">
+    <div class="dash-header">
+      <div>
+        <h2>AI Extracted Leads</h2>
+        <p>Manage and export leads generated by the OmniDimension AI Webhook.</p>
+      </div>
+      <button class="btn-export" onclick="exportExcel()"><i class="fa-solid fa-file-excel"></i> Export to Excel</button>
+    </div>
+
+    <div class="filter-bar">
+      <input type="text" id="search-input" placeholder="Search name or location..." onkeyup="filterTable()" />
+      <select id="interest-filter" onchange="filterTable()">
+        <option value="">All Interests</option>
+        <option value="hot">Hot</option>
+        <option value="warm">Warm</option>
+        <option value="cold">Cold</option>
+      </select>
+      <input type="date" id="date-filter" onchange="filterTable()" title="Filter by exact date" />
+    </div>
+
+    <div class="dash-panel">
+      <div class="panel-body">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Property Type</th>
+              <th>Location</th>
+              <th>Budget</th>
+              <th>Interest</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="leads-table-body">
+            <tr><td colspan="7" style="text-align:center">Loading leads...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  let API_BASE = "http://127.0.0.1:5001";
+  if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+    API_BASE = "https://" + window.location.hostname;
+  }
+  
+  let allLeads = [];
+
+  async function loadLeads() {
+    const token = localStorage.getItem("me_admin_token");
+    if (!token) {
+      alert("Please login first.");
+      window.location.href = "admin.html";
+      return;
+    }
+
+    try {
+      const res = await fetch(`${API_BASE}/api/admin/ai-leads`, {
+        headers: { "Authorization": `Bearer ${token}` }
+      });
+      if (res.status === 401) {
+        alert("Session expired.");
+        window.location.href = "admin.html";
+        return;
+      }
+      const data = await res.json();
+      allLeads = data.leads || [];
+      renderTable(allLeads);
+    } catch (e) {
+      console.error(e);
+      document.getElementById('leads-table-body').innerHTML = '<tr><td colspan="7" style="text-align:center;color:red">Failed to load leads</td></tr>';
+    }
+  }
+
+  function getBadgeClass(level) {
+    if (!level) return 'badge-cold';
+    const l = level.toLowerCase();
+    if (l.includes('hot')) return 'badge-hot';
+    if (l.includes('warm')) return 'badge-warm';
+    return 'badge-cold';
+  }
+
+  function renderTable(leads) {
+    const tbody = document.getElementById('leads-table-body');
+    tbody.innerHTML = '';
+    
+    if (leads.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center">No AI leads found.</td></tr>';
+      return;
+    }
+
+    leads.forEach(lead => {
+      const tr = document.createElement('tr');
+      const interestLower = (lead.interest_level || '').toLowerCase();
+      if (interestLower.includes('hot')) {
+        tr.className = 'hot-lead';
+      }
+
+      const dateStr = lead.created_at ? new Date(lead.created_at).toLocaleDateString() : 'N/A';
+
+      tr.innerHTML = `
+        <td style="font-weight:600;color:#111827">${lead.name || 'Unknown'}</td>
+        <td>${lead.phone || 'N/A'}</td>
+        <td>${lead.property_type || 'N/A'}</td>
+        <td>${lead.location_preference || 'N/A'}</td>
+        <td>${lead.budget || 'N/A'}</td>
+        <td><span class="badge ${getBadgeClass(lead.interest_level)}">${lead.interest_level || 'N/A'}</span></td>
+        <td>${dateStr}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function filterTable() {
+    const search = document.getElementById('search-input').value.toLowerCase();
+    const interest = document.getElementById('interest-filter').value.toLowerCase();
+    const date = document.getElementById('date-filter').value;
+    
+    const filtered = allLeads.filter(lead => {
+      const name = (lead.name || '').toLowerCase();
+      const loc = (lead.location_preference || '').toLowerCase();
+      const leadInterest = (lead.interest_level || '').toLowerCase();
+      
+      const matchSearch = name.includes(search) || loc.includes(search);
+      const matchInterest = interest ? leadInterest.includes(interest) : true;
+      
+      let matchDate = true;
+      if (date && lead.created_at) {
+        const leadDate = new Date(lead.created_at).toISOString().split('T')[0];
+        matchDate = (leadDate === date);
+      }
+      
+      return matchSearch && matchInterest && matchDate;
+    });
+    
+    renderTable(filtered);
+  }
+
+  function exportExcel() {
+    const token = localStorage.getItem("me_admin_token");
+    if (!token) return;
+    window.location.href = `${API_BASE}/api/admin/ai-leads/export?token=${token}`; 
+    // Need to pass token as query param for window.location or fetch as blob
+  }
+  
+  // Note: For export Excel via window.location, we need token in query param.
+  // Wait, our backend middleware only checks Authorization header.
+  // I will write a custom download function.
+  async function downloadExcel() {
+    const token = localStorage.getItem("me_admin_token");
+    try {
+      const res = await fetch(`${API_BASE}/api/admin/ai-leads/export`, {
+        headers: { "Authorization": `Bearer ${token}` }
+      });
+      if (!res.ok) throw new Error("Export failed");
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = "AIExtractedLeads.xlsx";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch(e) {
+      console.error(e);
+      alert("Failed to export Excel.");
+    }
+  }
+  
+  // Overwrite the simple href logic
+  document.querySelector('.btn-export').onclick = downloadExcel;
+
+  window.onload = loadLeads;
+</script>
+
+
+  <!-- ===== FLOATING SIDE BUTTONS ===== -->
+  <div class="floating-side-group fade-in-up">
+    <a href="https://wa.me/919666313007" target="_blank" class="side-btn wa" aria-label="WhatsApp">
+      <i class="fa-brands fa-whatsapp"></i>
+    </a>
+    <a href="tel:+919666313007" class="side-btn call" aria-label="Call">
+      <i class="fa-solid fa-phone"></i>
+    </a>
+    <button class="side-btn-quote" onclick="openLeadModal('Get Free Estimation','','')">
+      Get Quote
+    </button>
+  </div>
+
+</body>
+</html>
+

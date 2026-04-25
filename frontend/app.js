@@ -39,15 +39,29 @@ function initNavbar() {
   const navbar = document.getElementById('navbar');
   const hamburger = document.getElementById('hamburger');
   const navMobile = document.getElementById('nav-mobile');
+  const topBar = document.querySelector('.top-bar');
 
   if (!navbar) return;
 
+  // Dynamically position mobile menu just below navbar
+  function updateMobileTop() {
+    if (navMobile && navbar) {
+      const bottomEdge = navbar.getBoundingClientRect().bottom;
+      navMobile.style.top = bottomEdge + 'px';
+    }
+  }
+  updateMobileTop();
+  window.addEventListener('resize', updateMobileTop);
+
   window.addEventListener('scroll', () => {
     navbar.classList.toggle('scrolled', window.scrollY > 60);
+    // Recalc after scroll (top-bar may shrink or hide)
+    updateMobileTop();
   });
 
   if (hamburger && navMobile) {
     hamburger.addEventListener('click', () => {
+      updateMobileTop(); // always fresh offset on open
       hamburger.classList.toggle('open');
       navMobile.classList.toggle('open');
     });
@@ -358,6 +372,8 @@ async function submitLead(e) {
   const name = document.getElementById('lead-name').value.trim();
   const phone = document.getElementById('lead-phone').value.trim();
   const budget = document.getElementById('lead-budget')?.value || '';
+  const date = document.getElementById('lead-date')?.value || '';
+  const time = document.getElementById('lead-time')?.value || '';
   const property = document.getElementById('lead-property').value || 'General Inquiry';
   const propertyId = document.getElementById('lead-property-id').value || '';
 
@@ -365,6 +381,8 @@ async function submitLead(e) {
     name,
     phone,
     budget,
+    date,
+    time,
     property,
     property_id: propertyId,
     location: 'Andhra Pradesh'
