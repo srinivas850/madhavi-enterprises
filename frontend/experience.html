@@ -8,7 +8,7 @@
 
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 
-  <title>Interior Designs - Madhavi Enterprises</title>
+  <title>Experience - Madhavi Enterprises</title>
 
   <meta name="description" content="Explore our premium interior design portfolio - living rooms, bedrooms, kitchens, office spaces and more by Madhavi Enterprises."/>
 
@@ -402,7 +402,7 @@
 
       <li><a href="index.html">Home</a></li>
 
-      <li><a href="interiors.html" style="color:var(--gold);">Interiors</a></li>
+      <li><a href="interiors.html">Interiors</a></li>
 
       <li><a href="exteriors.html">Exteriors</a></li>
 
@@ -410,7 +410,9 @@
 
       <li><a href="ventures.html">Ventures</a>
     </li>
-        
+                <li><a href="experience.html" style="color:var(--gold);">Experience</a></li>
+        <li><a href="experience.html" style="color:var(--gold);">Experience</a></li>
+
       <li><a href="contact.html">Contact</a></li>
 
       <li><a href="admin.html" class="btn btn-glass" style="padding:8px 20px;font-size:0.82rem;">Admin</a></li>
@@ -430,7 +432,7 @@
 
   <a href="index.html">Home</a>
 
-  <a href="interiors.html" style="color:var(--gold);">Interiors</a>
+  <a href="interiors.html">Interiors</a>
 
   <a href="exteriors.html">Exteriors</a>
 
@@ -455,7 +457,7 @@
 
     <nav class="breadcrumb levitate" style="justify-content:center;">
 
-      <a href="index.html">Home</a><span class="sep">&#8250;</span><span class="current">Interior Design</span>
+      <a href="index.html">Home</a><span class="sep">&#8250;</span><span class="current">Experience</span>
 
     </nav>
 
@@ -463,31 +465,17 @@
 
     <h1 class="levitate levitate-delay-2">
 
-      Interior <span class="gold-text">Designs</span>
+      Our <span class="gold-text">Experience</span>
 
     </h1>
 
     <p class="levitate levitate-delay-3">
 
-      Luxury living rooms, modular kitchens, office cabins, hotel suites - crafted with precision and passion.
+      Take a look at our completed projects and real estate journey through these videos.
 
     </p>
 
-    <div class="filters-bar levitate levitate-delay-4" id="filters-bar">
-
-      <button class="f-btn active" data-filter="all">All Designs</button>
-
-      <button class="f-btn" data-filter="living">Living Rooms</button>
-
-      <button class="f-btn" data-filter="bedroom">Bedrooms</button>
-
-      <button class="f-btn" data-filter="kitchen">Kitchens</button>
-
-      <button class="f-btn" data-filter="office">Office Spaces</button>
-
-      <button class="f-btn" data-filter="hotel">Hotel Suites</button>
-
-    </div>
+    
 
   </div>
 
@@ -497,61 +485,23 @@
 
 
 
-<!-- Gallery -->
 
+<!-- Videos -->
 <section class="gallery-section">
-
   <div class="container">
-
-
-
-    <!-- Skeleton loader -->
-
-    <div class="skeleton-grid" id="skel-grid">
-
-      <div class="skel-item" style="height:200px;"></div>
-
-      <div class="skel-item" style="height:260px;"></div>
-
-      <div class="skel-item" style="height:180px;"></div>
-
-      <div class="skel-item" style="height:230px;"></div>
-
-      <div class="skel-item" style="height:210px;"></div>
-
-      <div class="skel-item" style="height:170px;"></div>
-
-      <div class="skel-item" style="height:240px;"></div>
-
-      <div class="skel-item" style="height:190px;"></div>
-
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; justify-items: center; align-items: center;">
+      <div style="width:100%; border-radius:16px; overflow:hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid var(--border-glass);">
+        <iframe width="100%" height="315" src="https://www.youtube.com/embed/F9Dx3Y_MCVk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+      <div style="width:100%; border-radius:16px; overflow:hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid var(--border-glass); max-width: 315px;">
+        <iframe width="100%" height="560" src="https://www.youtube.com/embed/XEBCHrn0vY4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      <div style="width:100%; border-radius:16px; overflow:hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid var(--border-glass); max-width: 400px; display: flex; justify-content: center; background: #fff;">
+        <iframe src="https://www.instagram.com/p/DXWrUx9thba/embed" width="100%" height="560" frameborder="0" scrolling="no" allowtransparency="true" style="background: white;"></iframe>
+      </div>
     </div>
-
-
-
-    <!-- Masonry Grid -->
-
-    <div class="masonry" id="gallery-grid" style="display:none;"></div>
-
-
-
-
-
-    <!-- Load More -->
-
-    <div class="load-more-wrap" id="load-more-wrap" style="display:none;">
-
-      <button class="btn btn-glass" id="load-more-btn" onclick="loadMore()">Load More Images</button>
-
-    </div>
-
-
-
   </div>
-
 </section>
-
-
 
 <!-- Lightbox -->
 
@@ -655,401 +605,6 @@
 
 <script>
 
-/* ==============================
-
-   INTERIORS PAGE - GALLERY LOGIC
-
-============================== */
-
-let allImgs  = [];
-
-let visible  = [];
-
-let offset   = 0;
-
-const PER_PAGE = 24;
-
-let lbIdx    = 0;
-
-
-
-// Init
-
-
-
-
-
-document.addEventListener('keydown', e => {
-
-  if (e.key === 'Escape') { closeLb(); closeModal(); }
-
-  if (e.key === 'ArrowLeft')  navLb(-1);
-
-  if (e.key === 'ArrowRight') navLb(1);
-
-});
-
-document.getElementById('lightbox').addEventListener('click', e => {
-
-  if (e.target === document.getElementById('lightbox')) closeLb();
-
-});
-
-document.getElementById('lead-modal').addEventListener('click', e => {
-
-  if (e.target === document.getElementById('lead-modal')) closeModal();
-
-});
-
-
-
-// Load gallery on page load
-
-(async function init() {
-
-  try {
-
-    const res  = await fetch('https://madhavi-enterprises.onrender.com/api/cloudinary/images?max=200');
-
-    const data = await res.json();
-
-    // Only show YOUR real interior images - exclude property folder & Cloudinary demo samples
-
-    const allCloud = data.images || [];
-
-    allImgs = allCloud.filter(img => {
-
-      const folder = (img.folder || '').toLowerCase();
-
-      const pid    = (img.public_id || '').toLowerCase();
-
-      // Exclude property listing images
-
-      if (folder.includes('madhavi_properties') || pid.includes('madhavi_properties')) return false;
-
-      // Exclude Cloudinary's built-in demo/sample images
-
-      if (pid.startsWith('cld-sample') || pid.startsWith('sample') || pid === 'main-sample') return false;
-
-      
-
-      // Target only interior images
-
-      const isInterior = folder.includes('living') || folder.includes('bedroom') || folder.includes('kitchen') || folder.includes('office') || folder.includes('hotel') || folder.includes('interior') || pid.includes('interior');
-
-      if (!isInterior) return false;
-
-
-
-      return true;
-
-    });
-
-  } catch(e) {
-
-    allImgs = [];
-
-  }
-
-  document.getElementById('skel-grid').style.display = 'none';
-
-
-
-  if (!allImgs.length) {
-
-    document.getElementById('gallery-empty').style.display = 'block';
-
-    return;
-
-  }
-
-  visible = [...allImgs];
-
-  offset  = 0;
-
-  document.getElementById('gallery-grid').style.display = 'block';
-
-  renderChunk();
-
-})();
-
-
-
-function renderChunk() {
-
-  const grid = document.getElementById('gallery-grid');
-
-  const chunk = visible.slice(offset, offset + PER_PAGE);
-
-  chunk.forEach((img, i) => {
-
-    const globalIdx = offset + i;
-
-    const div = document.createElement('div');
-
-    div.className = 'g-item';
-
-    const folder = (img.folder || img.public_id || '').toLowerCase();
-
-    const tag = folder.includes('living') ? 'Living Room'
-
-              : folder.includes('bedroom') ? 'Bedroom'
-
-              : folder.includes('kitchen') ? 'Kitchen'
-
-              : folder.includes('office')  ? 'Office'
-
-              : folder.includes('exterior')? 'Exterior'
-
-              : 'Interior Design';
-
-    div.innerHTML = `
-
-      <img src="${img.url}" alt="${tag}" loading="lazy"/>
-
-      <div class="g-overlay"><span class="g-tag">${tag}</span></div>`;
-
-    div.addEventListener('click', () => openLb(globalIdx));
-
-    grid.appendChild(div);
-
-  });
-
-  offset += chunk.length;
-
-  document.getElementById('load-more-wrap').style.display =
-
-    offset < visible.length ? 'flex' : 'none';
-
-}
-
-
-
-function loadMore() { renderChunk(); }
-
-
-
-// Filters
-
-document.getElementById('filters-bar').addEventListener('click', e => {
-
-  if (!e.target.classList.contains('f-btn')) return;
-
-  document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('active'));
-
-  e.target.classList.add('active');
-
-  const f = e.target.dataset.filter;
-
-  visible = f === 'all'
-
-    ? [...allImgs]
-
-    : allImgs.filter(img => {
-
-        const s = ((img.folder || '') + (img.public_id || '')).toLowerCase();
-
-        return s.includes(f);
-
-      });
-
-  if (!visible.length) visible = [...allImgs]; // fallback
-
-  const grid = document.getElementById('gallery-grid');
-
-  grid.innerHTML = '';
-
-  offset = 0;
-
-  renderChunk();
-
-});
-
-
-
-// Lightbox
-
-function openLb(idx) {
-
-  lbIdx = idx;
-
-  const img = document.getElementById('lb-img');
-
-  img.src = visible[lbIdx]?.url || '';
-
-  document.getElementById('lb-counter').textContent = `${lbIdx + 1} / ${visible.length}`;
-
-  document.getElementById('lightbox').classList.add('open');
-
-  document.body.style.overflow = 'hidden';
-
-}
-
-function closeLb() {
-
-  document.getElementById('lightbox').classList.remove('open');
-
-  document.body.style.overflow = '';
-
-}
-
-function navLb(dir) {
-
-  if (!visible.length) return;
-
-  lbIdx = (lbIdx + dir + visible.length) % visible.length;
-
-  const img = document.getElementById('lb-img');
-
-  img.style.opacity = '0';
-
-  setTimeout(() => {
-
-    img.src = visible[lbIdx]?.url || '';
-
-    img.style.opacity = '1';
-
-    document.getElementById('lb-counter').textContent = `${lbIdx + 1} / ${visible.length}`;
-
-  }, 150);
-
-}
-
-
-
-
-
 </script>
-
-
-
-<!-- Footer -->
-
-<footer class="footer">
-
-  <div class="container">
-
-    <div class="footer-grid">
-
-      <div class="footer-brand">
-
-        <div class="nav-logo" style="margin-bottom:1rem;">
-
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D32F2F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-
-            <path d="M 22 2 H 12 V 22 H 2" />
-
-        <path d="M 2 2 V 12 H 22 V 22" />
-
-        <circle cx="17" cy="7" r="1.5" fill="#D32F2F" stroke="none"/>
-
-        <circle cx="17" cy="17" r="1.5" fill="#D32F2F" stroke="none"/>
-
-        <circle cx="7" cy="17" r="1.5" fill="#D32F2F" stroke="none"/>
-
-        <circle cx="7" cy="7" r="1.5" fill="#D32F2F" stroke="none"/>
-
-          </svg>
-
-          Madhavi <span>Enterprises</span>
-
-        </div>
-
-        <p>We Don't Just Build Spaces - We Elevate Them.<br/>Premium interiors crafted with passion and precision.</p>
-
-        <div style="margin-top:1.2rem;display:flex;gap:10px;">
-
-          <a href="https://wa.me/919876543210" target="_blank" style="color:var(--gold);">WhatsApp</a>
-
-          <span style="color:var(--text-secondary)">&middot;</span>
-
-          <a href="tel:+919876543210" style="color:var(--gold);">Call Now</a>
-
-        </div>
-
-      </div>
-
-      <div class="footer-col">
-
-        <h4>Quick Links</h4>
-
-        <a href="index.html">Home</a>
-
-        <a href="interiors.html">Interiors</a>
-
-        <a href="exteriors.html">Exteriors</a>
-
-        <a href="properties.html">Properties</a>
-
-        <a href="ventures.html">Ventures</a>
-    
-        <a href="contact.html">Contact</a>
-
-      </div>
-
-      <div class="footer-col">
-
-        <h4>Interior Services</h4>
-
-        <a href="interiors.html">Modern Designs</a>
-
-        <a href="interiors.html">Office Cabins</a>
-
-        <a href="interiors.html">Modular Kitchens</a>
-
-        <a href="interiors.html">Hotel Interiors</a>
-
-        <a href="interiors.html">Bedrooms</a>
-
-      </div>
-
-      <div class="footer-col">
-
-        <h4>Contact</h4>
-
-        <a href="tel:+919876543210"><i class="fa-solid fa-phone"></i>  +91 98765 43210</a>
-
-        <a href="mailto:info@madhavienterprise.com"> info@madhavienterprise.com</a>
-
-        <a href="#"><i class="fa-solid fa-location-dot"></i> Andhra Pradesh, India</a>
-
-        <a href="admin.html"><i class="fa-solid fa-lock"></i> Admin Login</a>
-
-      </div>
-
-    </div>
-
-    <div class="footer-bottom">
-
-      <span>&copy; 2025 Madhavi Enterprises. All rights reserved.</span>
-
-      <span>Powered by AI &middot; Built with &#10084; in Andhra Pradesh</span>
-
-    </div>
-
-  </div>
-
-</footer>
-
-
-
-<script src="app.js"></script>
-
-
-  <!-- ===== FLOATING SIDE BUTTONS ===== -->
-  <div class="floating-side-group fade-in-up">
-    <a href="https://wa.me/919666313007" target="_blank" class="side-btn wa" aria-label="WhatsApp">
-      <i class="fa-brands fa-whatsapp"></i>
-    </a>
-    <a href="tel:+919666313007" class="side-btn call" aria-label="Call">
-      <i class="fa-solid fa-phone"></i>
-    </a>
-    
-  </div>
-
 </body>
-
 </html>
-
-
-
