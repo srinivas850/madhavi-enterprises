@@ -525,15 +525,8 @@ def handle_enquiry():
                 call_status = "completed"
                 print(f"  [+] OmniDimension call dispatched to {phone}")
             except Exception as e1:
-                print(f"  [!] dispatch_call failed: {e1}, trying create...")
-                response = omni_client.call.create(
-                    agent_id=OMNI_AGENT_ID, to=phone, context=call_context
-                )
-                call_status = "completed"
-                print(f"  [+] OmniDimension call created to {phone}")
-        except Exception as ce:
-            print(f"  [!] OmniDimension exception: {ce}")
-            call_status = "failed"
+                print(f"  [!] dispatch_call failed: {e1}")
+                call_status = "failed"
 
         lead_id = str(uuid.uuid4())
         conn = get_pg_db()
