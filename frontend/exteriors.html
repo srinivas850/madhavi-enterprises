@@ -505,13 +505,47 @@
 
 
 
-    <!-- Masonry Grid -->
+    <!-- Masonry Grid — 10 real exterior images from Cloudinary -->
     <div class="masonry" id="gallery-grid">
-      <div class="g-item" onclick="openLightbox(0)">
-        <img src="https://res.cloudinary.com/dhge37es8/image/upload/f_auto,q_auto,w_800,c_fill/v1777274730/samples/landscapes/architecture-signs.jpg" alt="Exterior Design" loading="lazy" decoding="async" width="400" height="300">
-        <div class="g-overlay">
-          <span class="g-tag">Exterior Architecture</span>
-        </div>
+      <div class="g-item" onclick="openLb(0)">
+        <img src="https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto,w_800,c_fill/img1_o7xtmq.jpg" alt="Exterior Design" loading="eager" decoding="async" width="400" height="300">
+        <div class="g-overlay"><span class="g-tag">Exterior Design</span></div>
+      </div>
+      <div class="g-item" onclick="openLb(1)">
+        <img src="https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto,w_800,c_fill/img2_tejr2p.jpg" alt="Exterior Design" loading="lazy" decoding="async" width="400" height="300">
+        <div class="g-overlay"><span class="g-tag">Elevation</span></div>
+      </div>
+      <div class="g-item" onclick="openLb(2)">
+        <img src="https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto,w_800,c_fill/img3_nlpfze.jpg" alt="Exterior Design" loading="lazy" decoding="async" width="400" height="300">
+        <div class="g-overlay"><span class="g-tag">Facade</span></div>
+      </div>
+      <div class="g-item" onclick="openLb(3)">
+        <img src="https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto,w_800,c_fill/img4_ygvku1.jpg" alt="Exterior Design" loading="lazy" decoding="async" width="400" height="300">
+        <div class="g-overlay"><span class="g-tag">Villa</span></div>
+      </div>
+      <div class="g-item" onclick="openLb(4)">
+        <img src="https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto,w_800,c_fill/img5_nojzpy.jpg" alt="Exterior Design" loading="lazy" decoding="async" width="400" height="300">
+        <div class="g-overlay"><span class="g-tag">Exterior Design</span></div>
+      </div>
+      <div class="g-item" onclick="openLb(5)">
+        <img src="https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto,w_800,c_fill/img6_gg40qi.jpg" alt="Exterior Design" loading="lazy" decoding="async" width="400" height="300">
+        <div class="g-overlay"><span class="g-tag">Commercial</span></div>
+      </div>
+      <div class="g-item" onclick="openLb(6)">
+        <img src="https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto,w_800,c_fill/img7_tppom8.jpg" alt="Exterior Design" loading="lazy" decoding="async" width="400" height="300">
+        <div class="g-overlay"><span class="g-tag">Landscaping</span></div>
+      </div>
+      <div class="g-item" onclick="openLb(7)">
+        <img src="https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto,w_800,c_fill/img8_wa2anf.jpg" alt="Exterior Design" loading="lazy" decoding="async" width="400" height="300">
+        <div class="g-overlay"><span class="g-tag">Elevation</span></div>
+      </div>
+      <div class="g-item" onclick="openLb(8)">
+        <img src="https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto,w_800,c_fill/img9_tyhoes.jpg" alt="Exterior Design" loading="lazy" decoding="async" width="400" height="300">
+        <div class="g-overlay"><span class="g-tag">Facade</span></div>
+      </div>
+      <div class="g-item" onclick="openLb(9)">
+        <img src="https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto,w_800,c_fill/WhatsApp_Image_2026-04-26_at_5.30.56_PM_wahlm2.jpg" alt="Exterior Design" loading="lazy" decoding="async" width="400" height="300">
+        <div class="g-overlay"><span class="g-tag">Villa</span></div>
       </div>
     </div>
 
@@ -681,57 +715,30 @@ document.getElementById('lead-modal').addEventListener('click', e => {
 // Load gallery on page load
 
 (async function init() {
-  document.getElementById('skel-grid').style.display = 'none';
+  document.getElementById('skel-grid') && (document.getElementById('skel-grid').style.display = 'none');
 
-  // Inject the specific image from the new Cloudinary account
+  // Real exterior images from Cloudinary (djda3lldb/exterior folder)
   allImgs = [
-    {
-      url: "https://res.cloudinary.com/dhge37es8/image/upload/f_auto,q_auto,w_800,c_fill/v1777274730/samples/landscapes/architecture-signs.jpg",
-      folder: "exterior",
-      public_id: "architecture-signs"
-    },
-    {
-      url: "https://res.cloudinary.com/dhge37es8/image/upload/f_auto,q_auto,w_800,c_fill/v1777274741/cld-sample-3.jpg",
-      folder: "facade",
-      public_id: "cld-sample-3"
-    }
+    { url: "https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto/img1_o7xtmq.jpg", folder: "exterior", public_id: "img1_o7xtmq" },
+    { url: "https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto/img2_tejr2p.jpg", folder: "elevation", public_id: "img2_tejr2p" },
+    { url: "https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto/img3_nlpfze.jpg", folder: "facade", public_id: "img3_nlpfze" },
+    { url: "https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto/img4_ygvku1.jpg", folder: "villa", public_id: "img4_ygvku1" },
+    { url: "https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto/img5_nojzpy.jpg", folder: "exterior", public_id: "img5_nojzpy" },
+    { url: "https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto/img6_gg40qi.jpg", folder: "commercial", public_id: "img6_gg40qi" },
+    { url: "https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto/img7_tppom8.jpg", folder: "landscape", public_id: "img7_tppom8" },
+    { url: "https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto/img8_wa2anf.jpg", folder: "elevation", public_id: "img8_wa2anf" },
+    { url: "https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto/img9_tyhoes.jpg", folder: "facade", public_id: "img9_tyhoes" },
+    { url: "https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto/WhatsApp_Image_2026-04-26_at_5.30.56_PM_wahlm2.jpg", folder: "villa", public_id: "WhatsApp_Image_2026-04-26_at_5.30.56_PM_wahlm2" }
   ];
 
-  try {
-    const res  = await fetch('https://madhavi-enterprises.onrender.com/api/cloudinary/images?max=200');
-    const data = await res.json();
-    const allCloud = data.images || [];
-    
-    // Add real backend images if they exist
-    allCloud.forEach(img => {
-      const folder = (img.folder || '').toLowerCase();
-      const pid    = (img.public_id || '').toLowerCase();
-      const isExterior = folder.includes('exterior') || folder.includes('elevation') || folder.includes('facade') || folder.includes('landscape') || pid.includes('exterior') || pid.includes('elevation');
-      
-      if (folder.includes('madhavi_properties') || pid.includes('madhavi_properties')) return;
-      if (pid.startsWith('cld-sample') || pid.startsWith('sample') || pid === 'main-sample') return;
-      if (isExterior) allImgs.push(img);
-    });
-  } catch(e) {
-    console.log("Fallback to hardcoded exteriors.");
-  }
-
-  if (!allImgs.length) {
-    // If empty fallback
-    document.getElementById('gallery-empty').style.display = 'block';
-    return;
-  }
-
   visible = [...allImgs];
-  offset  = 0;
-  
-  // Clear the static HTML grid
-  const grid = document.getElementById('gallery-grid');
-  grid.innerHTML = '';
-  grid.style.display = 'block';
-
-  renderChunk();
+  offset  = allImgs.length; // already rendered in HTML, don't re-render
+  document.getElementById('gallery-grid').style.display = 'block';
+  document.getElementById('load-more-wrap').style.display = 'none';
 })();
+
+
+
 
 
 function renderChunk() {
