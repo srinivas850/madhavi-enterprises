@@ -27,7 +27,7 @@
 
       padding: 120px 0 60px;
 
-      background: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=80') center/cover no-repeat;
+      background: url("https://res.cloudinary.com/djda3lldb/image/fetch/f_auto,q_auto,w_1920,c_fill/https://images.unsplash.com/photo-1600585154340-be6161a56a0c") center/cover no-repeat;
 
       text-align: center;
 
@@ -505,44 +505,19 @@
 
 
 
-    <!-- Skeleton loader -->
-
-    <div class="skeleton-grid" id="skel-grid">
-
-      <div class="skel-item" style="height:200px;"></div>
-
-      <div class="skel-item" style="height:260px;"></div>
-
-      <div class="skel-item" style="height:180px;"></div>
-
-      <div class="skel-item" style="height:230px;"></div>
-
-      <div class="skel-item" style="height:210px;"></div>
-
-      <div class="skel-item" style="height:170px;"></div>
-
-      <div class="skel-item" style="height:240px;"></div>
-
-      <div class="skel-item" style="height:190px;"></div>
-
+    <!-- Masonry Grid -->
+    <div class="masonry" id="gallery-grid">
+      <div class="g-item" onclick="openLightbox(0)">
+        <img src="https://res.cloudinary.com/dhge37es8/image/upload/f_auto,q_auto,w_800,c_fill/v1777274730/samples/landscapes/architecture-signs.jpg" alt="Exterior Design" loading="lazy" decoding="async" width="400" height="300">
+        <div class="g-overlay">
+          <span class="g-tag">Exterior Architecture</span>
+        </div>
+      </div>
     </div>
 
-
-
-    <!-- Masonry Grid -->
-
-    <div class="masonry" id="gallery-grid" style="display:none;"></div>
-
-
-
-
-
     <!-- Load More -->
-
     <div class="load-more-wrap" id="load-more-wrap" style="display:none;">
-
       <button class="btn btn-glass" id="load-more-btn" onclick="loadMore()">Load More Images</button>
-
     </div>
 
 
@@ -706,85 +681,57 @@ document.getElementById('lead-modal').addEventListener('click', e => {
 // Load gallery on page load
 
 (async function init() {
-
-  try {
-
-    const res  = await fetch('https://madhavi-enterprises.onrender.com/api/cloudinary/images?max=200');
-
-    const data = await res.json();
-
-    // Only show YOUR real exterior images - exclude property folder & Cloudinary demo samples
-
-    const allCloud = data.images || [];
-
-    allImgs = allCloud.filter(img => {
-
-      const folder = (img.folder || '').toLowerCase();
-
-      const pid    = (img.public_id || '').toLowerCase();
-
-      
-
-      // Specifically target exterior images
-
-      const isExterior = folder.includes('exterior') || folder.includes('elevation') || folder.includes('facade') || folder.includes('landscape') || pid.includes('exterior') || pid.includes('elevation');
-
-      
-
-      // If we are strictly filtering to exteriors, you could return `isExterior`. 
-
-      // For now, if no exterior images exist, let's just make sure it's not a sample or property.
-
-      
-
-      // Exclude property listing images
-
-      if (folder.includes('madhavi_properties') || pid.includes('madhavi_properties')) return false;
-
-      // Exclude Cloudinary's built-in demo/sample images
-
-      if (pid.startsWith('cld-sample') || pid.startsWith('sample') || pid === 'main-sample') return false;
-
-      
-
-      // If you only want exterior-tagged images, uncomment the next line:
-
-      if (!isExterior) return false;
-
-      
-
-      return true;
-
-    });
-
-  } catch(e) {
-
-    allImgs = [];
-
-  }
-
   document.getElementById('skel-grid').style.display = 'none';
 
+  // Inject the specific image from the new Cloudinary account
+  allImgs = [
+    {
+      url: "https://res.cloudinary.com/dhge37es8/image/upload/f_auto,q_auto,w_800,c_fill/v1777274730/samples/landscapes/architecture-signs.jpg",
+      folder: "exterior",
+      public_id: "architecture-signs"
+    },
+    {
+      url: "https://res.cloudinary.com/dhge37es8/image/upload/f_auto,q_auto,w_800,c_fill/v1777274741/cld-sample-3.jpg",
+      folder: "facade",
+      public_id: "cld-sample-3"
+    }
+  ];
 
+  try {
+    const res  = await fetch('https://madhavi-enterprises.onrender.com/api/cloudinary/images?max=200');
+    const data = await res.json();
+    const allCloud = data.images || [];
+    
+    // Add real backend images if they exist
+    allCloud.forEach(img => {
+      const folder = (img.folder || '').toLowerCase();
+      const pid    = (img.public_id || '').toLowerCase();
+      const isExterior = folder.includes('exterior') || folder.includes('elevation') || folder.includes('facade') || folder.includes('landscape') || pid.includes('exterior') || pid.includes('elevation');
+      
+      if (folder.includes('madhavi_properties') || pid.includes('madhavi_properties')) return;
+      if (pid.startsWith('cld-sample') || pid.startsWith('sample') || pid === 'main-sample') return;
+      if (isExterior) allImgs.push(img);
+    });
+  } catch(e) {
+    console.log("Fallback to hardcoded exteriors.");
+  }
 
   if (!allImgs.length) {
-
+    // If empty fallback
     document.getElementById('gallery-empty').style.display = 'block';
-
     return;
-
   }
 
   visible = [...allImgs];
-
   offset  = 0;
-
-  document.getElementById('gallery-grid').style.display = 'block';
+  
+  // Clear the static HTML grid
+  const grid = document.getElementById('gallery-grid');
+  grid.innerHTML = '';
+  grid.style.display = 'block';
 
   renderChunk();
-
 })();
-
 
 
 function renderChunk() {

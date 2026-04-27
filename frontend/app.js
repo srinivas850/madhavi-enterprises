@@ -231,42 +231,42 @@ function getDemoProperties() {
       id: 'kammapadu', title: 'Kammapadu Premium Plots', type: 'Plot',
       price: 'Rs. 15,000', location: 'Kammapadu, AP',
       description: 'DTCP-approved gated community with excellent connectivity.',
-      images: ['https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&q=80'],
+      images: ['https://res.cloudinary.com/djda3lldb/image/fetch/f_auto,q_auto,w_800,c_fill/https://images.unsplash.com/photo-1500382017468-9049fed747ef'],
       featured: true
     },
     {
       id: 'lemalle', title: 'Lemalle Venture', type: 'Plot',
       price: 'Rs. 17,000', location: 'Lemalle, AP',
       description: 'RERA-registered plots with highway access.',
-      images: ['https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&q=80'],
+      images: ['https://res.cloudinary.com/djda3lldb/image/fetch/f_auto,q_auto,w_800,c_fill/https://images.unsplash.com/photo-1441974231531-c6227db76b6e'],
       featured: true
     },
     {
       id: 'kanchincharla', title: 'Kanchincharla Exclusive', type: 'Plot',
       price: 'Rs. 18,000', location: 'Kanchincharla, AP',
       description: 'River view plots - investment hotspot.',
-      images: ['https://images.unsplash.com/photo-1560493676-04071c5f467b?w=600&q=80'],
+      images: ['https://res.cloudinary.com/djda3lldb/image/fetch/f_auto,q_auto,w_800,c_fill/https://images.unsplash.com/photo-1560493676-04071c5f467b'],
       featured: true
     },
     {
       id: 'villa-1', title: 'Heritage Villa', type: 'Villa',
       price: 'Rs. 1.8 Cr', location: 'Vijayawada, AP',
       description: 'Luxury 4BHK villa with smart home features and landscaped garden.',
-      images: ['https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80'],
+      images: ['https://res.cloudinary.com/djda3lldb/image/fetch/f_auto,q_auto,w_800,c_fill/https://images.unsplash.com/photo-1600596542815-ffad4c1539a9'],
       featured: false
     },
     {
       id: 'apt-1', title: 'Skyline Apartments', type: 'Apartment',
       price: 'Rs. 85 Lakhs', location: 'Guntur, AP',
       description: 'Modern 3BHK apartments with rooftop amenities in the heart of Guntur.',
-      images: ['https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=80'],
+      images: ['https://res.cloudinary.com/djda3lldb/image/fetch/f_auto,q_auto,w_800,c_fill/https://images.unsplash.com/photo-1545324418-cc1a3fa10c00'],
       featured: false
     },
     {
       id: 'house-1', title: 'Riverside House', type: 'House',
       price: 'Rs. 65 Lakhs', location: 'Krishna District, AP',
       description: 'Spacious individual house with 2400 sqft, near the Krishna river.',
-      images: ['https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=600&q=80'],
+      images: ['https://res.cloudinary.com/djda3lldb/image/fetch/f_auto,q_auto,w_800,c_fill/https://images.unsplash.com/photo-1568605114967-8130f3a36994'],
       featured: false
     }
   ];
@@ -287,7 +287,13 @@ function renderProperties(props) {
   if (noProps) noProps.style.display = 'none';
 
   grid.innerHTML = filtered.map((p, i) => {
-    const img = (p.images && p.images[0]) || (p.image_urls && p.image_urls.split(',')[0]) || 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&q=80';
+    let img = (p.images && p.images[0]) || (p.image_urls && p.image_urls.split(',')[0]) || 'https://images.unsplash.com/photo-1500382017468-9049fed747ef';
+    // OPTIMIZE:
+    if(img.includes('/upload/')) {
+        img = img.replace('/upload/', '/upload/f_auto,q_auto,w_600,c_fill/');
+    } else if (!img.includes('f_auto') && !img.startsWith('data:')) {
+        img = `https://res.cloudinary.com/djda3lldb/image/fetch/f_auto,q_auto,w_600,c_fill/${img.split('?')[0]}`;
+    }
     const isVenture = ['kammapadu', 'lemalle', 'kanchincharla'].includes(String(p.id));
     const href = isVenture
       ? `property.html?venture=${p.id}`
@@ -465,8 +471,16 @@ function renderGalleryChunk() {
     const item = document.createElement('div');
     item.className = 'gallery-item';
     item.dataset.folder = img.folder || '';
+    // OPTIMIZE: Inject Cloudinary transformations
+    let optUrl = img.url;
+    if(optUrl.includes('/upload/')) {
+      optUrl = optUrl.replace('/upload/', '/upload/f_auto,q_auto,w_800,c_fill/');
+    } else if (!optUrl.includes('f_auto')) {
+      optUrl = `https://res.cloudinary.com/djda3lldb/image/fetch/f_auto,q_auto,w_800,c_fill/${optUrl}`;
+    }
+    
     item.innerHTML = `
-      <img src="${img.url}" alt="Interior Design" loading="lazy"/>
+      <img src="${optUrl}" alt="Interior Design" loading="lazy" decoding="async" width="400" height="300"/>
       <div class="gal-overlay">
         <span class="gal-label">${img.folder ? img.folder.replace('madhavi_', '').replace('_', ' ') : 'Design Portfolio'}</span>
       </div>`;
