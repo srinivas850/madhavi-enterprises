@@ -527,6 +527,9 @@ def handle_enquiry():
             except Exception as e1:
                 print(f"  [!] dispatch_call failed: {e1}")
                 call_status = "failed"
+        except Exception as e_call:
+            print(f"  [!] Call dispatch error: {e_call}")
+            call_status = "failed"
 
         lead_id = str(uuid.uuid4())
         conn = get_pg_db()

@@ -27,7 +27,7 @@
 
       padding: 120px 0 60px;
 
-      background: url("https://res.cloudinary.com/djda3lldb/image/fetch/f_auto,q_auto,w_1920,c_fill/https://images.unsplash.com/photo-1600585154340-be6161a56a0c") center/cover no-repeat;
+      background: url('https://res.cloudinary.com/djda3lldb/image/fetch/f_auto,q_auto,w_1920,c_fill/https://images.unsplash.com/photo-1600585154340-be6161a56a0c') center/cover no-repeat;
 
       text-align: center;
 
@@ -642,6 +642,63 @@
   </div>
 </section>
 
+<!-- School Infrastructure Section -->
+<section class="gallery-section" style="padding-top: 1rem; padding-bottom: 5rem; background: var(--bg-dark);">
+  <div class="container">
+
+    <!-- Section Heading -->
+    <div style="text-align:center; margin-bottom: 2.5rem; padding-top: 1.5rem;">
+      <div class="section-badge" style="display:inline-flex; margin-bottom:1rem;">
+        <i class="fa-solid fa-school" style="font-size:0.8em;"></i>&nbsp; Education Spaces
+      </div>
+      <h2 style="font-size: clamp(1.8rem,4vw,2.8rem); margin-bottom:0.8rem;">
+        School <span class="gold-text">Infrastructure</span>
+      </h2>
+      <p style="color: var(--text-secondary); max-width:520px; margin:0 auto; font-size:1rem; line-height:1.7;">
+        Thoughtfully designed school infrastructure that fosters learning, safety, and an inspiring environment.
+      </p>
+      <div style="width:60px;height:3px;background:var(--gold);margin:1.2rem auto 0;border-radius:2px;"></div>
+    </div>
+
+    <!-- School Infra Masonry Grid -->
+    <div class="masonry" id="school-infra-grid">
+      <div class="g-item" onclick="openSchoolInfraLb(0)">
+        <img src="https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto,w_800,c_fill/i1_vpq94w.jpg" alt="School Infrastructure" loading="lazy" decoding="async" width="400" height="300">
+        <div class="g-overlay"><span class="g-tag">School Infrastructure</span></div>
+      </div>
+      <div class="g-item" onclick="openSchoolInfraLb(1)">
+        <img src="https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto,w_800,c_fill/i2_cxroxx.jpg" alt="School Infrastructure" loading="lazy" decoding="async" width="400" height="300">
+        <div class="g-overlay"><span class="g-tag">School Infrastructure</span></div>
+      </div>
+      <div class="g-item" onclick="openSchoolInfraLb(2)">
+        <img src="https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto,w_800,c_fill/i3_dyzfcd.jpg" alt="School Infrastructure" loading="lazy" decoding="async" width="400" height="300">
+        <div class="g-overlay"><span class="g-tag">School Infrastructure</span></div>
+      </div>
+      <div class="g-item" onclick="openSchoolInfraLb(3)">
+        <img src="https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto,w_800,c_fill/i4_pdkphj.jpg" alt="School Infrastructure" loading="lazy" decoding="async" width="400" height="300">
+        <div class="g-overlay"><span class="g-tag">School Infrastructure</span></div>
+      </div>
+      <div class="g-item" onclick="openSchoolInfraLb(4)">
+        <img src="https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto,w_800,c_fill/i5_olarvv.jpg" alt="School Infrastructure" loading="lazy" decoding="async" width="400" height="300">
+        <div class="g-overlay"><span class="g-tag">School Infrastructure</span></div>
+      </div>
+      <div class="g-item" onclick="openSchoolInfraLb(5)">
+        <img src="https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto,w_800,c_fill/i6_tmwn8y.jpg" alt="School Infrastructure" loading="lazy" decoding="async" width="400" height="300">
+        <div class="g-overlay"><span class="g-tag">School Infrastructure</span></div>
+      </div>
+      <div class="g-item" onclick="openSchoolInfraLb(6)">
+        <img src="https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto,w_800,c_fill/i7_xzotth.jpg" alt="School Infrastructure" loading="lazy" decoding="async" width="400" height="300">
+        <div class="g-overlay"><span class="g-tag">School Infrastructure</span></div>
+      </div>
+      <div class="g-item" onclick="openSchoolInfraLb(7)">
+        <img src="https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto,w_800,c_fill/i8_d34stk.jpg" alt="School Infrastructure" loading="lazy" decoding="async" width="400" height="300">
+        <div class="g-overlay"><span class="g-tag">School Infrastructure</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 
 
 <!-- Lightbox -->
@@ -997,6 +1054,31 @@ function openUpvcLb(idx) {
   // Override nav buttons temporarily to use upvc array
   document.getElementById('lb-prev-btn').onclick = () => { upvcLbIdx = (upvcLbIdx - 1 + upvcImgs.length) % upvcImgs.length; openUpvcLb(upvcLbIdx); };
   document.getElementById('lb-next-btn').onclick = () => { upvcLbIdx = (upvcLbIdx + 1) % upvcImgs.length; openUpvcLb(upvcLbIdx); };
+}
+
+// School Infrastructure lightbox
+const schoolInfraImgs = [
+  "https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto/i1_vpq94w.jpg",
+  "https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto/i2_cxroxx.jpg",
+  "https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto/i3_dyzfcd.jpg",
+  "https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto/i4_pdkphj.jpg",
+  "https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto/i5_olarvv.jpg",
+  "https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto/i6_tmwn8y.jpg",
+  "https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto/i7_xzotth.jpg",
+  "https://res.cloudinary.com/djda3lldb/image/upload/f_auto,q_auto/i8_d34stk.jpg"
+];
+let schoolInfraLbIdx = 0;
+
+function openSchoolInfraLb(idx) {
+  schoolInfraLbIdx = idx;
+  const lb = document.getElementById('lightbox');
+  const img = document.getElementById('lb-img');
+  img.src = schoolInfraImgs[idx];
+  document.getElementById('lb-counter').textContent = `${idx + 1} / ${schoolInfraImgs.length}`;
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('lb-prev-btn').onclick = () => { schoolInfraLbIdx = (schoolInfraLbIdx - 1 + schoolInfraImgs.length) % schoolInfraImgs.length; openSchoolInfraLb(schoolInfraLbIdx); };
+  document.getElementById('lb-next-btn').onclick = () => { schoolInfraLbIdx = (schoolInfraLbIdx + 1) % schoolInfraImgs.length; openSchoolInfraLb(schoolInfraLbIdx); };
 }
 
 </script>
