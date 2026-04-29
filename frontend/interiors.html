@@ -360,7 +360,7 @@
   <div class="top-bar">
     <div class="container">
       <div class="top-bar-contact">
-        <a href="tel:+919666313007"><i class="fa-solid fa-phone"></i> +91 96663 13007</a>
+        <a href="tel:+919666313007"><i class="fa-solid fa-phone"></i> +91 96663 13007</a> | <a href="tel:+919030298017">+91 90302 98017</a> | <a href="tel:+9199851553208">+91 99851 553208</a>
         <a href="mailto:dasamrao@gmail.com"><i class="fa-solid fa-envelope"></i> dasamrao@gmail.com</a>
       </div>
       <div class="top-bar-socials">
@@ -474,19 +474,10 @@
     </p>
 
     <div class="filters-bar levitate levitate-delay-4" id="filters-bar">
-
-      <button class="f-btn active" data-filter="all">All Designs</button>
-
-      <button class="f-btn" data-filter="living">Living Rooms</button>
-
-      <button class="f-btn" data-filter="bedroom">Bedrooms</button>
-
-      <button class="f-btn" data-filter="kitchen">Kitchens</button>
-
-      <button class="f-btn" data-filter="office">Office Spaces</button>
-
-      <button class="f-btn" data-filter="hotel">Hotel Suites</button>
-
+      <button class="f-btn active" data-filter="all">All</button>
+      <button class="f-btn" data-filter="acrylic">Acrylic Aluminium</button>
+      <button class="f-btn" data-filter="bedroom">Bedroom</button>
+      <button class="f-btn" data-filter="ceiling">Ceiling</button>
     </div>
 
   </div>
@@ -531,7 +522,7 @@
 
     <!-- Masonry Grid -->
 
-    <div class="masonry" id="gallery-grid" style="display:none;"></div>
+    <div class="masonry" id="gallery-grid" style="display:none; transition: opacity 0.3s ease;"></div>
 
 
 
@@ -554,7 +545,7 @@
 
 
 <!-- Office Work Section -->
-<section class="gallery-section" style="padding-top: 1rem; padding-bottom: 5rem; background: var(--bg-dark);">
+<section id="office-work-section" class="gallery-section" style="padding-top: 1rem; padding-bottom: 5rem; background: var(--bg-dark);">
   <div class="container">
 
     <!-- Section Heading -->
@@ -751,270 +742,130 @@
 
 
 <script>
-
 /* ==============================
-
    INTERIORS PAGE - GALLERY LOGIC
-
 ============================== */
 
-let allImgs  = [];
-
-let visible  = [];
-
-let offset   = 0;
-
-const PER_PAGE = 24;
-
-let lbIdx    = 0;
-
-
-
-// Init
-
-
-
-
-
-document.addEventListener('keydown', e => {
-
-  if (e.key === 'Escape') { closeLb(); closeModal(); }
-
-  if (e.key === 'ArrowLeft')  navLb(-1);
-
-  if (e.key === 'ArrowRight') navLb(1);
-
-});
-
-document.getElementById('lightbox').addEventListener('click', e => {
-
-  if (e.target === document.getElementById('lightbox')) closeLb();
-
-});
-
-document.getElementById('lead-modal').addEventListener('click', e => {
-
-  if (e.target === document.getElementById('lead-modal')) closeModal();
-
-});
-
-
-
-// Load gallery on page load
-
-(async function init() {
-
-  try {
-
-    const res  = await fetch('https://madhavi-enterprises.onrender.com/api/cloudinary/images?max=200');
-
-    const data = await res.json();
-
-    // Only show YOUR real interior images - exclude property folder & Cloudinary demo samples
-
-    const allCloud = data.images || [];
-
-    allImgs = allCloud.filter(img => {
-
-      const folder = (img.folder || '').toLowerCase();
-
-      const pid    = (img.public_id || '').toLowerCase();
-
-      // Exclude property listing images
-
-      if (folder.includes('madhavi_properties') || pid.includes('madhavi_properties')) return false;
-
-      // Exclude Cloudinary's built-in demo/sample images
-
-      if (pid.startsWith('cld-sample') || pid.startsWith('sample') || pid === 'main-sample') return false;
-
-      
-
-      // Target only interior images
-
-      const isInterior = folder.includes('living') || folder.includes('bedroom') || folder.includes('kitchen') || folder.includes('office') || folder.includes('hotel') || folder.includes('interior') || pid.includes('interior');
-
-      if (!isInterior) return false;
-
-
-
-      return true;
-
-    });
-
-  } catch(e) {
-
-    allImgs = [];
-
-  }
-
-  document.getElementById('skel-grid').style.display = 'none';
-
-
-
-  if (!allImgs.length) {
-
-    document.getElementById('gallery-empty').style.display = 'block';
-
-    return;
-
-  }
-
-  visible = [...allImgs];
-
-  offset  = 0;
-
-  document.getElementById('gallery-grid').style.display = 'block';
-
-  renderChunk();
-
-})();
-
-
-
-function renderChunk() {
-
-  const grid = document.getElementById('gallery-grid');
-
-  const chunk = visible.slice(offset, offset + PER_PAGE);
-
-  chunk.forEach((img, i) => {
-
-    const globalIdx = offset + i;
-
-    const div = document.createElement('div');
-
-    div.className = 'g-item';
-
-    const folder = (img.folder || img.public_id || '').toLowerCase();
-
-    const tag = folder.includes('living') ? 'Living Room'
-
-              : folder.includes('bedroom') ? 'Bedroom'
-
-              : folder.includes('kitchen') ? 'Kitchen'
-
-              : folder.includes('office')  ? 'Office'
-
-              : folder.includes('exterior')? 'Exterior'
-
-              : 'Interior Design';
-
-    div.innerHTML = `
-
-      <img src="${img.url}" alt="${tag}" loading="lazy"/>
-
-      <div class="g-overlay"><span class="g-tag">${tag}</span></div>`;
-
-    div.addEventListener('click', () => openLb(globalIdx));
-
-    grid.appendChild(div);
-
-  });
-
-  offset += chunk.length;
-
-  document.getElementById('load-more-wrap').style.display =
-
-    offset < visible.length ? 'flex' : 'none';
-
+const CLOUD_NAME = 'djda3lldb';
+const BASE_URL = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/f_auto,q_auto/`;
+
+function makeImgs(ids, category) {
+  return ids.map(id => ({ url: BASE_URL + id, public_id: id, category }));
 }
 
+// Exact public_ids from verified Cloudinary folders
+const acrylicImages = makeImgs([
+  'interior19_edhgvt', 'interior21_uzhgr0', 'interior23_zftrpr',
+  'interior26_vz8fkx', 'interior32_yliqb4', 'interior43_cue8sn'
+], 'acrylic');
 
+const bedroomImages = makeImgs([
+  'interior513_sl42qz', 'interior14_zd5inn', 'interior24_awqxrv',
+  'interior22_ie7vqw', 'interior17_aop8mi', 'interior31_hjfewa',
+  'interior29_r0mvhk', 'interior27_lpsmol', 'interior30_zp1hwc'
+], 'bedroom');
+
+const ceilingImages = makeImgs([
+  'interior3_poqv9c', 'interior4_l8tzze', 'interior6_rxpaja',
+  'interior7_qb6845', 'interior8_xuzhfo', 'interior9_r0qbqb',
+  'interior10_b033v3', 'interior12_e5y7dr', 'interior11_amypww',
+  'interior513_kcrj5w', 'interior14_ytvcgm', 'interior15_uhnvxu',
+  'interior17_jzjjhm'
+], 'ceiling');
+
+const allImages = [...acrylicImages, ...bedroomImages, ...ceilingImages];
+
+let visible = [...allImages];
+let offset = 0;
+const PER_PAGE = 28;
+let lbIdx = 0;
+const LABELS = { acrylic: 'Acrylic Aluminium', bedroom: 'Bedroom', ceiling: 'Ceiling' };
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeLb(); closeModal(); }
+  if (e.key === 'ArrowLeft')  navLb(-1);
+  if (e.key === 'ArrowRight') navLb(1);
+});
+document.getElementById('lightbox').addEventListener('click', e => {
+  if (e.target === document.getElementById('lightbox')) closeLb();
+});
+document.getElementById('lead-modal').addEventListener('click', e => {
+  if (e.target === document.getElementById('lead-modal')) closeModal();
+});
+
+(function init() {
+  document.getElementById('skel-grid').style.display = 'none';
+  document.getElementById('gallery-grid').style.display = 'block';
+  renderChunk();
+})();
+
+function renderChunk() {
+  const grid = document.getElementById('gallery-grid');
+  const chunk = visible.slice(offset, offset + PER_PAGE);
+  chunk.forEach((img, i) => {
+    const globalIdx = offset + i;
+    const div = document.createElement('div');
+    div.className = 'g-item';
+    div.style.cssText = 'opacity:0; transform:scale(0.95); transition:all 0.4s ease;';
+    const label = LABELS[img.category] || 'Interior';
+    div.innerHTML = `<img src="${img.url}" alt="${label}" loading="lazy"/><div class="g-overlay"><span class="g-tag">${label}</span></div>`;
+    div.addEventListener('click', () => openLb(globalIdx));
+    grid.appendChild(div);
+    setTimeout(() => { div.style.opacity = '1'; div.style.transform = 'scale(1)'; }, 40 * i);
+  });
+  offset += chunk.length;
+  document.getElementById('load-more-wrap').style.display = offset < visible.length ? 'flex' : 'none';
+}
 
 function loadMore() { renderChunk(); }
 
-
-
-// Filters
-
 document.getElementById('filters-bar').addEventListener('click', e => {
-
   if (!e.target.classList.contains('f-btn')) return;
-
+  const filter = e.target.dataset.filter;
   document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('active'));
-
   e.target.classList.add('active');
-
-  const f = e.target.dataset.filter;
-
-  visible = f === 'all'
-
-    ? [...allImgs]
-
-    : allImgs.filter(img => {
-
-        const s = ((img.folder || '') + (img.public_id || '')).toLowerCase();
-
-        return s.includes(f);
-
-      });
-
-  if (!visible.length) visible = [...allImgs]; // fallback
-
   const grid = document.getElementById('gallery-grid');
-
-  grid.innerHTML = '';
-
-  offset = 0;
-
-  renderChunk();
-
+  grid.style.opacity = '0';
+  setTimeout(() => {
+    if      (filter === 'all')     visible = [...allImages];
+    else if (filter === 'acrylic') visible = [...acrylicImages];
+    else if (filter === 'bedroom') visible = [...bedroomImages];
+    else if (filter === 'ceiling') visible = [...ceilingImages];
+    grid.innerHTML = '';
+    offset = 0;
+    if (!visible.length) {
+      grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-secondary);">No images found.</div>';
+      document.getElementById('load-more-wrap').style.display = 'none';
+    } else {
+      renderChunk();
+    }
+    grid.style.opacity = '1';
+  }, 250);
 });
 
-
-
-// Lightbox
-
 function openLb(idx) {
-
   lbIdx = idx;
-
   const img = document.getElementById('lb-img');
-
   img.src = visible[lbIdx]?.url || '';
-
   document.getElementById('lb-counter').textContent = `${lbIdx + 1} / ${visible.length}`;
-
   document.getElementById('lightbox').classList.add('open');
-
   document.body.style.overflow = 'hidden';
-
 }
-
 function closeLb() {
-
   document.getElementById('lightbox').classList.remove('open');
-
   document.body.style.overflow = '';
-
 }
-
 function navLb(dir) {
-
   if (!visible.length) return;
-
   lbIdx = (lbIdx + dir + visible.length) % visible.length;
-
   const img = document.getElementById('lb-img');
-
   img.style.opacity = '0';
-
   setTimeout(() => {
-
     img.src = visible[lbIdx]?.url || '';
-
     img.style.opacity = '1';
-
     document.getElementById('lb-counter').textContent = `${lbIdx + 1} / ${visible.length}`;
-
   }, 150);
-
 }
-
-
-
-
 
 </script>
 
@@ -1097,11 +948,11 @@ function openOfficeWorkLb(idx) {
 
         <div style="margin-top:1.2rem;display:flex;gap:10px;">
 
-          <a href="https://wa.me/919876543210" target="_blank" style="color:var(--gold);">WhatsApp</a>
+          <a href="https://wa.me/919666313007" target="_blank" style="color:var(--gold);">WhatsApp</a>
 
           <span style="color:var(--text-secondary)">&middot;</span>
 
-          <a href="tel:+919876543210" style="color:var(--gold);">Call Now</a>
+          <a href="tel:+919666313007" style="color:var(--gold);">Call Now</a>
 
         </div>
 
@@ -1145,7 +996,7 @@ function openOfficeWorkLb(idx) {
 
         <h4>Contact</h4>
 
-        <a href="tel:+919876543210"><i class="fa-solid fa-phone"></i>  +91 98765 43210</a>
+        <a href="tel:+919666313007"><i class="fa-solid fa-phone"></i> +91 96663 13007</a><br><a href="tel:+919030298017"><i class="fa-solid fa-phone"></i> +91 90302 98017</a><br><a href="tel:+9199851553208"><i class="fa-solid fa-phone"></i> +91 99851 553208</a>
 
         <a href="mailto:info@madhavienterprise.com"> info@madhavienterprise.com</a>
 
@@ -1184,6 +1035,9 @@ function openOfficeWorkLb(idx) {
     </a>
     
   </div>
+
+
+
 
 </body>
 
